@@ -32,7 +32,6 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
         
-        /* ✨ FUNDO DO CORPO COM GRADE TECNOLÓGICA MAIS VISÍVEL ✨ */
         @keyframes moveGrid {
             from { background-position: 0 0; }
             to { background-position: -4rem 0; }
@@ -44,11 +43,10 @@
             color: var(--branco);
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
-            /* Cor da grade mais forte para ser bem visível */
             background-image: radial-gradient(rgba(0, 201, 167, 0.15) 1px, transparent 1px);
-            background-size: 2.5rem 2.5rem; /* Tamanho da grade */
+            background-size: 2.5rem 2.5rem;
             background-position: 0 0;
-            animation: moveGrid 15s linear infinite; /* Animação mais rápida */
+            animation: moveGrid 15s linear infinite;
         }
         
         /* =========================================================================
@@ -68,7 +66,7 @@
         }
 
         .glass-section {
-            background: rgba(10, 10, 10, 0.7); /* Um pouco mais opaco para legibilidade */
+            background: rgba(10, 10, 10, 0.7);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
             border-top: 1px solid var(--borda-card);
@@ -296,6 +294,150 @@
 
         .animate-on-scroll { opacity: 0; transform: translateY(40px); transition: opacity 1s ease, transform 1s ease; }
         .animate-on-scroll.is-visible { opacity: 1; transform: translateY(0); }
+
+        /* =========================================================================
+         ESTILOS DO CHAT COM GEMINI
+         ========================================================================= */
+        .chat-container {
+            position: fixed;
+            bottom: 25px;
+            left: 25px;
+            z-index: 1001;
+        }
+
+        #chat-toggle-button {
+            background: linear-gradient(45deg, var(--roxo), var(--complementar));
+            color: var(--branco);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+            transition: transform 0.3s ease;
+        }
+        #chat-toggle-button:hover {
+            transform: scale(1.1);
+        }
+
+        #chat-widget {
+            position: absolute;
+            bottom: 80px;
+            left: 0;
+            width: 350px;
+            max-width: 90vw;
+            height: 500px;
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-radius: 20px;
+            border: 1px solid var(--borda-card);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            transform-origin: bottom left;
+        }
+        #chat-widget.hidden {
+            opacity: 0;
+            transform: scale(0.5);
+            pointer-events: none;
+        }
+
+        .chat-header {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--borda-card);
+            text-align: left;
+        }
+        .chat-header h3 {
+            margin: 0;
+            color: var(--branco);
+            font-size: 1.1rem;
+        }
+        .chat-header p {
+            margin: 0;
+            font-size: 0.8rem;
+            color: var(--cinza-texto);
+        }
+
+        .chat-messages {
+            flex-grow: 1;
+            padding: 1.5rem;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .message {
+            padding: 0.8rem 1rem;
+            border-radius: 15px;
+            max-width: 80%;
+            line-height: 1.5;
+            font-size: 0.95rem;
+        }
+        .message.sent {
+            background-color: var(--complementar);
+            color: var(--preto);
+            border-bottom-right-radius: 5px;
+            align-self: flex-end;
+        }
+        .message.received {
+            background-color: #262626;
+            color: var(--branco);
+            border-bottom-left-radius: 5px;
+            align-self: flex-start;
+        }
+        .message.loading {
+            align-self: flex-start;
+            background: none;
+        }
+        .message.loading span {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: #555;
+            animation: bounce 1s infinite;
+            margin: 0 2px;
+        }
+        .message.loading span:nth-child(2) { animation-delay: 0.1s; }
+        .message.loading span:nth-child(3) { animation-delay: 0.2s; }
+
+        @keyframes bounce {
+            0%, 80%, 100% { transform: scale(0); }
+            40% { transform: scale(1); }
+        }
+
+        .chat-input-area {
+            display: flex;
+            padding: 1rem;
+            border-top: 1px solid var(--borda-card);
+        }
+
+        #chat-input {
+            flex-grow: 1;
+            background: transparent;
+            border: none;
+            outline: none;
+            color: var(--branco);
+            font-size: 1rem;
+        }
+        #chat-send-button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+        #chat-send-button svg {
+            transition: transform 0.2s ease;
+        }
+        #chat-send-button:hover svg {
+            transform: scale(1.1) rotate(-10deg);
+        }
         
         @media (max-width: 768px) {
             .feature-section.reverse, .feature-section { flex-direction: column; }
@@ -433,6 +575,27 @@
         </section>
     </main>
     
+    <div class="chat-container">
+        <button id="chat-toggle-button" aria-label="Abrir chat">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/><path d="M5 3v4"/><path d="M19 17v4"/><path d="M3 5h4"/><path d="M17 19h4"/></svg>
+        </button>
+        <div id="chat-widget" class="hidden">
+            <div class="chat-header">
+                <h3>Fale com nossa IA</h3>
+                <p>Potencializado por Gemini</p>
+            </div>
+            <div id="chat-messages" class="chat-messages">
+                <div class="message received">Olá! Como posso ajudar a falar sobre nossos serviços de automação hoje?</div>
+            </div>
+            <div class="chat-input-area">
+                <input type="text" id="chat-input" placeholder="Digite sua pergunta...">
+                <button id="chat-send-button" aria-label="Enviar mensagem">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="#FFFFFF"><path d="M3.478 2.405a.75.75 0 0 0-.926.94l2.432 7.905H13.5a.75.75 0 0 1 0 1.5H4.984l-2.432 7.905a.75.75 0 0 0 .926.94 60.519 60.519 0 0 0 18.445-8.986.75.75 0 0 0 0-1.218A60.517 60.517 0 0 0 3.478 2.405Z"/></svg>
+                </button>
+            </div>
+        </div>
+    </div>
+    
     <footer>
         <div class="container">
             <div class="footer-social">
@@ -495,6 +658,80 @@
         const elementsToAnimate = document.querySelectorAll('.animate-on-scroll');
         elementsToAnimate.forEach(el => observer.observe(el));
     });
+
+    // =========================================================================
+    // LÓGICA DO CHAT COM GEMINI
+    // =========================================================================
+    const chatToggleButton = document.getElementById('chat-toggle-button');
+    const chatWidget = document.getElementById('chat-widget');
+    const chatMessages = document.getElementById('chat-messages');
+    const chatInput = document.getElementById('chat-input');
+    const chatSendButton = document.getElementById('chat-send-button');
+
+    chatToggleButton.addEventListener('click', () => {
+        chatWidget.classList.toggle('hidden');
+    });
+
+    const sendMessage = async () => {
+        const question = chatInput.value.trim();
+        if (!question) return;
+
+        addMessage(question, 'sent');
+        chatInput.value = '';
+        showLoadingIndicator();
+
+        try {
+            // ATENÇÃO: A URL abaixo é um exemplo para Netlify.
+            // Esta chamada SÓ FUNCIONARÁ depois que você configurar o backend (Parte 2).
+            const response = await fetch('/.netlify/functions/ask-gemini', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ question: question }),
+            });
+
+            if (!response.ok) {
+                throw new Error('A resposta do servidor não foi OK');
+            }
+
+            const data = await response.json();
+            
+            hideLoadingIndicator();
+            addMessage(data.answer, 'received');
+
+        } catch (error) {
+            console.error('Erro:', error);
+            hideLoadingIndicator();
+            addMessage('Desculpe, ocorreu um erro. Tente novamente mais tarde.', 'received');
+        }
+    };
+
+    chatInput.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter') { sendMessage(); }
+    });
+
+    chatSendButton.addEventListener('click', sendMessage);
+
+    function addMessage(text, type) {
+        const messageElement = document.createElement('div');
+        messageElement.className = `message ${type}`;
+        messageElement.textContent = text;
+        chatMessages.appendChild(messageElement);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    function showLoadingIndicator() {
+        const loadingElement = document.createElement('div');
+        loadingElement.className = 'message loading';
+        loadingElement.id = 'loading-indicator';
+        loadingElement.innerHTML = '<span></span><span></span><span></span>';
+        chatMessages.appendChild(loadingElement);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    function hideLoadingIndicator() {
+        const indicator = document.getElementById('loading-indicator');
+        if (indicator) { indicator.remove(); }
+    }
     </script>
 </body>
 </html>
