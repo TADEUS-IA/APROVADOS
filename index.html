@@ -189,7 +189,31 @@
         #chat-send-button svg path { fill: var(--verde-neon); }
         #chat-send-button:hover { background-color: rgba(0, 255, 136, 0.3); box-shadow: 0 0 15px rgba(0, 255, 136, 0.5); transform: scale(1.1); }
         #chat-send-button:hover svg { transform: rotate(-15deg) scale(1.05); }
-       
+
+        /* ===== INÍCIO: Estilos para Respostas Rápidas ===== */
+        .chat-quick-replies {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+            align-self: flex-start;
+        }
+        .quick-reply-btn {
+            background-color: rgba(0, 255, 136, 0.1);
+            border: 1px solid var(--borda-glass);
+            color: var(--verde-neon);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-family: 'Inter', sans-serif;
+            transition: background-color 0.3s ease;
+        }
+        .quick-reply-btn:hover {
+            background-color: rgba(0, 255, 136, 0.2);
+        }
+        /* ===== FIM: Estilos para Respostas Rápidas ===== */
+        
         /* ===== AJUSTES DE RESPONSIVIDADE (TABLET) ===== */
         @media (max-width: 950px) {
             .feature-grid, .feature-grid.reverse { grid-template-columns: 1fr; }
@@ -508,7 +532,14 @@
             </div>
             <div id="chat-messages" class="chat-messages">
                 <div class="message received">Olá! Melhor agora que chegou — mais um cliente pra potencializar resultados. Posso te ajudar com uma auditoria rápida, configurar uma automação ou escalar seu tráfego?</div>
-            </div>
+                
+                <div id="chat-quick-replies" class="chat-quick-replies">
+                    <button class="quick-reply-btn" data-value="Automação">Automação</button>
+                    <button class="quick-reply-btn" data-value="Impulsionamento">Impulsionamento</button>
+                    <button class="quick-reply-btn" data-value="Valor">Valor</button>
+                    <button class="quick-reply-btn" data-value="Dúvida">Dúvida</button>
+                </div>
+                </div>
             <form id="chat-form" class="chat-input-area">
                 <input type="text" id="chat-input" placeholder="Digite sua dúvida..." autocomplete="off">
                 <button type="submit" id="chat-send-button" aria-label="Enviar mensagem">
@@ -545,6 +576,7 @@
             const chatMessages = document.getElementById('chat-messages');
             const backToTopButton = document.getElementById('back-to-top-btn');
             const whatsappButton = document.getElementById('whatsapp-track-button');
+            const quickRepliesContainer = document.getElementById('chat-quick-replies'); // Novo elemento
 
             // Funcionalidade do Chat
             chatToggleButton.addEventListener('click', () => chatWidget.classList.toggle('hidden'));
@@ -553,11 +585,50 @@
                 e.preventDefault();
                 const userInput = chatInput.value.trim();
                 if (!userInput) return;
+                
+                // Remove os botões de resposta rápida se existirem
+                if (quickRepliesContainer) {
+                    quickRepliesContainer.remove();
+                }
+
                 addMessage(userInput, 'sent');
                 chatInput.value = '';
                 getAIResponse(userInput);
             });
-                
+            
+            // ===== INÍCIO: Lógica para Respostas Rápidas =====
+            const predefinedResponses = {
+                'Automação': 'Excelente escolha! Nossa <strong>Automação Inteligente</strong> usa a plataforma N8N para criar fluxos de vendas, pós-venda e nutrição. Conectamos suas ferramentas, reduzimos erros e economizamos horas de trabalho, permitindo que sua empresa escale de forma previsível. Quer saber como isso se aplica ao seu negócio?',
+                'Impulsionamento': 'Ótimo! Nosso <strong>Impulsionamento de Alta Performance</strong> foca em estratégia de mídia para gerar resultados. Analisamos seu público, testamos criativos e otimizamos o orçamento diariamente para reduzir seu Custo de Aquisição (CAC) e maximizar o retorno. Pronto para lançar uma campanha que vende?',
+                'Valor': 'Nossos planos são desenhados para gerar retorno rápido. O plano <strong>"Automação + Tráfego"</strong> é o mais popular por integrar o melhor dos dois mundos, reduzindo o custo por venda. Quer agendar um diagnóstico gratuito para eu te mostrar o potencial de retorno para o seu caso específico?',
+                'Dúvida': 'Sem problemas. Sou um agente de IA treinado para te ajudar. Pode me perguntar qualquer coisa sobre nossos serviços, como funciona a integração, quais ferramentas usamos, ou qualquer outra questão que tiver. Estou aqui para esclarecer tudo para você.'
+            };
+
+            if (quickRepliesContainer) {
+                quickRepliesContainer.addEventListener('click', function(event) {
+                    // Garante que o clique foi em um botão
+                    if (event.target.classList.contains('quick-reply-btn')) {
+                        const userChoice = event.target.dataset.value;
+                        const botReply = predefinedResponses[userChoice];
+
+                        addMessage(userChoice, 'sent');
+                        
+                        showLoadingIndicator();
+                        
+                        setTimeout(() => {
+                            hideLoadingIndicator();
+                            if (botReply) {
+                                addMessage(botReply, 'received');
+                            }
+                        }, 500); // Simula um tempo de "pensamento"
+                        
+                        // Remove os botões após a seleção
+                        quickRepliesContainer.remove();
+                    }
+                });
+            }
+            // ===== FIM: Lógica para Respostas Rápidas =====
+
             // Botão "Voltar ao Topo"
             window.addEventListener('scroll', () => {
                 if (window.scrollY > 300) {
@@ -606,7 +677,7 @@
                 } catch (error) {
                     console.error("Erro ao contatar a API:", error);
                     hideLoadingIndicator();
-                    addMessage("Desculpe, estou com um problema técnico no momento. Por favor, tente novamente ou contate-nos pelo WhatsApp.", 'received');
+                    addMessage("Desculpe, estou com um problema técnico no momento. Por favor, tente novamente ou contate-nos pelo <a href='https://wa.me/message/DQJBWVDS3BJ4N1' target='_blank'>WhatsApp</a>.", 'received');
                 }
             }
 
