@@ -1,12 +1,13 @@
-// ARQUIVO: netlify/functions/ask-tadeus.js (VERSÃO 5.0 - SUPER AGENTE)
+// ARQUIVO: netlify/functions/ask-tadeus.js (VERSÃO 5.0 - SUPER AGENTE CORRIGIDO)
 
 // ========================================================================
 // 1. CONFIGURAÇÃO E CONSTANTES GLOBAIS
 // ========================================================================
 
 const DEEPSEEK_API_URL = "https://api.deepseek.com/chat/completions";
-const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent`;
-const WHATSAPP_LINK = "https://wa.me/message/DQJBWVDS3BJ4N1"; // SEU WHATSAPP JÁ ESTÁ AQUI
+// ✅ CORREÇÃO APLICADA AQUI: removido o "-latest" do nome do modelo
+const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent`;
+const WHATSAPP_LINK = "https://wa.me/message/DQJBWVDS3BJ4N1";
 
 // A Persona completa do Tadeus, usada pelos Planos A e B (as IAs)
 const tadeusAIPersona = `
