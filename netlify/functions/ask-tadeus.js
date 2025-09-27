@@ -1,4 +1,4 @@
-// ARQUIVO: netlify/functions/ask-tadeus.js
+// ARQUIVO: netlify/functions/ask-tadeus.js (VERSÃO 5.0 - SUPER AGENTE)
 
 // ========================================================================
 // 1. CONFIGURAÇÃO E CONSTANTES GLOBAIS
@@ -6,162 +6,218 @@
 
 const DEEPSEEK_API_URL = "https://api.deepseek.com/chat/completions";
 const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent`;
-const WHATSAPP_LINK = " https://wa.me/message/DQJBWVDS3BJ4N1"; // <-- SUBSTITUA PELO SEU LINK DO WHATSAPP
+const WHATSAPP_LINK = "https://wa.me/message/DQJBWVDS3BJ4N1"; // SEU WHATSAPP JÁ ESTÁ AQUI
 
 // A Persona completa do Tadeus, usada pelos Planos A e B (as IAs)
 const tadeusAIPersona = `
-Você é “tadeus”, um agente de vendas e consultoria especializado em AUTOMAÇÃO e TRÁFEGO PAGO...
-// COLE AQUI A SUA PERSONA COMPLETA E DETALHADA QUE VOCÊ ME ENVIOU.
-// Este é o cérebro das IAs.
+Você é “tadeus”, um agente de vendas e consultoria especializado em AUTOMAÇÃO e TRÁFGO PAGO.
+Idioma: Português (Brasil). Tom: vendedor consultivo — direto, confiante, cortês, com pitadas de humor rápido quando apropriado.
+Objetivo principal: converter visitantes em leads/cliente (agendar call, solicitar auditoria, fechar plano). Objetivo secundário: educar, tirar dúvidas, remover objeções.
+// ... E O RESTO DA SUA PERSONA COMPLETA ...
 `;
 
-
 // ========================================================================
-// 2. CÉREBRO LOCAL (PLANO C) - BASE DE CONHECIMENTO
-// Respostas pré-definidas para quando as IAs falharem.
+// 2. CÉREBRO LOCAL (PLANO C) - BASE DE CONHECIMENTO COMPLETA
 // ========================================================================
 const tadeusLocalBrain = {
     intents: [
         // --- SAUDAÇÕES ---
         {
             name: "greeting",
-            keywords: ["oi", "olá", "ola", "bom dia", "boa tarde", "boa noite", "tudo bem", "tudo bom"],
+            keywords: { primary: ["oi", "olá", "ola", "bom dia", "boa tarde", "boa noite", "tudo bem", "tudo bom"], secondary: [] },
+            priority: 10,
             responses: [
                 "Olá! Melhor agora que chegou — mais um cliente pra potencializar resultados. Em que posso te ajudar? (auditoria rápida, configurar automação, escala de tráfego?)",
                 "E aí! Pronto pra parar de perder tempo e começar a vender enquanto dorme? Me diga o que você precisa.",
                 "Oi! Posso te mostrar onde você está vazando faturamento? Me conte um pouco sobre seu negócio."
             ]
         },
-        // --- PERGUNTAS GERAIS ---
+        // --- CONHECIMENTO POR NICHO DE NEGÓCIO ---
+        {
+            name: "business_niche_application",
+            keywords: { primary: ["hamburgueria", "barbearia", "clínica", "clinica", "loja", "ecommerce", "restaurante", "consultório", "advocacia", "imobiliária", "delivery"], secondary: ["tenho um", "minha empresa é", "sou dono de"] },
+            priority: 100,
+            responseFunction: (message) => {
+                if (message.includes("hamburgueria") || message.includes("restaurante") || message.includes("delivery")) {
+                    return `Excelente! Para uma <strong>hamburgueria ou restaurante</strong>, atacamos duas frentes principais:<br><br><strong>1. Automação:</strong> Criamos um robô de atendimento no WhatsApp que anota pedidos, recebe pagamentos e envia para a cozinha, tudo sozinho. Chega de atendentes ocupados e pedidos errados.<br><br><strong>2. Tráfego Pago:</strong> Lançamos anúncios no Instagram e Facebook para as pessoas que estão com fome e perto do seu restaurante, mostrando suas promoções do dia. O resultado é mais pedidos e clientes fiéis.<br><br>Qual dessas áreas é sua maior dor de cabeça hoje: o caos nos pedidos ou a falta de clientes?`;
+                }
+                if (message.includes("barbearia")) {
+                    return `Ótimo! Para <strong>barbearias</strong>, o foco é manter a agenda cheia e evitar furos.<br><br><strong>1. Automação:</strong> Implementamos um sistema de agendamento inteligente no WhatsApp. Ele agenda, confirma, envia lembretes 24h antes e até oferece horários vagos de última hora. Chega de "no-shows".<br><br><strong>2. Tráfego Pago:</strong> Criamos campanhas locais no Instagram mostrando seus melhores cortes e promoções para homens na sua região, transformando seguidores em clientes na cadeira.<br><br>Quer acabar com os buracos na sua agenda e ter uma previsibilidade de faturamento?`;
+                }
+                if (message.includes("clínica") || message.includes("clinica") || message.includes("consultório")) {
+                    return `Perfeito. Para <strong>clínicas e consultórios</strong>, a eficiência no atendimento e a captação de novos pacientes são cruciais.<br><br><strong>1. Automação:</strong> Integramos sua agenda com o WhatsApp para confirmação automática de consultas, envio de lembretes e remarcações, reduzindo faltas em até 80%. Também automatizamos o follow-up pós-consulta.<br><br><strong>2. Tráfego Pago:</strong> Usamos o Google Ads para que sua clínica apareça no topo quando alguém procurar por [Ex: "dentista na sua cidade"] e o Instagram para divulgar procedimentos específicos (como clareamento, botox, etc.) para o público certo.<br><br>Vamos transformar sua gestão e atrair mais pacientes?`;
+                }
+                if (message.includes("loja") || message.includes("ecommerce")) {
+                    return `Excelente! Para <strong>lojas e e-commerce</strong>, o objetivo é claro: vender mais e automatizar o processo.<br><br><strong>1. Automação:</strong> Criamos automações para recuperação de carrinhos abandonados via WhatsApp e E-mail, além de chatbots que respondem dúvidas sobre produtos e frete, 24/7.<br><br><strong>2. Tráfego Pago:</strong> Estruturamos campanhas de 'remarketing' no Instagram e Facebook para mostrar anúncios dos produtos que o cliente visitou e não comprou, além de campanhas no Google Shopping para atrair novos compradores.<br><br>Pronto para transformar visitantes em clientes e automatizar seu pós-venda?`;
+                }
+                return "Interessante! Para o seu tipo de negócio, podemos aplicar estratégias de automação para organizar seus processos e de tráfego para atrair mais clientes. Qual é o seu maior desafio hoje?";
+            }
+        },
+        // --- CONHECIMENTO POR SERVIÇO ---
+        {
+            name: "inquiry_automation",
+            keywords: { primary: ["automação", "automatizar", "n8n", "zapier", "rpa"], secondary: ["o que é", "como funciona", "fale sobre"] },
+            priority: 80,
+            responses: [
+                "Automação é sobre criar 'robôs' que fazem o trabalho repetitivo por você. Por exemplo, quando um cliente preenche um formulário, um robô pode salvar em uma planilha, enviar um e-mail de boas-vindas e notificar sua equipe, tudo em 2 segundos. Isso libera seu tempo e evita erros. Que processo mais te consome tempo hoje?",
+                `Usamos ferramentas como n8n e Zapier para conectar os sistemas que você já usa e criar um fluxo de trabalho inteligente. O objetivo é simples: se uma tarefa é repetitiva, um robô deve fazê-la, não um humano. Quer auditar seus processos para encontrar pontos de automação?`
+            ]
+        },
+        {
+            name: "inquiry_traffic",
+            keywords: { primary: ["tráfego", "tráfego pago", "anúncio", "impulsionar", "meta ads", "google ads"], secondary: ["o que é", "como funciona", "fale sobre"] },
+            priority: 80,
+            responses: [
+                "Tráfego pago é a arte de colocar o anúncio certo, na frente da pessoa certa, na hora certa. Em vez de esperar o cliente te achar, nós vamos ativamente buscá-lo no Instagram, Facebook, Google, etc. O objetivo é atrair pessoas qualificadas para o seu negócio com o menor custo possível. Qual plataforma seu público mais usa hoje?",
+                "Funciona assim: definimos seu cliente ideal, criamos anúncios persuasivos e usamos plataformas como Google e Meta (Instagram/Facebook) para mostrá-los a quem tem mais chance de comprar. Nós gerenciamos o orçamento para garantir o máximo de retorno sobre o investimento (ROI). Qual produto você mais gostaria de vender agora?"
+            ]
+        },
+        // --- PERGUNTAS E OBJEÇÕES COMUNS ---
         {
             name: "how_it_works",
-            keywords: ["como funciona", "o que vocês fazem", "qual o processo", "como é"],
+            keywords: { primary: ["como funciona", "o que vocês fazem", "qual o processo", "como é"], secondary: [] },
+            priority: 50,
             responses: [
-                "Funciona em 3 passos simples: 1) Fazemos um diagnóstico rápido (24h) para encontrar os pontos de melhoria; 2) Implementamos as automações e campanhas iniciais (7–14 dias); 3) Escalamos com otimização contínua. Quer agendar sua auditoria gratuita para começarmos o passo 1?",
-                "Nosso processo é direto: primeiro um diagnóstico para entender suas necessidades, depois a implementação da solução e, por fim, a otimização para escalar seus resultados. Podemos começar com uma auditoria sem compromisso, o que acha?"
-            ]
-        }, {
-            name: "inquiry_price",
-            keywords: ["preço", "valor", "quanto custa", "orçamento", "planos", "qual o valor"],
-            responses: [
-                "Essa é uma ótima pergunta! Para te dar um valor preciso, preciso entender um pouco mais. Você poderia me informar sua meta de faturamento mensal, seu ticket médio e a verba que investe em tráfego atualmente? Com isso, já consigo montar uma proposta.",
-                "Claro! Nossos planos são personalizados. Para simular o melhor para você, me passe 3 dados: 1) seu ticket médio; 2) seu faturamento mensal; 3) sua verba atual para tráfego."
+                "Funciona em 3 passos simples: 1) Fazemos um diagnóstico rápido (24h); 2) Implementamos as automações e campanhas iniciais (7–14 dias); 3) Escalamos com otimização contínua. Quer agendar sua auditoria gratuita para começarmos o passo 1?",
             ]
         },
-        // --- OBJEÇÕES ---
+        {
+            name: "inquiry_price",
+            keywords: { primary: ["preço", "valor", "quanto custa", "orçamento", "planos", "qual o valor"], secondary: [] },
+            priority: 70,
+            responses: [
+                "Essa é uma ótima pergunta! Para te dar um valor preciso, preciso entender um pouco mais. Você poderia me informar sua meta de faturamento, seu ticket médio e a verba que investe em tráfego? Com isso, já consigo montar uma proposta.",
+            ]
+        },
         {
             name: "objection_price",
-            keywords: ["caro", "custoso", "preço alto", "investimento alto"],
+            keywords: { primary: ["caro", "custoso", "preço alto", "investimento alto"], secondary: [] },
+            priority: 60,
             responses: [
-                "Entendo perfeitamente a preocupação com o custo. Pense nisso como um investimento. Em média, nossos clientes recuperam o valor investido em poucas semanas com a otimização que fazemos. Quer testar uma auditoria gratuita de 10 dias para ver o potencial de retorno sem compromisso?",
-                "Compreendo. O custo é um ponto importante. Posso te enviar um mini-relatório gratuito com 3 ações de alto impacto que você mesmo pode aplicar? Se gostar dos resultados, podemos conversar sobre um plano mais completo."
-            ]
-        }, {
-            name: "objection_time",
-            keywords: ["sem tempo", "não tenho tempo", "muito ocupado", "correria", "quanto tempo demora"],
-            responses: [
-                "É exatamente por isso que nosso serviço existe: para te devolver tempo. O processo exige o mínimo de você: apenas uma reunião inicial de 15-30 minutos para o diagnóstico. Depois, nós cuidamos de tudo. Quer agendar esses 15 minutos para amanhã?",
-                "Entendo que seu tempo é valioso. Por isso, nosso processo é desenhado para ser o mais eficiente possível. Cuidamos de toda a implementação e te enviamos relatórios resumidos. Que tal uma conversa rápida de 15 minutos para eu te mostrar como podemos te poupar dezenas de horas por mês?"
-            ]
-        }, {
-            name: "objection_trust",
-            keywords: ["funciona mesmo", "tem garantia", "confio", "dá resultado", " tem certeza", "posso confiar"],
-            responses: [
-                "Essa é uma dúvida totalmente razoável. A melhor forma de construir confiança é com provas. Posso te enviar agora 2 estudos de caso de clientes no mesmo nicho que o seu, com os números de antes e depois. O que acha?",
-                "Entendo sua cautela. Oferecemos uma auditoria gratuita de 10 dias justamente para isso: para você ver o potencial de resultado sem nenhum risco. Se ao final dos 10 dias você não estiver satisfeito, não há nenhum compromisso. Quer começar?"
-            ]
-        }, {
-            name: "objection_past_failure",
-            keywords: ["já tentei", "já fiz", "outra agência", "não funcionou", "deu errado", "outro freelancer", "perdi dinheiro"],
-            responses: [
-                "Entendo perfeitamente sua frustração. Muitos clientes chegam aqui após experiências ruins. A grande diferença é que não trabalhamos com 'achismo'. Nosso processo começa com um diagnóstico de dados para provar onde está o problema antes de investirmos um real. Quer ver como nossa abordagem é diferente com uma auditoria gratuita?",
-                "Essa é uma preocupação muito justa. Para não repetir o erro, o mais importante é entender: o que exatamente não funcionou na sua tentativa anterior? Sabendo disso, posso te mostrar exatamente como nosso método evita essa mesma armadilha."
-            ]
-        }, {
-            name: "objection_uniqueness",
-            keywords: ["meu negócio é diferente", "meu nicho é específico", "meu público é complicado", "não serve pra mim", "meu mercado"],
-            responses: [
-                "Você tem razão, cada negócio é único. É exatamente por isso que não vendemos 'pacotes prontos'. Nossas soluções são 100% customizadas após o diagnóstico inicial. Já aplicamos esses princípios em nichos de [Exemplo: estética avançada] a [Exemplo: indústria de parafusos]. Qual é o seu nicho para eu te dar um exemplo prático?",
-                "Perfeito. Se o seu negócio é específico, você precisa de uma estratégia específica. A automação e os princípios de tráfego são universais, mas a aplicação é artesanal. É isso que fazemos. Qual o maior desafio do seu nicho hoje?"
-            ]
-        }, {
-            name: "objection_diy",
-            keywords: ["fazer sozinho", "eu mesmo faço", "usar o zapier", "aprender a fazer", "parece fácil"],
-            responses: [
-                "Com certeza você consegue aprender, as ferramentas estão aí para isso! A questão é: quanto vale a sua hora? Nós entregamos em dias um sistema otimizado e à prova de erros que talvez levaria meses de tentativa e erro para construir. Nosso trabalho é comprar seu tempo de volta e acelerar seu resultado.",
-                "É como a contabilidade. Você pode fazer sozinho, mas um contador profissional te economiza dinheiro e evita erros caros. Nós somos os 'contadores' da sua automação e tráfego. Quer focar na estratégia do seu negócio enquanto nós garantimos que a operação rode perfeitamente?"
+                "Entendo perfeitamente a preocupação com o custo. Pense nisso como um investimento com alto retorno. Em média, nossos clientes recuperam o valor em poucas semanas. Quer testar uma auditoria gratuita de 10 dias para ver o potencial sem compromisso?",
             ]
         },
-        // --- DÚVIDAS ESPECÍFICAS ---
+        {
+            name: "objection_time",
+            keywords: { primary: ["sem tempo", "não tenho tempo", "muito ocupado", "correria", "quanto tempo demora"], secondary: [] },
+            priority: 60,
+            responses: [
+                "É exatamente por isso que nosso serviço existe: para te devolver tempo. Exigimos o mínimo de você, apenas uma reunião inicial. Depois, nós cuidamos de tudo. Quer agendar esses 15 minutos para amanhã?",
+            ]
+        },
+        {
+            name: "objection_trust",
+            keywords: { primary: ["funciona mesmo", "tem garantia", "confio", "dá resultado", " tem certeza", "posso confiar"], secondary: [] },
+            priority: 60,
+            responses: [
+                "Dúvida totalmente razoável. A melhor forma de construir confiança é com provas. Posso te enviar agora 2 estudos de caso de clientes no mesmo nicho que o seu, com os números de antes e depois. O que acha?",
+            ]
+        },
+        {
+            name: "objection_past_failure",
+            keywords: { primary: ["já tentei", "outra agência", "não funcionou", "deu errado", "outro freelancer"], secondary: [] },
+            priority: 60,
+            responses: [
+                "Entendo sua frustração. Muitos chegam aqui após experiências ruins. A diferença é que não usamos 'achismo', usamos dados. Nosso processo começa com um diagnóstico para provar onde está o problema antes de mexer em algo. Quer ver como nossa abordagem é diferente?",
+            ]
+        },
+        {
+            name: "objection_uniqueness",
+            keywords: { primary: ["meu negócio é diferente", "meu nicho é específico", "meu público é complicado"], secondary: [] },
+            priority: 60,
+            responses: [
+                "Você tem razão, cada negócio é único. É por isso que não vendemos pacotes prontos. Nossas soluções são 100% customizadas. Qual o maior desafio do seu nicho hoje?",
+            ]
+        },
+        {
+            name: "objection_diy",
+            keywords: { primary: ["fazer sozinho", "eu mesmo faço", "usar o zapier"], secondary: [] },
+            priority: 60,
+            responses: [
+                "Com certeza você consegue aprender! A questão é: quanto vale a sua hora? Nós entregamos em dias um sistema otimizado que talvez levaria meses de tentativa e erro. Nosso trabalho é acelerar seu resultado.",
+            ]
+        },
         {
             name: "inquiry_discount",
-            keywords: ["desconto", "mais barato", "valor menor", "consegue melhorar", "faz por menos", "promoção", "cupom", "negociar o preço"],
+            keywords: { primary: ["desconto", "mais barato", "valor menor", "consegue melhorar", "negociar o preço"], secondary: [] },
+            priority: 60,
             responses: [
-                "Entendo sua pergunta. Nosso foco principal é sempre no ROI (Retorno Sobre o Investimento) que entregamos. Em vez de um simples desconto, prefiro te mostrar como o valor investido volta para o seu bolso em poucas semanas. Que tal fazermos uma simulação rápida com seus números para você ver o potencial de lucro?",
-                "É uma ótima pergunta. Nossos preços já são bem justos pelo valor que entregamos, mas temos condições especiais para parceiros de longo prazo. Para pagamentos anuais ou pacotes que combinam Automação + Tráfego, conseguimos oferecer um desconto progressivo. Qual dessas opções te interessa mais?",
-                `No momento não temos uma campanha de descontos ativa. O que posso te oferecer como bônus para fecharmos hoje é uma consultoria de otimização de funil, que normalmente já traria um retorno maior que o desconto. Se preferir, podemos discutir as condições diretamente no WhatsApp: <a href='${WHATSAPP_LINK}' target='_blank'>Vamos negociar</a>.`
+                "Entendo sua pergunta. Nosso foco é sempre no ROI. Em vez de um desconto, prefiro te mostrar como o valor investido volta para o seu bolso em poucas semanas. Que tal fazermos uma simulação rápida com seus números?",
             ]
-        }, {
-            name: "inquiry_timeline",
-            keywords: ["quanto tempo", "demora", "prazo", "quando vejo resultado", "implementação"],
-            responses: [
-                "Ótima pergunta. Dividimos os resultados em duas fases: as 'vitórias rápidas' (quick wins), como otimizações de automação e campanhas, que você já sente em 7 a 14 dias. E a 'escala sustentável', que é o crescimento contínuo do faturamento mês a mês. Quer começar com uma ação de impacto para a próxima semana?",
-                "A implementação inicial leva de 7 a 14 dias. A partir daí, a otimização é constante. Alguns clientes dobram os leads no primeiro mês, outros aumentam a conversão em 30%. O resultado varia, mas o progresso é sempre visível desde o início."
-            ]
-        }, {
-            name: "inquiry_customer_effort",
-            keywords: ["o que eu preciso fazer", "meu trabalho", "tenho que aprender", "é difícil de usar", "complicado"],
-            responses: [
-                "Seu envolvimento é mínimo e estratégico. Precisamos de você na reunião de diagnóstico (cerca de 30 min) para entendermos suas metas e do seu feedback nos relatórios. O resto, toda a parte técnica e operacional, é com a gente. Nosso objetivo é te dar mais tempo, não mais trabalho.",
-                "Pelo contrário! A ideia é simplificar sua vida. Você não precisa aprender a usar nenhuma ferramenta nova. Nós integramos tudo o que você já usa e entregamos um painel com os resultados claros. A única coisa que você precisa fazer é se preparar para atender mais clientes."
-            ]
-        }, {
+        },
+        {
             name: "inquiry_support",
-            keywords: ["suporte", "manutenção", "se der problema", "acompanhamento", "depois"],
+            keywords: { primary: ["suporte", "manutenção", "se der problema", "acompanhamento"], secondary: [] },
+            priority: 50,
             responses: [
-                "Sim, o suporte é contínuo. Nossos planos incluem monitoramento e manutenção constantes. Se uma automação falhar ou uma campanha performar mal, somos os primeiros a saber e a agir. Você nunca fica na mão.",
-                `Todo nosso trabalho inclui um período de suporte e garantia. Além disso, temos planos de manutenção contínua para garantir que tudo funcione perfeitamente a longo prazo. Quer que eu detalhe as opções de suporte? Ou prefere chamar no WhatsApp para uma resposta mais rápida? <a href='${WHATSAPP_LINK}' target='_blank'>Fale conosco</a>.`
+                "Sim, o suporte é contínuo. Nossos planos incluem monitoramento e manutenção. Se algo falhar, somos os primeiros a saber e a agir. Você nunca fica na mão.",
             ]
-        }, {
+        },
+        {
             name: "inquiry_case_studies",
-            keywords: ["cases", "exemplos", "portfólio", "clientes", "referências", "quem vocês atendem"],
+            keywords: { primary: ["cases", "exemplos", "portfólio", "clientes", "referências"], secondary: [] },
+            priority: 50,
             responses: [
-                "Temos sim! Já ajudamos empresas a aumentar em até 300% a geração de leads e a economizar mais de 20 horas de trabalho manual por semana. Em qual área você gostaria de ver um exemplo: [1] Aumento de Vendas, [2] Redução de Custos ou [3] Organização de Processos?",
-                `Claro. Nosso maior orgulho são os resultados dos nossos clientes. Para te enviar os exemplos mais relevantes, me diga qual o seu nicho de mercado. Ou, se preferir, posso te conectar com um cliente nosso para ele mesmo te contar a experiência. É só chamar no WhatsApp: <a href='${WHATSAPP_LINK}' target='_blank'>Peça uma referência aqui</a>.`
+                "Temos sim! Já ajudamos empresas a aumentar em até 300% a geração de leads. Em qual área você gostaria de ver um exemplo: Aumento de Vendas, Redução de Custos ou Organização de Processos?",
             ]
-        }, {
+        },
+        {
             name: "inquiry_help",
-            keywords: ["ajuda", "socorro", "contato", "falar com", "quero falar com um atendente"],
+            keywords: { primary: ["ajuda", "contato", "falar com", "atendente"], secondary: [] },
+            priority: 90,
             responses: [
                 `Com certeza. Para falar com um especialista, por favor, nos chame no WhatsApp: <a href='${WHATSAPP_LINK}' target='_blank'>Clique aqui para iniciar a conversa</a>.`
             ]
         }
     ],
-    // Resposta final se nenhuma intenção for encontrada
     defaultResponse: `Entendi. Essa é uma pergunta mais específica. Para te dar a melhor resposta, o ideal é falar com um de nossos especialistas. Que tal chamar no WhatsApp? <a href='${WHATSAPP_LINK}' target='_blank'>É só clicar aqui.</a>`
 };
 
 
 // ========================================================================
-// 3. MOTOR DE BUSCA DO CÉREBRO LOCAL
+// 3. MOTOR DE BUSCA INTELIGENTE DO CÉREBRO LOCAL (COM PONTUAÇÃO)
 // ========================================================================
 function getLocalResponse(message) {
     const lowerCaseMessage = message.toLowerCase();
+    let scores = [];
+
     for (const intent of tadeusLocalBrain.intents) {
-        for (const keyword of intent.keywords) {
+        let currentScore = 0;
+        
+        for (const keyword of intent.keywords.primary) {
             if (lowerCaseMessage.includes(keyword)) {
-                // Retorna uma das respostas possíveis aleatoriamente para não parecer robótico
-                return intent.responses[Math.floor(Math.random() * intent.responses.length)];
+                currentScore += (intent.priority || 50);
             }
         }
+
+        if (intent.keywords.secondary) {
+            for (const keyword of intent.keywords.secondary) {
+                if (lowerCaseMessage.includes(keyword)) {
+                    currentScore += 10;
+                }
+            }
+        }
+        
+        if (currentScore > 0) {
+            scores.push({ intent: intent, score: currentScore });
+        }
     }
-    return null; // Nenhuma intenção encontrada
+
+    if (scores.length === 0) return null;
+
+    scores.sort((a, b) => b.score - a.score);
+    const bestMatch = scores[0].intent;
+
+    if (typeof bestMatch.responseFunction === 'function') {
+        return bestMatch.responseFunction(lowerCaseMessage);
+    }
+    
+    return bestMatch.responses[Math.floor(Math.random() * bestMatch.responses.length)];
 }
 
 
 // ========================================================================
 // 4. HELPERS DE API (PLANOS A & B)
-// Funções isoladas para chamar as IAs externas.
 // ========================================================================
 async function callDeepSeekAPI(message, apiKey) {
     const response = await fetch(DEEPSEEK_API_URL, {
@@ -199,22 +255,17 @@ async function callGeminiAPI(message, apiKey) {
 
 
 // ========================================================================
-// 5. FUNÇÃO PRINCIPAL (HANDLER)
-// Orquestra a lógica de múltiplos níveis de fallback.
+// 5. FUNÇÃO PRINCIPAL (HANDLER) - ORQUESTRADOR DOS PLANOS A, B, C e D
 // ========================================================================
 exports.handler = async (event) => {
     if (event.httpMethod !== 'POST') {
         return { statusCode: 405, body: 'Method Not Allowed' };
     }
-
     const { message } = JSON.parse(event.body);
     if (!message) {
         return { statusCode: 400, body: 'Bad Request: message is required.' };
     }
-
     let reply = "";
-
-    // --- PLANO A: TENTAR DEEPSEEK ---
     try {
         console.log("Executando Plano A: DeepSeek");
         const deepSeekKey = process.env.DEEPSEEK_API_KEY;
@@ -222,8 +273,6 @@ exports.handler = async (event) => {
         reply = await callDeepSeekAPI(message, deepSeekKey);
     } catch (deepSeekError) {
         console.error("Plano A (DeepSeek) falhou:", deepSeekError.message);
-
-        // --- PLANO B: TENTAR GEMINI ---
         try {
             console.log("Executando Plano B: Gemini");
             const geminiKey = process.env.GEMINI_API_KEY;
@@ -231,23 +280,16 @@ exports.handler = async (event) => {
             reply = await callGeminiAPI(message, geminiKey);
         } catch (geminiError) {
             console.error("Plano B (Gemini) falhou:", geminiError.message);
-
-            // --- PLANO C: USAR CÉREBRO LOCAL ---
             console.log("Executando Plano C: Cérebro Local");
             reply = getLocalResponse(message);
-
-            // --- PLANO D: FALLBACK FINAL ---
             if (!reply) {
                 console.log("Plano C não encontrou resposta. Executando Plano D.");
                 reply = tadeusLocalBrain.defaultResponse;
             }
         }
     }
-
-    // Retornar a resposta encontrada (seja do Plano A, B, C ou D)
     const finalStatusCode = (reply) ? 200 : 500;
     const finalReply = reply || "Desculpe, estamos com uma instabilidade geral. Por favor, tente mais tarde.";
-
     return {
         statusCode: finalStatusCode,
         headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" },
