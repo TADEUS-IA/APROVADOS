@@ -141,6 +141,28 @@
         .logos-slide img { height: 40px; width: auto; margin: 0 35px; filter: grayscale(1) brightness(0.8); opacity: 0.7; transition: all 0.3s ease; }
         .logos-slide img:hover { filter: grayscale(0) brightness(1); opacity: 1; transform: scale(1.1); }
         @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(calc(-200px * 6)); } }
+        
+        /* ===== INÍCIO: ESTILO ADICIONADO PARA O BANNER DE TESTE GRÁTIS ===== */
+        .trial-banner {
+            padding: 2rem 0;
+            text-align: center;
+        }
+        .trial-banner-link {
+            color: var(--roxo-principal);
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            font-size: 1.2rem;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            padding: 0 2rem; /* Adicionado para evitar que o texto quebre em telas menores */
+            display: inline-block; /* Necessário para o padding funcionar corretamente */
+        }
+        .trial-banner-link:hover {
+            color: var(--verde-neon);
+            text-decoration: underline;
+        }
+        /* ===== FIM: ESTILO ADICIONADO PARA O BANNER DE TESTE GRÁTIS ===== */
+
         footer { background: #050505; padding: 4rem 0 2rem; }
         .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 4rem; margin-bottom: 4rem; text-align: left; }
         .footer-logo { font-size: 1.5rem; font-weight: 700; color: var(--branco); text-decoration: none; }
@@ -152,6 +174,20 @@
         .social-icon-link svg { width: 28px; height: 28px; fill: var(--roxo-principal); transition: all 0.3s ease; }
         .social-icon-link:hover svg { fill: var(--verde-neon); transform: scale(1.1); }
         .footer-copyright { border-top: 1px solid var(--borda-glass); padding-top: 2rem; text-align: center; font-size: 0.9rem; color: var(--cinza-texto); }
+        
+        /* ===== INÍCIO: ESTILO ADICIONADO PARA O LINK DO DESIGNER ===== */
+        .designer-link {
+            color: var(--verde-neon);
+            font-weight: bold;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        .designer-link:hover {
+            color: var(--roxo-principal);
+            text-decoration: underline;
+        }
+        /* ===== FIM: ESTILO ADICIONADO PARA O LINK DO DESIGNER ===== */
+
         .floating-buttons-right { position: fixed; bottom: 20px; right: 20px; z-index: 1000; display: flex; flex-direction: column; gap: 15px; align-items: flex-end; }
         .whatsapp-container { display: flex; align-items: center; gap: 12px; }
         .whatsapp-status { background: rgba(0,0,0,0.7); backdrop-filter: blur(5px); padding: 8px 16px; border-radius: 20px; color: var(--branco); font-size: 0.9rem; opacity: 0; transform: translateX(10px); transition: opacity 0.3s ease, transform 0.3s ease; pointer-events: none; }
@@ -232,7 +268,7 @@
             .container { padding: 0 1.5rem; } 
             h1 { font-size: clamp(2.5rem, 8vw, 3rem); } 
             h2 { font-size: 2rem; }
-            p, .section-subtitle { font-size: 1rem; }
+            p, .section-subtitle, .trial-banner-link { font-size: 1rem; }
             .glass-card { padding: 1.5rem; }
             .faq-item summary, .faq-item .faq-content { padding-left: 1.5rem; padding-right: 1.5rem; }
             .btn { 
@@ -266,6 +302,11 @@
         </div>
     </header>
 
+    <div class="trial-banner animate-on-scroll">
+        <a href="https://wa.me/message/DQJBWVDS3BJ4N1" target="_blank" class="trial-banner-link">
+            APROVEITE SEU TESTE GRÁTIS DE 10 DIAS COM SUA AUTOMAÇÃO PADRONIZADA.
+        </a>
+    </div>
     <main>
         <section id="problema">
             <div class="container">
@@ -500,7 +541,8 @@
             </div>
             <div class="footer-copyright">
                 <p>&copy; 2025 Aprovados Automações. Todos os direitos reservados.</p>
-            </div>
+                <p style="margin-top: 0.5rem;">Design do site feito por <a href="https://wa.me/message/DQJBWVDS3BJ4N1" target="_blank" class="designer-link">Rodrigo</a>, colaborador da Aprovados.</p>
+                </div>
         </div>
     </footer>
 
