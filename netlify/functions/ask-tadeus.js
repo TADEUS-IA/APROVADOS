@@ -1,15 +1,16 @@
-// ARQUIVO: netlify/functions/ask-tadeus.js (VERSÃO 10.1 DEFINITIVA - CÓDIGO COMPLETO)
-// CORREÇÃO FINAL:
-// 1. CÓDIGO 100% EXPANDIDO: Todos os scripts e functions foram inseridos na íntegra. Não há mais abreviações ou resumos.
-// 2. ARQUITETURA HÍBRIDA MANTIDA: A fusão da interatividade da v6.2 com a base de conhecimento da v9.0 é a base deste código.
-// 3. SEM ERROS, SEM ATALHOS: Este é o código final e completo para ser copiado e utilizado.
+// ARQUIVO: netlify/functions/ask-tadeus.js (VERSÃO 10.2 - CORREÇÃO DE LÓGICA)
+// CORREÇÃO FINAL E DEFINITIVA:
+// 1. [BUG CORRIGIDO] LÓGICA DE SAUDAÇÃO: O sistema agora identifica a intenção "greeting" e a responde localmente de forma imediata, sem escalar para as IAs. O erro do "oi" foi eliminado.
+// 2. [BUG CORRIGIDO] URL DO GEMINI: A URL da API do Gemini foi corrigida para usar a versão 'v1beta', que é a correta para o modelo 'gemini-1.5-flash'.
+// 3. ARQUITETURA HÍBRIDA MANTIDA: A fusão da interatividade da v6.2 com a base de conhecimento da v9.0 continua sendo a base do código.
 
 // ========================================================================
 // 1. CONFIGURAÇÃO E CONSTANTES GLOBAIS
 // ========================================================================
 
 const DEEPSEEK_API_URL = "https://api.deepseek.com/chat/completions";
-const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent`;
+// [CORREÇÃO] URL do Gemini atualizada de v1 para v1beta
+const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent`;
 const WHATSAPP_LINK = "https://wa.me/message/DQJBWVDS3BJ4N1";
 const LOCAL_BRAIN_CONFIDENCE_THRESHOLD = 95;
 
@@ -22,7 +23,7 @@ Responda diretamente à pergunta do cliente usando o contexto fornecido.
 `;
 
 // ========================================================================
-// 2. BASE DE CONHECIMENTO PROFUNDO (A ALMA - DA V9.0)
+// 2. BASE DE CONHECIMENTO PROFUNDO (A ALMA)
 // ========================================================================
 const localKnowledgeBase = {
     automation: {
@@ -156,7 +157,7 @@ const localKnowledgeBase = {
 };
 
 // ========================================================================
-// 3. CÉREBRO INTERATIVO (AS RESPOSTAS - DA V6.2)
+// 3. CÉREBRO INTERATIVO (AS RESPOSTAS)
 // ========================================================================
 const tadeusLocalBrain = {
     intents: [
@@ -297,7 +298,7 @@ function analyzeHybridBrain(message) {
 
 
 // ========================================================================
-// 5. [CORRIGIDO] FALLBACK HÍBRIDO E CONVERSACIONAL
+// 5. FALLBACK HÍBRIDO E CONVERSACIONAL
 // ========================================================================
 function generateHybridFallback(analysis) {
     // Se a análise de intenção da v6.2 encontrou uma boa resposta, use-a.
@@ -350,18 +351,20 @@ exports.handler = async (event) => {
     if (!message) { return { statusCode: 400, body: 'Bad Request: message is required.' }; }
 
     let reply = "";
-    console.log("Analisando com o Cérebro Unificado (v10.1)...");
+    console.log("Analisando com o Cérebro Unificado (v10.2)...");
     const localAnalysis = analyzeHybridBrain(message);
 
-    if (localAnalysis.bestMatch && localAnalysis.bestMatch.score >= LOCAL_BRAIN_CONFIDENCE_THRESHOLD) {
-        console.log(`Plano C (Cérebro Local) respondeu com alta confiança (${localAnalysis.bestMatch.score}).`);
+    // [CORREÇÃO] Lógica especial para saudações, para que nunca tentem chamar a IA.
+    const isGreeting = localAnalysis.bestMatch && localAnalysis.bestMatch.intent.name === 'greeting';
+
+    if (isGreeting || (localAnalysis.bestMatch && localAnalysis.bestMatch.score >= LOCAL_BRAIN_CONFIDENCE_THRESHOLD)) {
+        console.log(`Plano C (Cérebro Local) respondeu com alta confiança ou por ser uma saudação.`);
         reply = localAnalysis.bestMatch.response;
     } else {
         console.log("Cérebro Local forneceu contexto. Orquestrando com IA Externa.");
         
         let contextForAI = `Contexto da Intenção do Cliente: ${localAnalysis.bestMatch ? localAnalysis.bestMatch.intent.name : 'não identificado'}.\n`;
         if (localAnalysis.knowledgeContext) {
-            // Enviando o TEMA e o SCRIPT COMPLETO para a IA ter todo o contexto
             contextForAI += `Contexto Filosófico Relevante: ${localKnowledgeBase[localAnalysis.knowledgeContext.context].theme}. A seguir, nosso material interno sobre o assunto:\n\n---\n${localKnowledgeBase[localAnalysis.knowledgeContext.context].script}\n---`;
         }
         
