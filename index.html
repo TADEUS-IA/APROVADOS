@@ -142,7 +142,6 @@
         .logos-slide img:hover { filter: grayscale(0) brightness(1); opacity: 1; transform: scale(1.1); }
         @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(calc(-200px * 6)); } }
         
-        /* ===== INÍCIO: ESTILO ADICIONADO PARA O BANNER DE TESTE GRÁTIS ===== */
         .trial-banner {
             padding: 2rem 0;
             text-align: center;
@@ -154,14 +153,13 @@
             font-size: 1.2rem;
             text-decoration: none;
             transition: color 0.3s ease;
-            padding: 0 2rem; /* Adicionado para evitar que o texto quebre em telas menores */
-            display: inline-block; /* Necessário para o padding funcionar corretamente */
+            padding: 0 2rem;
+            display: inline-block;
         }
         .trial-banner-link:hover {
             color: var(--verde-neon);
             text-decoration: underline;
         }
-        /* ===== FIM: ESTILO ADICIONADO PARA O BANNER DE TESTE GRÁTIS ===== */
 
         footer { background: #050505; padding: 4rem 0 2rem; }
         .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 4rem; margin-bottom: 4rem; text-align: left; }
@@ -175,7 +173,6 @@
         .social-icon-link:hover svg { fill: var(--verde-neon); transform: scale(1.1); }
         .footer-copyright { border-top: 1px solid var(--borda-glass); padding-top: 2rem; text-align: center; font-size: 0.9rem; color: var(--cinza-texto); }
         
-        /* ===== INÍCIO: ESTILO ADICIONADO PARA O LINK DO DESIGNER ===== */
         .designer-link {
             color: var(--verde-neon);
             font-weight: bold;
@@ -186,7 +183,6 @@
             color: var(--roxo-principal);
             text-decoration: underline;
         }
-        /* ===== FIM: ESTILO ADICIONADO PARA O LINK DO DESIGNER ===== */
 
         .floating-buttons-right { position: fixed; bottom: 20px; right: 20px; z-index: 1000; display: flex; flex-direction: column; gap: 15px; align-items: flex-end; }
         .whatsapp-container { display: flex; align-items: center; gap: 12px; }
@@ -226,7 +222,6 @@
         #chat-send-button:hover { background-color: rgba(0, 255, 136, 0.3); box-shadow: 0 0 15px rgba(0, 255, 136, 0.5); transform: scale(1.1); }
         #chat-send-button:hover svg { transform: rotate(-15deg) scale(1.05); }
 
-        /* ===== INÍCIO: Estilos para Respostas Rápidas ===== */
         .chat-quick-replies {
             display: flex;
             flex-wrap: wrap;
@@ -248,9 +243,208 @@
         .quick-reply-btn:hover {
             background-color: rgba(0, 255, 136, 0.2);
         }
-        /* ===== FIM: Estilos para Respostas Rápidas ===== */
+
+        /* ESTILOS DAS NOVAS SEÇÕES (JÁ INTEGRADOS) */
+        .servicos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 2rem;
+        }
+        .servico-card {
+            aspect-ratio: 9 / 13;
+            border-radius: 16px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            cursor: pointer;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            padding: 20px;
+            border: 1px solid var(--borda-glass);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+        .servico-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.95) 10%, rgba(0,0,0,0) 60%);
+        }
+        .servico-card:hover {
+            transform: scale(1.05) translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0, 255, 136, 0.15);
+        }
+        .servico-card h3 {
+            color: var(--branco);
+            font-size: 1.5rem;
+            position: relative;
+            z-index: 2;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+            margin: 0;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1001;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.8);
+            animation: fadeIn 0.3s;
+        }
+        .modal-content {
+            background-color: var(--preto);
+            background-image: radial-gradient(rgba(0, 255, 136, 0.05) 1px, transparent 1px);
+            background-size: 3rem 3rem;
+            margin: 5% auto;
+            padding: 40px;
+            border: 1px solid var(--borda-glass);
+            width: 90%;
+            max-width: 800px;
+            border-radius: 20px;
+            position: relative;
+            animation: slideIn 0.4s;
+            box-shadow: 0 0 50px rgba(106, 0, 255, 0.3);
+        }
+        .close-button {
+            color: var(--cinza-texto);
+            position: absolute;
+            top: 15px;
+            right: 25px;
+            font-size: 35px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+        .close-button:hover,
+        .close-button:focus {
+            color: var(--verde-neon);
+            transform: scale(1.1);
+        }
+        #modalTitle {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 30px;
+            color: var(--branco);
+        }
+        .modal-body .servico-detalhe {
+            background: var(--fundo-glass);
+            border: 1px solid var(--borda-glass);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .modal-body h4 {
+            font-size: 1.2rem;
+            color: var(--verde-neon);
+            margin-bottom: 8px;
+            border-left: 4px solid var(--verde-neon);
+            padding-left: 10px;
+        }
+        .modal-body .servico-detalhe.combo h4 {
+            color: var(--roxo-principal);
+            border-left-color: var(--roxo-principal);
+        }
+        .modal-body p {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: var(--cinza-texto);
+        }
+        .form-container-wrapper {
+            background: var(--fundo-glass);
+            border: 1px solid var(--borda-glass);
+            padding: 2.5rem;
+            border-radius: 16px;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            max-width: 700px;
+            margin: 0 auto 3rem auto;
+        }
+        .form-container-wrapper h2 {
+            font-size: clamp(1.8rem, 3vw, 2.5rem);
+            margin-bottom: 1rem;
+        }
+        .form-container-wrapper .instrucoes, .form-container-wrapper p {
+            color: var(--cinza-texto);
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+        }
+        .form-group {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 700;
+            color: var(--branco);
+            font-family: 'Poppins';
+        }
+        .form-group input[type="number"],
+        .form-group input[type="text"],
+        .form-group input[type="email"],
+        .form-group select {
+            width: 100%;
+            padding: 1rem;
+            background: rgba(0,0,0,0.3);
+            border: 1px solid var(--borda-glass);
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-size: 1rem;
+            color: var(--branco);
+            font-family: 'Inter';
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: var(--verde-neon);
+            box-shadow: 0 0 15px rgba(0, 255, 136, 0.3);
+        }
+        .form-group select {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2300FF88' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            background-size: 1em;
+        }
+        .resultado-roi {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            border-radius: 8px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            font-family: 'Poppins';
+            display: none;
+            border: 1px solid;
+        }
+        .resultado-roi.positivo {
+            background-color: rgba(0, 255, 136, 0.1);
+            color: var(--verde-neon);
+            border-color: var(--verde-neon);
+        }
+        .resultado-roi.negativo {
+            background-color: rgba(255, 0, 106, 0.1);
+            color: #ff4d6d;
+            border-color: #ff4d6d;
+        }
+        #formStatus {
+            margin-top: 1.5rem;
+            font-weight: bold;
+            font-size: 1rem;
+        }
+        @keyframes fadeIn { from {opacity: 0;} to {opacity: 1;} }
+        @keyframes slideIn { from {transform: translateY(-50px); opacity: 0;} to {transform: translateY(0); opacity: 1;} }
         
-        /* ===== AJUSTES DE RESPONSIVIDADE (TABLET) ===== */
         @media (max-width: 950px) {
             .feature-grid, .feature-grid.reverse { grid-template-columns: 1fr; }
             .feature-image { order: -1; margin-bottom: 2rem; }
@@ -261,24 +455,26 @@
             section { padding: var(--spacing-section-mobile) 0; }
             .grid-3 { grid-template-columns: 1fr; }
             .pricing-card.popular { transform: none; }
+            .servicos-grid { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
         }
 
-        /* ===== AJUSTES FINOS PARA CELULAR (PARA FICAR PERFEITO) ===== */
         @media (max-width: 768px) {
             .container { padding: 0 1.5rem; } 
             h1 { font-size: clamp(2.5rem, 8vw, 3rem); } 
             h2 { font-size: 2rem; }
             p, .section-subtitle, .trial-banner-link { font-size: 1rem; }
-            .glass-card { padding: 1.5rem; }
+            .glass-card, .form-container-wrapper { padding: 1.5rem; }
             .faq-item summary, .faq-item .faq-content { padding-left: 1.5rem; padding-right: 1.5rem; }
             .btn { 
                 padding: 0.9rem 2.2rem;
                 font-size: 0.95rem;
             }
             .timeline-step { padding-bottom: 2rem; }
-            .footer-grid > div { text-align: center; } /* Centraliza o conteúdo do rodapé */
+            .footer-grid > div { text-align: center; }
             .highlight-block { padding: 3rem 1.5rem; }
             .whatsapp-status, .ai-agent-status { display: none; }
+            .modal-content { width: 95%; margin: 10% auto; padding: 2rem; }
+            .servicos-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
         }
     </style>
 </head>
@@ -328,6 +524,56 @@
                 </div>
             </div>
         </section>
+
+        <section id="solucoes">
+            <div class="container">
+                <h2 class="animate-on-scroll">Soluções Sob Medida para o seu Negócio</h2>
+                <p class="section-subtitle animate-on-scroll" style="transition-delay: 0.1s;">Cada negócio é único. Clique e descubra como nossas estratégias de automação e tráfego se aplicam diretamente ao seu segmento.</p>
+                <div class="servicos-grid animate-on-scroll" style="transition-delay: 0.2s;">
+                    <div class="servico-card" 
+                         data-title="Soluções para Barbearias"
+                         data-img-url="https://images.unsplash.com/photo-1599335619934-0c51d683f1c6?q=80&w=1974&auto=format&fit=crop"
+                         data-impulsionamento="Aumente sua visibilidade local com anúncios no Instagram e Google, atraindo novos clientes todos os dias. Criamos campanhas focadas em agendamentos e no fortalecimento da sua marca."
+                         data-automacao="Automatize o agendamento via WhatsApp, envie lembretes de horários para reduzir faltas e gerencie seu fluxo de clientes de forma inteligente e sem esforço."
+                         data-combo="A combinação perfeita: enquanto as campanhas de marketing enchem sua agenda, a automação cuida dos clientes, confirma horários e fideliza, liberando você para focar no que faz de melhor.">
+                        <h3>Barbearias</h3>
+                    </div>
+                    <div class="servico-card" 
+                         data-title="Soluções para Clínicas"
+                         data-img-url="https://images.unsplash.com/photo-1576091160550-2173dba999ef?q=80&w=2070&auto=format&fit=crop"
+                         data-impulsionamento="Posicione sua clínica como referência em saúde e bem-estar. Criamos conteúdo informativo, gerenciamos suas redes sociais e desenvolvemos campanhas para atrair pacientes qualificados."
+                         data-automacao="Otimize a jornada do paciente com agendamento online, confirmação de consulta automática, envio de preparos para exames e pesquisas de satisfação pós-atendimento."
+                         data-combo="Atraia novos pacientes com marketing de conteúdo e anúncios direcionados, enquanto a automação organiza sua recepção, reduz o tempo de espera e melhora a experiência do paciente do início ao fim.">
+                        <h3>Clínicas</h3>
+                    </div>
+                    <div class="servico-card" 
+                         data-title="Soluções para Hamburguerias"
+                         data-img-url="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?q=80&w=1998&auto=format&fit=crop"
+                         data-impulsionamento="Deixe sua cidade com água na boca! Criamos fotos e vídeos incríveis, promovemos suas ofertas nas redes sociais e campanhas de delivery para aumentar seus pedidos online."
+                         data-automacao="Implemente um cardápio digital interativo via QR Code, automatize pedidos pelo WhatsApp e crie um programa de fidelidade automatizado para que seus clientes sempre voltem."
+                         data-combo="Suas promoções chegam a milhares de pessoas através do marketing digital, e nosso sistema de automação garante que cada pedido seja recebido e processado com rapidez e sem erros. Mais vendas, menos caos.">
+                        <h3>Hamburguerias</h3>
+                    </div>
+                    <div class="servico-card" 
+                         data-title="Soluções para Lojas"
+                         data-img-url="https://images.unsplash.com/photo-1555529771-835f59fc5efe?q=80&w=1974&auto=format&fit=crop"
+                         data-impulsionamento="Leve sua loja para o mundo digital. Criamos sua loja online, gerenciamos anúncios no Instagram Shopping e Google Ads para atrair compradores e aumentar suas vendas."
+                         data-automacao="Recupere carrinhos abandonados com mensagens automáticas, notifique clientes sobre novidades e promoções, e ofereça um atendimento ao cliente 24/7 com chatbots inteligentes."
+                         data-combo="Enquanto o tráfego pago traz novos visitantes para o seu site todos os dias, a automação converte esses visitantes em clientes e os incentiva a comprar de novo, criando um ciclo de vendas poderoso.">
+                        <h3>Lojas</h3>
+                    </div>
+                    <div class="servico-card" 
+                         data-title="Soluções Personalizadas"
+                         data-img-url="https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2070&auto=format&fit=crop"
+                         data-impulsionamento="Seu negócio é único, e sua estratégia também deve ser. Analisamos seu mercado e público para criar campanhas de marketing digital sob medida que geram resultados reais."
+                         data-automacao="Mapeamos seus processos e identificamos oportunidades para automação, seja no atendimento, vendas, ou gestão interna. Criamos fluxos que economizam seu tempo e dinheiro."
+                         data-combo="A sinergia perfeita entre marketing e tecnologia. Criamos um ecossistema digital onde a atração de clientes e a eficiência operacional andam de mãos dadas, impulsionando seu crescimento de forma sustentável.">
+                        <h3>Outros</h3>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <section id="trafego">
             <div class="container">
                 <div class="feature-grid">
@@ -439,6 +685,63 @@
                 </div>
             </div>
         </section>
+        
+        <section id="ferramentas">
+            <div class="container">
+                <div class="form-container-wrapper animate-on-scroll">
+                    <h2>Isso realmente dá resultado? Calcule você mesmo.</h2>
+                    <p class="instrucoes">
+                        Essa ferramenta é simples e direta. Use números realistas para descobrir o potencial de crescimento do seu negócio.
+                        <br><strong>Exemplo:</strong> Se você investiu R$ 500 em anúncios e, com os novos clientes, seu faturamento aumentou em R$ 3.000, use esses valores abaixo.
+                    </p>
+                    <form id="roiForm" style="text-align: center;">
+                        <div class="form-group">
+                            <label for="investimento">Quanto você investiria nos nossos serviços? (R$)</label>
+                            <input type="number" id="investimento" placeholder="Ex: 500" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="ganho">Quanto a mais você faturou com isso? (R$)</label>
+                            <input type="number" id="ganho" placeholder="Ex: 3000" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Ver o Lucro</button>
+                    </form>
+                    <div id="resultadoROI" class="resultado-roi">
+                        </div>
+                </div>
+
+                <div class="form-container-wrapper animate-on-scroll" style="transition-delay: 0.2s;">
+                    <h2>Receba um Diagnóstico Gratuito</h2>
+                    <p>Calculou seu potencial? Ótimo. Agora, preencha o formulário e receba uma análise detalhada de como podemos alcançar (e superar) esses números no seu negócio.</p>
+                    <form id="diagnosticoForm" style="text-align: center;">
+                        <div class="form-group">
+                            <label for="nome">Seu Nome:</label>
+                            <input type="text" id="nome" name="nome" placeholder="Nome completo" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Seu Melhor E-mail:</label>
+                            <input type="email" id="email" name="email" placeholder="seuemail@exemplo.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="nomeEmpresa">Nome da Empresa:</label>
+                            <input type="text" id="nomeEmpresa" name="nomeEmpresa" placeholder="Sua Barbearia, Clínica, etc." required>
+                        </div>
+                        <div class="form-group">
+                            <label for="segmento">Qual o seu segmento?</label>
+                            <select id="segmento" name="segmento" required>
+                                <option value="" disabled selected>Selecione uma opção</option>
+                                <option value="Barbearia">Barbearia</option>
+                                <option value="Clinica">Clínica</option>
+                                <option value="Hamburgueria">Hamburgueria</option>
+                                <option value="Loja">Loja</option>
+                                <option value="Outro">Outro</option>
+                            </select>
+                        </div>
+                        <button type="submit" id="submitBtn" class="btn btn-primary">Receber Diagnóstico</button>
+                    </form>
+                    <div id="formStatus"></div>
+                </div>
+            </div>
+        </section>
 
         <section id="planos">
             <div class="container">
@@ -546,6 +849,27 @@
         </div>
     </footer>
 
+    <div id="servicoModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2 id="modalTitle"></h2>
+            <div class="modal-body">
+                <div class="servico-detalhe">
+                    <h4>🚀 Impulsionamento de Marca</h4>
+                    <p id="modalImpulsionamento"></p>
+                </div>
+                <div class="servico-detalhe">
+                    <h4>🤖 Automação Inteligente</h4>
+                    <p id="modalAutomacao"></p>
+                </div>
+                <div class="servico-detalhe combo">
+                    <h4>✨ O Combo Perfeito</h4>
+                    <p id="modalCombo"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="floating-buttons-right">
         <div class="whatsapp-container">
             <div class="whatsapp-status">Rodrigo Online</div>
@@ -610,7 +934,7 @@
             }, { threshold: 0.1 });
             document.querySelectorAll('.animate-on-scroll').forEach(el => { observer.observe(el); });
 
-            // Elementos do DOM
+            // Elementos do DOM (EXISTENTES)
             const chatToggleButton = document.getElementById('chat-toggle-button');
             const chatWidget = document.getElementById('chat-widget');
             const chatForm = document.getElementById('chat-form');
@@ -618,60 +942,139 @@
             const chatMessages = document.getElementById('chat-messages');
             const backToTopButton = document.getElementById('back-to-top-btn');
             const whatsappButton = document.getElementById('whatsapp-track-button');
-            const quickRepliesContainer = document.getElementById('chat-quick-replies'); // Novo elemento
+            const quickRepliesContainer = document.getElementById('chat-quick-replies');
 
-            // Funcionalidade do Chat
+            // --- INÍCIO: NOVAS FUNCIONALIDADES ---
+
+            // FUNCIONALIDADE DA CALCULADORA DE ROI (VERSÃO UX MELHORADA)
+            const roiForm = document.getElementById('roiForm');
+            if (roiForm) {
+                roiForm.addEventListener('submit', function(event) {
+                    event.preventDefault(); 
+                    const investimento = parseFloat(document.getElementById('investimento').value);
+                    const ganho = parseFloat(document.getElementById('ganho').value);
+                    const resultadoDiv = document.getElementById('resultadoROI');
+                    if (isNaN(investimento) || isNaN(ganho) || investimento <= 0) {
+                        resultadoDiv.innerHTML = 'Por favor, insira valores válidos. O investimento deve ser maior que zero.';
+                        resultadoDiv.className = 'resultado-roi negativo';
+                        resultadoDiv.style.display = 'block';
+                        return;
+                    }
+                    const roi = ((ganho - investimento) / investimento) * 100;
+                    const lucroLiquido = ganho - investimento;
+                    const retornoPorReal = lucroLiquido / investimento;
+                    let resultadoHTML = `Seu Retorno foi de: <strong>${roi.toFixed(2)}%</strong>`;
+                    if (retornoPorReal >= 0) {
+                        resultadoHTML += `<br><small style="font-weight: 400; font-size: 1rem;">Isso significa que para cada R$ 1,00 investido, você teve <strong style="color: var(--verde-neon);">R$ ${retornoPorReal.toFixed(2).replace('.', ',')} de LUCRO</strong>.</small>`;
+                        resultadoDiv.className = 'resultado-roi positivo';
+                    } else {
+                        resultadoHTML += `<br><small style="font-weight: 400; font-size: 1rem;">Isso significa que para cada R$ 1,00 investido, você teve <strong style="color: #ff4d6d;">R$ ${Math.abs(retornoPorReal).toFixed(2).replace('.', ',')} de PREJUÍZO</strong>.</small>`;
+                        resultadoDiv.className = 'resultado-roi negativo';
+                    }
+                    resultadoDiv.innerHTML = resultadoHTML;
+                    resultadoDiv.style.display = 'block';
+                });
+            }
+
+            // FUNCIONALIDADE DO FORMULÁRIO DE DIAGNÓSTICO (N8N)
+            const diagnosticoForm = document.getElementById('diagnosticoForm');
+            if (diagnosticoForm) {
+                diagnosticoForm.addEventListener('submit', function(event) {
+                    event.preventDefault();
+                    const submitBtn = document.getElementById('submitBtn');
+                    const formStatus = document.getElementById('formStatus');
+                    const webhookURL = 'SUA_URL_DO_WEBHOOK_N8N_AQUI'; // <<<---- IMPORTANTE: SUBSTITUA PELA SUA URL
+                    const formData = {
+                        nome: document.getElementById('nome').value,
+                        email: document.getElementById('email').value,
+                        nomeEmpresa: document.getElementById('nomeEmpresa').value,
+                        segmento: document.getElementById('segmento').value
+                    };
+                    submitBtn.disabled = true;
+                    submitBtn.textContent = 'Enviando...';
+                    formStatus.textContent = '';
+                    fetch(webhookURL, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(formData)
+                    })
+                    .then(response => {
+                        if (!response.ok) throw new Error('Falha no envio.');
+                        return response.json();
+                    })
+                    .then(data => {
+                        formStatus.textContent = 'Diagnóstico solicitado! Entraremos em contato em breve.';
+                        formStatus.style.color = 'var(--verde-neon)';
+                        diagnosticoForm.reset();
+                    })
+                    .catch(error => {
+                        formStatus.textContent = 'Erro ao enviar. Tente novamente mais tarde.';
+                        formStatus.style.color = '#ff4d6d';
+                        console.error('Erro:', error);
+                    })
+                    .finally(() => {
+                        submitBtn.disabled = false;
+                        submitBtn.textContent = 'Receber Diagnóstico';
+                    });
+                });
+            }
+            
+            // FUNCIONALIDADE DOS SERVIÇOS ESTILO NETFLIX
+            const servicoCards = document.querySelectorAll('.servico-card');
+            const modal = document.getElementById('servicoModal');
+            const closeModalBtn = document.querySelector('.close-button');
+            servicoCards.forEach(card => {
+                const imgUrl = card.dataset.imgUrl;
+                if (imgUrl) card.style.backgroundImage = `url('${imgUrl}')`;
+                card.addEventListener('click', () => {
+                    document.getElementById('modalTitle').textContent = card.dataset.title;
+                    document.getElementById('modalImpulsionamento').textContent = card.dataset.impulsionamento;
+                    document.getElementById('modalAutomacao').textContent = card.dataset.automacao;
+                    document.getElementById('modalCombo').textContent = card.dataset.combo;
+                    modal.style.display = 'block';
+                });
+            });
+            const closeModal = () => { if(modal) modal.style.display = 'none'; };
+            if (closeModalBtn) closeModalBtn.addEventListener('click', closeModal);
+            window.addEventListener('click', (event) => { if (event.target == modal) closeModal(); });
+
+            // --- FIM: NOVAS FUNCIONALIDADES ---
+
+
+            // --- CÓDIGO ORIGINAL DO SEU SITE (MANTIDO) ---
             chatToggleButton.addEventListener('click', () => chatWidget.classList.toggle('hidden'));
-
             chatForm.addEventListener('submit', (e) => {
                 e.preventDefault();
                 const userInput = chatInput.value.trim();
                 if (!userInput) return;
-                
-                // Remove os botões de resposta rápida se existirem
-                if (quickRepliesContainer) {
-                    quickRepliesContainer.remove();
+                if (document.getElementById('chat-quick-replies')) {
+                    document.getElementById('chat-quick-replies').remove();
                 }
-
                 addMessage(userInput, 'sent');
                 chatInput.value = '';
                 getAIResponse(userInput);
             });
-            
-            // ===== INÍCIO: Lógica para Respostas Rápidas =====
             const predefinedResponses = {
                 'Automação': 'Excelente escolha! Nossa <strong>Automação Inteligente</strong> usa a plataforma N8N para criar fluxos de vendas, pós-venda e nutrição. Conectamos suas ferramentas, reduzimos erros e economizamos horas de trabalho, permitindo que sua empresa escale de forma previsível. Quer saber como isso se aplica ao seu negócio?',
                 'Impulsionamento': 'Ótimo! Nosso <strong>Impulsionamento de Alta Performance</strong> foca em estratégia de mídia para gerar resultados. Analisamos seu público, testamos criativos e otimizamos o orçamento diariamente para reduzir seu Custo de Aquisição (CAC) e maximizar o retorno. Pronto para lançar uma campanha que vende?',
                 'Valor': 'Nossos planos são desenhados para gerar retorno rápido. O plano <strong>"Automação + Tráfego"</strong> é o mais popular por integrar o melhor dos dois mundos, reduzindo o custo por venda. Quer agendar um diagnóstico gratuito para eu te mostrar o potencial de retorno para o seu caso específico?',
                 'Dúvida': 'Sem problemas. Sou um agente de IA treinado para te ajudar. Pode me perguntar qualquer coisa sobre nossos serviços, como funciona a integração, quais ferramentas usamos, ou qualquer outra questão que tiver. Estou aqui para esclarecer tudo para você.'
             };
-
             if (quickRepliesContainer) {
                 quickRepliesContainer.addEventListener('click', function(event) {
-                    // Garante que o clique foi em um botão
                     if (event.target.classList.contains('quick-reply-btn')) {
                         const userChoice = event.target.dataset.value;
                         const botReply = predefinedResponses[userChoice];
-
                         addMessage(userChoice, 'sent');
-                        
                         showLoadingIndicator();
-                        
                         setTimeout(() => {
                             hideLoadingIndicator();
-                            if (botReply) {
-                                addMessage(botReply, 'received');
-                            }
-                        }, 500); // Simula um tempo de "pensamento"
-                        
-                        // Remove os botões após a seleção
-                        quickRepliesContainer.remove();
+                            if (botReply) addMessage(botReply, 'received');
+                        }, 500);
+                        event.target.parentElement.remove();
                     }
                 });
             }
-            // ===== FIM: Lógica para Respostas Rápidas =====
-
-            // Botão "Voltar ao Topo"
             window.addEventListener('scroll', () => {
                 if (window.scrollY > 300) {
                     backToTopButton.classList.add('visible');
@@ -679,8 +1082,6 @@
                     backToTopButton.classList.remove('visible');
                 }
             });
-
-            // Lógica para adicionar mensagens na interface
             function addMessage(htmlContent, type) {
                 const messageElement = document.createElement('div');
                 messageElement.className = `message ${type}`;
@@ -688,7 +1089,6 @@
                 chatMessages.appendChild(messageElement);
                 chatMessages.scrollTop = chatMessages.scrollHeight;
             }
-
             function showLoadingIndicator() {
                 const loadingElement = document.createElement('div');
                 loadingElement.className = 'message loading';
@@ -697,13 +1097,10 @@
                 chatMessages.appendChild(loadingElement);
                 chatMessages.scrollTop = chatMessages.scrollHeight;
             }
-
             function hideLoadingIndicator() {
                 const indicator = document.getElementById('loading-indicator');
                 if (indicator) indicator.remove();
             }
-
-            // Lógica para chamar a API do Agente
             async function getAIResponse(userInput) {
                 showLoadingIndicator();
                 try {
@@ -722,8 +1119,6 @@
                     addMessage("Desculpe, estou com um problema técnico no momento. Por favor, tente novamente ou contate-nos pelo <a href='https://wa.me/message/DQJBWVDS3BJ4N1' target='_blank'>WhatsApp</a>.", 'received');
                 }
             }
-
-            // Lógica para rastrear clique no WhatsApp com Webhook
             whatsappButton.addEventListener('click', function(event) {
                 event.preventDefault(); 
                 const webhookURL = 'https://SUA-URL-DE-WEBHOOK-AQUI.com';
@@ -732,8 +1127,6 @@
                     timestamp: new Date().toISOString(),
                     page: window.location.href
                 };
-
-                // Tenta usar sendBeacon para envio assíncrono, se não, usa fetch
                 if (navigator.sendBeacon) {
                    navigator.sendBeacon(webhookURL, JSON.stringify(dataToSend));
                 } else {
@@ -741,10 +1134,9 @@
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(dataToSend),
-                        keepalive: true // Permite que a requisição continue mesmo após a página fechar
+                        keepalive: true
                     }).catch(error => console.error('Erro ao enviar para o webhook:', error));
                 }
-                
                 window.open(this.href, '_blank');
             });
         });
