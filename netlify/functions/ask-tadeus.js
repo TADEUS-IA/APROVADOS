@@ -1,14 +1,8 @@
-// ARQUIVO: netlify/functions/ask-tadeus.js (VERSÃO 7.0 - O ORQUESTRADOR ROBUSTO)
-// ATUALIZAÇÃO FINAL:
-// 1. CÓDIGO UNIFICADO: Esta é a versão completa e definitiva, integrando todas as funcionalidades solicitadas.
-// 2. ORQUESTRADOR MULTI-IA: A lógica de cascata (DeepSeek -> Gemini -> Groq) está implementada e otimizada.
-// 3. CÉREBRO LOCAL EXPANDIDO: A base de conhecimento interna (v6.4) está totalmente integrada para máxima autonomia e eficiência.
-// 4. ALTA DISPONIBILIDADE: O sistema é resiliente a falhas de API, sempre buscando uma resposta antes de recorrer ao fallback final.
-// 5. EFICIÊNCIA DE CUSTOS: A análise de confiança local previne chamadas desnecessárias às APIs pagas.
-
-// ========================================================================
-// 1. CONFIGURAÇÃO E CONSTANTES GLOBAIS
-// ========================================================================
+// ARQUIVO: netlify/functions/ask-tadeus.js (VERSÃO 7.1 - CORREÇÃO DE ENDPOINTS)
+// ATUALIZAÇÃO 7.1:
+// 1. CORREÇÃO GEMINI: Atualizado o endpoint para v1beta e o nome do modelo para 'gemini-1.5-flash-latest' para resolver o erro 404.
+// 2. CORREÇÃO GROQ: Corrigido o endpoint da API de /v4 para /v1 e atualizado o modelo para 'llama-3.1-8b-instant' para resolver os erros 404 e de modelo descontinuado.
+// 3. ESTRUTURA MANTIDA: Nenhuma outra parte do código ou da lógica foi alterada.
 
 // ========================================================================
 // 1. CONFIGURAÇÃO E CONSTANTES GLOBAIS
@@ -16,9 +10,9 @@
 
 const DEEPSEEK_API_URL = "https://api.deepseek.com/chat/completions";
 // ATUALIZADO: Corrigido para o endpoint v1beta e modelo 'latest' para maior compatibilidade.
-const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent`; 
+const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent`;
 // ATUALIZADO: Corrigido o caminho da API de /v4 para /v1.
-const GROQ_API_URL = "https://api.groq.com/openai/v1/chat/completions"; 
+const GROQ_API_URL = "https://api.groq.com/openai/v1/chat/completions";
 const WHATSAPP_LINK = "https://wa.me/message/DQJBWVDS3BJ4N1";
 const LOCAL_BRAIN_CONFIDENCE_THRESHOLD = 95;
 
@@ -31,7 +25,7 @@ Use negrito para destacar os resultados e sempre termine com uma pergunta que gu
 `;
 
 // ========================================================================
-// 2. CÉREBRO LOCAL (PLANO D) - v7.0: BASE DE CONHECIMENTO EXPANDIDA
+// 2. CÉREBRO LOCAL (PLANO D) - v7.1: BASE DE CONHECIMENTO EXPANDIDA
 // ========================================================================
 const tadeusLocalBrain = {
     intents: [
@@ -223,7 +217,8 @@ async function callGroqAPI(orchestratedPrompt, apiKey) {
     const response = await fetch(GROQ_API_URL, {
         method: "POST", headers: { "Content-Type": "application/json", "Authorization": `Bearer ${apiKey}` },
         body: JSON.stringify({
-            model: "llama3-8b-8192",
+            // ATUALIZADO: Trocado modelo aposentado pelo novo 'llama-3.1-8b-instant'.
+            model: "llama-3.1-8b-instant",
             messages: [{ "role": "system", "content": tadeusAIPersona }, { "role": "user", "content": orchestratedPrompt }],
             stream: false
         })
@@ -242,7 +237,7 @@ exports.handler = async (event) => {
     if (!message) { return { statusCode: 400, body: 'Bad Request: message is required.' }; }
 
     let reply = "";
-    console.log("Analisando com o Cérebro Local (v7.0)...");
+    console.log("Analisando com o Cérebro Local (v7.1)...");
     const localAnalysis = analyzeLocalBrain(message);
 
     if (localAnalysis.bestMatch && localAnalysis.bestMatch.score >= LOCAL_BRAIN_CONFIDENCE_THRESHOLD) {
