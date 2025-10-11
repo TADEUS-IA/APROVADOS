@@ -10,9 +10,15 @@
 // 1. CONFIGURAÇÃO E CONSTANTES GLOBAIS
 // ========================================================================
 
+// ========================================================================
+// 1. CONFIGURAÇÃO E CONSTANTES GLOBAIS
+// ========================================================================
+
 const DEEPSEEK_API_URL = "https://api.deepseek.com/chat/completions";
-const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent`;
-const GROQ_API_URL = "https://api.groq.com/openai/v4/chat/completions";
+// ATUALIZADO: Corrigido para o endpoint v1beta e modelo 'latest' para maior compatibilidade.
+const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent`; 
+// ATUALIZADO: Corrigido o caminho da API de /v4 para /v1.
+const GROQ_API_URL = "https://api.groq.com/openai/v1/chat/completions"; 
 const WHATSAPP_LINK = "https://wa.me/message/DQJBWVDS3BJ4N1";
 const LOCAL_BRAIN_CONFIDENCE_THRESHOLD = 95;
 
