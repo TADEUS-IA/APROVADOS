@@ -186,13 +186,37 @@
 
         .floating-buttons-right { position: fixed; bottom: 20px; right: 20px; z-index: 1000; display: flex; flex-direction: column; gap: 15px; align-items: flex-end; }
         .whatsapp-container { display: flex; align-items: center; gap: 12px; }
-        .whatsapp-status { background: rgba(0,0,0,0.7); backdrop-filter: blur(5px); padding: 8px 16px; border-radius: 20px; color: var(--branco); font-size: 0.9rem; opacity: 0; transform: translateX(10px); transition: opacity 0.3s ease, transform 0.3s ease; pointer-events: none; }
+        .whatsapp-status { background: rgba(0,0,0,0.7); backdrop-filter: blur(5px); padding: 8px 16px; border-radius: 20px; color: var(--branco); font-size: 0.9rem; opacity: 0; transform: translateX(10px); transition: opacity 0.3s ease, transform 0.3s ease; pointer-events: none; white-space: nowrap; }
         .whatsapp-container:hover .whatsapp-status { opacity: 1; transform: translateX(0); }
         .float-button { background-color: #25D366; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 20px rgba(0,0,0,0.3); transition: transform 0.3s ease, background-color 0.3s ease; cursor: pointer; border: none; text-decoration: none; }
         .float-button:hover { transform: scale(1.1); }
         .float-button svg { width: 32px; height: 32px; fill: white; stroke: white; }
         #back-to-top-btn { background-color: rgba(106, 0, 255, 0.7); opacity: 0; pointer-events: none; transform: translateY(20px); transition: opacity 0.3s ease, transform 0.3s ease; }
         #back-to-top-btn.visible { opacity: 1; pointer-events: auto; transform: translateY(0); }
+        
+        /* --- INÍCIO: CÓDIGO ADICIONADO PARA O BOTÃO DO CURSO --- */
+        .course-container { display: flex; align-items: center; gap: 12px; }
+        .course-status { background: rgba(0,0,0,0.7); backdrop-filter: blur(5px); padding: 8px 16px; border-radius: 20px; color: var(--branco); font-size: 0.9rem; opacity: 0; transform: translateX(10px); transition: opacity 0.3s ease, transform 0.3s ease; pointer-events: none; white-space: nowrap; }
+        .course-container:hover .course-status { opacity: 1; transform: translateX(0); }
+        .course-button {
+            background-color: var(--verde-neon);
+            animation: pulse-glow-button 3s infinite ease-in-out;
+        }
+        .course-button svg {
+            fill: var(--preto);
+            stroke: var(--preto);
+        }
+        /* Animação de pulso para o botão do curso */
+        @keyframes pulse-glow-button {
+            0%, 100% {
+                box-shadow: 0 0 20px rgba(0, 255, 136, 0.4);
+            }
+            50% {
+                box-shadow: 0 0 35px rgba(0, 255, 136, 0.7);
+            }
+        }
+        /* --- FIM: CÓDIGO ADICIONADO PARA O BOTÃO DO CURSO --- */
+
         .chat-container { position: fixed; bottom: 20px; left: 20px; z-index: 1001; }
         .ai-agent-container { display: flex; align-items: center; gap: 12px; }
         .ai-agent-status { background: rgba(0,0,0,0.7); backdrop-filter: blur(5px); padding: 8px 16px; border-radius: 20px; color: var(--branco); font-size: 0.9rem; opacity: 0; transform: translateX(10px); transition: opacity 0.3s ease, transform 0.3s ease; pointer-events: none; white-space: nowrap; }
@@ -473,7 +497,7 @@
             .timeline-step { padding-bottom: 2rem; }
             .footer-grid > div { text-align: center; }
             .highlight-block { padding: 3rem 1.5rem; }
-            .whatsapp-status, .ai-agent-status { display: none; }
+            .whatsapp-status, .ai-agent-status, .course-status { display: none; } /* Adicionado .course-status aqui */
             .modal-content { width: 95%; margin: 10% auto; padding: 2rem; }
             .servicos-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
         }
@@ -567,19 +591,19 @@
                          data-title="Redes Sociais"
                          data-img-url="https://i.pinimg.com/736x/75/c1/a1/75c1a1ad90cf0be3aca60774bd96d1ea.jpg"
                          data-impulsionamento="🚀 1️⃣ Impulsione sua presença digital em todas as redes
-                                        Transforme suas redes sociais em uma máquina de crescimento!
-                                        Automatizamos postagens, respostas e interações no Instagram, TikTok, Facebook e YouTube.
-                                        👉 Publique um vídeo uma única vez e nós o distribuímos automaticamente em todas as suas redes sociais escolhidas, no melhor horário para engajamento.
-                                        Enquanto isso, monitoramos métricas em tempo real para descobrir o que mais atrai e converte seu público."
+                                             Transforme suas redes sociais em uma máquina de crescimento!
+                                             Automatizamos postagens, respostas e interações no Instagram, TikTok, Facebook e YouTube.
+                                             👉 Publique um vídeo uma única vez e nós o distribuímos automaticamente em todas as suas redes sociais escolhidas, no melhor horário para engajamento.
+                                             Enquanto isso, monitoramos métricas em tempo real para descobrir o que mais atrai e converte seu público."
                          data-automacao="💰 2️⃣ Tráfego pago inteligente que gera vendas reais
-                                        Com estratégias personalizadas de Instagram Ads, Google Ads e Facebook Ads, levamos seu negócio até quem está pronto para comprar.
-                                        Você atrai novos visitantes todos os dias enquanto nossa automação trabalha para transformar esses cliques em clientes.
-                                        📊 Otimização contínua garante menos gasto e mais resultado, com campanhas que aprendem e melhoram automaticamente."
+                                             Com estratégias personalizadas de Instagram Ads, Google Ads e Facebook Ads, levamos seu negócio até quem está pronto para comprar.
+                                             Você atrai novos visitantes todos os dias enquanto nossa automação trabalha para transformar esses cliques em clientes.
+                                             📊 Otimização contínua garante menos gasto e mais resultado, com campanhas que aprendem e melhoram automaticamente."
                          data-combo="🤖 3️⃣ O poder da automação + tráfego pago trabalhando juntos
-                                    Essa é a combinação que os grandes negócios já usam:
-                                    Enquanto o tráfego pago traz novos leads, a automação cuida do pós-venda — recupera carrinhos, envia promoções e mantém clientes engajados com mensagens personalizadas e chatbots 24h.
-                                    Resultado?
-                                    🔁 Um ciclo de vendas constante, onde cada visitante pode virar cliente e cada cliente pode comprar de novo. ">
+                                             Essa é a combinação que os grandes negócios já usam:
+                                             Enquanto o tráfego pago traz novos leads, a automação cuida do pós-venda — recupera carrinhos, envia promoções e mantém clientes engajados com mensagens personalizadas e chatbots 24h.
+                                             Resultado?
+                                             🔁 Um ciclo de vendas constante, onde cada visitante pode virar cliente e cada cliente pode comprar de novo. ">
                         <h3>Redes Sociais</h3>
                     </div>
                     <div class="servico-card" 
@@ -886,7 +910,7 @@
             <div class="footer-copyright">
                 <p>&copy; 2025 Aprovados Automações. Todos os direitos reservados.</p>
                 <p style="margin-top: 0.5rem;">Design do site feito por <a href="https://wa.me/message/DQJBWVDS3BJ4N1" target="_blank" class="designer-link">Rodrigo</a>, colaborador da Aprovados.</p>
-                </div>
+            </div>
         </div>
     </footer>
 
@@ -912,10 +936,18 @@
     </div>
 
     <div class="floating-buttons-right">
+        
         <div class="whatsapp-container">
             <div class="whatsapp-status">Rodrigo Online</div>
             <a href=" https://wa.me/message/DQJBWVDS3BJ4N1" id="whatsapp-track-button" target="_blank" class="float-button" aria-label="Fale conosco no WhatsApp">
                 <svg viewBox="0 0 895 896" xmlns="http://www.w3.org/2000/svg"><path d="M632.753 514.282c-9.6-4.883-57.115-28.144-65.959-31.321-8.844-3.178-15.24-4.883-21.636 4.883-6.396 9.765-24.996 31.321-30.635 37.717-5.639 6.396-11.278 7.153-20.878 2.27-9.6-4.883-40.43-14.88-77.004-47.525-28.428-25.378-47.605-56.715-53.244-66.48-5.639-9.764-.6-15.08 4.283-19.963 4.363-4.363 9.6-11.278 14.483-16.917 4.883-5.639 6.396-9.765 9.765-16.161 3.178-6.396 1.589-11.278-2.27-20.878-3.938-9.6-21.636-52.285-29.479-71.54-7.56-18.973-15.399-16.44-21.636-16.72-6.078-.27-12.474-.27-18.87-.27-6.396 0-16.917 2.27-25.76 11.278-8.844 9.005-33.842 33.085-33.842 80.563 0 47.478 34.6 93.44 39.483 99.836 4.883 6.396 68.229 104.42 166.19 146.497 97.96 42.077 97.96 27.904 115.637 26.294 17.677-1.61 57.115-23.407 65.12-46.036 8.004-22.628 8.004-41.916 5.639-46.036-2.365-4.283-8.844-6.396-18.444-11.278Z"/><path d="M447.381 22.28C213.155 22.28 22.28 213.155 22.28 447.381c0 78.434 22.08 153.81 62.4 216.923L24.846 871.45l215.34-59.544c60.312 36.376 129.043 55.756 200.076 55.756h.08C681.688 827.662 872.563 636.787 872.563 447.461c-.08-234.226-190.955-425.101-425.182-425.181Zm0 76.843c197.877 0 358.858 160.981 358.858 358.858 0 197.877-160.981 358.858-358.858 358.858-67.461 0-131.745-18.618-185.895-51.579l-13.04-7.64-138.252 38.163 38.84-134.713-8.317-13.518C123.51 590.966 99.123 521.9 99.123 447.381c0-197.877 160.981-358.858 358.858-358.858h-.6Z"/></svg>
+            </a>
+        </div>
+        
+        <div class="course-container">
+            <div class="course-status">Aprenda com nosso curso</div>
+            <a href="https://tadeus-ia.github.io/n8n/" target="_blank" class="float-button course-button" aria-label="Aprenda com nosso curso" id="cta-curso-flutuante">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path d="M12 3L1 9l4 2.18v6.32L12 21l7-3.5V11.18L23 9l-5-2.5V3h-2v2.32L12 3zm0 2.84L19.38 9 12 12.16 4.62 9 12 5.84zM6 11.68l5 2.5v5l-5-2.5v-5zm7 0v5l5-2.5v-5l-5 2.5z"/></svg>
             </a>
         </div>
         <a href="#vanta-header" id="back-to-top-btn" class="float-button" aria-label="Voltar ao topo">
