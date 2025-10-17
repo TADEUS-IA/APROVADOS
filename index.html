@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Aprovados Automações | Automação e Tráfego que Vendem por Você</title>
     <link rel="icon" href="favicon.png" type="image/png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -131,6 +132,58 @@
         .pricing-card ul { list-style: none; margin: 2rem 0; padding: 0; flex-grow: 1; }
         .pricing-card li { margin-bottom: 1rem; color: var(--cinza-texto); }
         .pricing-card .btn { margin-top: 1.5rem; }
+
+        .client-logo-grid {
+            display: grid;
+            /* 6 colunas no desktop */
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 2rem;
+            align-items: center;
+            justify-content: center;
+            max-width: 1000px; /* Limita para não esticar demais as 6 logos */
+            margin: 4rem auto 0 auto;
+        }
+        .client-logo-card {
+            background: rgba(255, 255, 255, 0.02); /* Fundo glass bem sutil */
+            border: 1px solid var(--borda-glass);
+            border-radius: 12px;
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+            perspective: 1000px; /* Ativa o espaço 3D para o transform */
+        }
+        .client-logo-card:hover {
+            transform: translateY(-8px) translateZ(20px); /* Efeito "3D" sutil ao levantar */
+            box-shadow: 0 15px 35px rgba(0, 255, 136, 0.15); /* Sombra neon */
+            border-color: var(--verde-neon);
+        }
+        .client-logo-card img {
+            max-width: 100%;
+            height: auto;
+            max-height: 50px; /* Padroniza a altura máxima */
+            filter: grayscale(1) brightness(0.9) contrast(1.2); /* Deixa as logos brancas/cinzas */
+            opacity: 0.8;
+            transition: filter 0.3s ease, opacity 0.3s ease;
+        }
+        .client-logo-card:hover img {
+            filter: grayscale(0) brightness(1) contrast(1); /* Mostra a cor original */
+            opacity: 1;
+        }
+        @media (max-width: 768px) {
+            .client-logo-grid {
+                /* 3 colunas em mobile */
+                grid-template-columns: repeat(3, 1fr);
+                gap: 1rem;
+            }
+        }
+        @media (max-width: 480px) {
+            .client-logo-grid {
+                 /* 2 colunas em mobile pequeno */
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
         .highlight-block { background: rgba(106, 0, 255, 0.1); border: 1px solid var(--borda-glass); backdrop-filter: blur(10px); padding: 4rem 2rem; border-radius: 20px; animation: pulse-glow 5s infinite ease-in-out; }
         .highlight-block h2 { font-size: clamp(1.8rem, 3vw, 2.5rem); line-height: 1.4; margin-bottom: 1rem; background: none; -webkit-text-fill-color: initial; }
         .highlight-block p { margin-bottom: 2.5rem; }
@@ -698,6 +751,34 @@
             </div>
         </section>
 
+        <section id="clientes-confiam">
+            <div class="container">
+                <h2 class="animate-on-scroll">Empresas que Aceleramos</h2>
+                <p class="section-subtitle animate-on-scroll" style="transition-delay: 0.1s;">
+                    Junte-se a dezenas de negócios que transformaram seus processos e resultados com nossas soluções.
+                </p>
+                <div class="client-logo-grid animate-on-scroll" style="transition-delay: 0.2s;">
+                    <div class="client-logo-card" title="Logo Cliente 1">
+                        <img src="mister.png" alt="Logo Cliente 1">
+                    </div>
+                    <div class="client-logo-card" title="Logo Cliente 2">
+                        <img src="https://via.placeholder.com/150x50/FFFFFF/CCCCCC?text=Cliente+2" alt="Logo Cliente 2">
+                    </div>
+                    <div class="client-logo-card" title="Logo Cliente 3">
+                        <img src="https://via.placeholder.com/150x50/FFFFFF/CCCCCC?text=Cliente+3" alt="Logo Cliente 3">
+                    </div>
+                    <div class="client-logo-card" title="Logo Cliente 4">
+                        <img src="https://via.placeholder.com/150x50/FFFFFF/CCCCCC?text=Cliente+4" alt="Logo Cliente 4">
+                    </div>
+                    <div class="client-logo-card" title="Logo Cliente 5">
+                        <img src="https://via.placeholder.com/150x50/FFFFFF/CCCCCC?text=Cliente+5" alt="Logo Cliente 5">
+                    </div>
+                    <div class="client-logo-card" title="Logo Cliente 6">
+                        <img src="https://via.placeholder.com/150x50/FFFFFF/CCCCCC?text=Cliente+6" alt="Logo Cliente 6">
+                    </div>
+                </div>
+            </div>
+        </section>
         <section id="logos">
             <div class="container animate-on-scroll">
                 <h2 class="animate-on-scroll" style="margin-bottom: 2rem;">Ferramentas que Integramos</h2>
