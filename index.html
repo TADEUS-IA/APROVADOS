@@ -9,552 +9,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Poppins:wght@700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --preto: #0A0A0A;
-            --roxo-principal: #6A00FF;
-            --verde-neon: #00FF88;
-            --branco: #FFFFFF;
-            --cinza-texto: #D2D2D2;
-            --fundo-glass: rgba(106, 0, 255, 0.05);
-            --borda-glass: rgba(0, 255, 136, 0.2);
-            --spacing-section: 6rem;
-            --spacing-section-mobile: 4rem;
-        }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
-        body {
-            background-color: var(--preto);
-            color: var(--branco);
-            font-family: 'Inter', sans-serif;
-            overflow-x: hidden; /* Garante que não haja rolagem horizontal */
-            background-image: radial-gradient(rgba(0, 255, 136, 0.05) 1px, transparent 1px);
-            background-size: 3rem 3rem;
-            -webkit-font-smoothing: antialiased;
-        }
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; width: 100%; position: relative; z-index: 2; }
-        section { padding: var(--spacing-section) 0; text-align: center; position: relative; }
-        h1, h2, h3 { font-family: 'Poppins', sans-serif; font-weight: 700; letter-spacing: 1px; }
-        h1 { font-size: clamp(2.8rem, 5vw, 4.5rem); line-height: 1.1; text-shadow: 0 0 20px rgba(0,0,0,0.7); }
-        h2 {
-            font-size: clamp(2.2rem, 4vw, 3rem);
-            margin-bottom: 1rem;
-            background: linear-gradient(90deg, var(--branco), var(--cinza-texto));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-fill-color: transparent;
-        }
-        .section-subtitle { font-size: 1.1rem; color: var(--cinza-texto); max-width: 700px; margin: 0 auto 3rem auto; line-height: 1.7; }
-        p { color: var(--cinza-texto); line-height: 1.7; font-size: 1.1rem; }
-        .btn { display: inline-block; padding: 1rem 2.5rem; border-radius: 50px; text-decoration: none; font-weight: 700; font-family: 'Poppins', sans-serif; transition: all 0.3s ease; border: 1px solid transparent; }
-        .btn-primary { background: var(--roxo-principal); color: var(--branco); box-shadow: 0 0 25px rgba(106, 0, 255, 0.6); }
-        .btn-primary:hover { transform: scale(1.05) translateY(-3px); box-shadow: 0 0 35px rgba(0, 255, 136, 0.7); border-color: var(--verde-neon); }
-        .animate-on-scroll { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
-        .animate-on-scroll.is-visible { opacity: 1; transform: translateY(0); }
-        .navbar {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            padding: 1.5rem 0;
-            z-index: 100;
-        }
-        .navbar .container {
-            display: flex;
-            justify-content: flex-start;
-            align-items: center;
-        }
-        .navbar-logo img {
-            max-height: 40px;
-            width: auto;
-        }
-        .glass-card {
-            background: var(--fundo-glass);
-            border: 1px solid var(--borda-glass);
-            padding: 2.5rem;
-            border-radius: 16px;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            text-align: left;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            height: 100%;
-        }
-        .glass-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0, 255, 136, 0.1);
-        }
-        #vanta-header {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            position: relative;
-            width: 100%;
-            padding: 6rem 0;
-        }
-        .hero-text { max-width: 900px; }
-        .hero-text .subheadline { font-size: 1.2rem; margin: 1.5rem auto 2.5rem; max-width: 600px; text-shadow: 0 0 10px rgba(0,0,0,0.5); }
-        .hero-text .microproof { margin-top: 1rem; font-size: 0.9rem; color: var(--cinza-texto); opacity: 0.8; }
-        .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
-        .problem-card h3 { color: var(--verde-neon); margin-bottom: 1rem; }
-        .feature-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; margin-top: 4rem; }
-        .feature-grid.reverse { grid-template-columns: 1fr 1fr; }
-        .feature-image img { width: 100%; border-radius: 16px; box-shadow: 0 0 40px rgba(0,0,0,0.5); }
-        .feature-text { text-align: left; }
-        .feature-text ul { list-style: none; margin-top: 2rem; padding-left: 0; }
-        .feature-text li { display: flex; align-items: flex-start; margin-bottom: 1.5rem; }
-        .feature-text li svg { flex-shrink: 0; width: 24px; height: 24px; color: var(--verde-neon); margin-right: 1rem; margin-top: 5px; transition: transform 0.3s ease, filter 0.3s ease; }
-        .feature-text li:hover svg {
-            transform: scale(1.2);
-            filter: drop-shadow(0 0 8px var(--verde-neon));
-        }
-        .timeline { display: flex; justify-content: space-between; position: relative; margin-top: 4rem; }
-        .timeline::before { content: ''; position: absolute; top: 40px; left: 15%; right: 15%; height: 2px; background: linear-gradient(90deg, var(--roxo-principal), var(--verde-neon)); opacity: 0.3; }
-        .timeline-step { flex: 1; padding: 0 1rem; text-align: center; position: relative; }
-        .timeline-step .step-number { font-size: 3rem; font-weight: 700; color: var(--roxo-principal); line-height: 1; margin-bottom: 0.5rem; }
-        .timeline-step h3 { margin-bottom: 0.5rem; font-size: 1.5rem; }
-        .case-card { text-align: left; }
-        .case-card blockquote { font-size: 1.2rem; margin-bottom: 1.5rem; border-left: 3px solid var(--verde-neon); padding-left: 1.5rem; }
-        .case-card .author { display: flex; align-items: center; margin-top: 1.5rem; }
-        .case-card .author img { width: 50px; height: 50px; border-radius: 50%; margin-right: 1rem; object-fit: cover; }
-        .faq-container { max-width: 800px; margin: 0 auto; text-align: left; }
-        .faq-item details { background: var(--fundo-glass); border: 1px solid var(--borda-glass); border-radius: 8px; margin-bottom: 1rem; }
-        .faq-item summary { padding: 1.5rem; cursor: pointer; font-weight: 700; font-family: 'Poppins'; display: flex; justify-content: space-between; align-items: center; }
-        .faq-item summary::after { content: '+'; font-size: 2rem; transition: transform 0.2s; }
-        .faq-item details[open] summary::after { transform: rotate(45deg); }
-        .faq-item .faq-content { padding: 0 1.5rem 1.5rem; }
-        .pricing-card { text-align: center; display: flex; flex-direction: column; justify-content: space-between; }
-        .pricing-card.popular { border-color: var(--verde-neon); transform: scale(1.03); box-shadow: 0 0 30px rgba(0, 255, 136, 0.2); }
-        .pricing-card h3 { font-size: 1.5rem; }
-        .pricing-card .price { font-size: 3rem; font-weight: 700; margin: 1rem 0; color: var(--verde-neon); }
-        .pricing-card ul { list-style: none; margin: 2rem 0; padding: 0; flex-grow: 1; }
-        .pricing-card li { margin-bottom: 1rem; color: var(--cinza-texto); }
-        .pricing-card .btn { margin-top: 1.5rem; }
-
-        .client-logo-grid {
-            display: grid;
-            /* 6 colunas no desktop */
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 2rem;
-            align-items: center;
-            justify-content: center;
-            max-width: 1000px; /* Limita para não esticar demais as 6 logos */
-            margin: 4rem auto 0 auto;
-        }
-        .client-logo-card {
-            background: rgba(255, 255, 255, 0.02); /* Fundo glass bem sutil */
-            border: 1px solid var(--borda-glass);
-            border-radius: 12px;
-            padding: 1.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
-            perspective: 1000px; /* Ativa o espaço 3D para o transform */
-        }
-        .client-logo-card:hover {
-            transform: translateY(-8px) translateZ(20px); /* Efeito "3D" sutil ao levantar */
-            box-shadow: 0 15px 35px rgba(0, 255, 136, 0.15); /* Sombra neon */
-            border-color: var(--verde-neon);
-        }
-        .client-logo-card img {
-            max-width: 100%;
-            height: auto;
-            max-height: 100px; /* Padroniza a altura máxima */
-            filter: grayscale(1) brightness(0.9) contrast(1.2); /* Deixa as logos brancas/cinzas */
-            opacity: 0.8;
-            transition: filter 0.3s ease, opacity 0.3s ease;
-        }
-        .client-logo-card:hover img {
-            filter: grayscale(0) brightness(1) contrast(1); /* Mostra a cor original */
-            opacity: 1;
-        }
-        @media (max-width: 768px) {
-            .client-logo-grid {
-                /* 3 colunas em mobile */
-                grid-template-columns: repeat(3, 1fr);
-                gap: 1rem;
-            }
-        }
-        @media (max-width: 480px) {
-            .client-logo-grid {
-                 /* 2 colunas em mobile pequeno */
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-        .highlight-block { background: rgba(106, 0, 255, 0.1); border: 1px solid var(--borda-glass); backdrop-filter: blur(10px); padding: 4rem 2rem; border-radius: 20px; animation: pulse-glow 5s infinite ease-in-out; }
-        .highlight-block h2 { font-size: clamp(1.8rem, 3vw, 2.5rem); line-height: 1.4; margin-bottom: 1rem; background: none; -webkit-text-fill-color: initial; }
-        .highlight-block p { margin-bottom: 2.5rem; }
-        @keyframes pulse-glow { 0%, 100% { box-shadow: 0 0 50px rgba(0, 255, 136, 0.15); } 50% { box-shadow: 0 0 70px rgba(0, 255, 136, 0.3); } }
-        #logos { padding: 4rem 0; background: rgba(0,0,0,0.2); }
-        .logos-container { overflow: hidden; position: relative; -webkit-mask-image: linear-gradient(to right, transparent, black 20%, black 80%, transparent); mask-image: linear-gradient(to right, transparent, black 20%, black 80%, transparent); }
-        .logos-slide { display: flex; align-items: center; width: calc(200px * 12); animation: scroll 30s linear infinite; }
-        .logos-slide img { height: 40px; width: auto; margin: 0 35px; filter: grayscale(1) brightness(0.8); opacity: 0.7; transition: all 0.3s ease; }
-        .logos-slide img:hover { filter: grayscale(0) brightness(1); opacity: 1; transform: scale(1.1); }
-        @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(calc(-200px * 6)); } }
-        
-        .trial-banner {
-            padding: 2rem 0;
-            text-align: center;
-        }
-        .trial-banner-link {
-            color: var(--roxo-principal);
-            font-family: 'Poppins', sans-serif;
-            font-weight: 700;
-            font-size: 1.2rem;
-            text-decoration: none;
-            transition: color 0.3s ease;
-            padding: 0 2rem;
-            display: inline-block;
-        }
-        .trial-banner-link:hover {
-            color: var(--verde-neon);
-            text-decoration: underline;
-        }
-
-        footer { background: #050505; padding: 4rem 0 2rem; }
-        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 4rem; margin-bottom: 4rem; text-align: left; }
-        .footer-logo { font-size: 1.5rem; font-weight: 700; color: var(--branco); text-decoration: none; }
-        .footer-links h4 { margin-bottom: 1rem; color: var(--verde-neon); }
-        .footer-links ul { list-style: none; padding: 0; }
-        .footer-links li { margin-bottom: 0.5rem; }
-        .footer-links a { color: var(--cinza-texto); text-decoration: none; transition: color 0.3s; }
-        .footer-links a:hover { color: var(--branco); }
-        .social-icon-link svg { width: 28px; height: 28px; fill: var(--roxo-principal); transition: all 0.3s ease; }
-        .social-icon-link:hover svg { fill: var(--verde-neon); transform: scale(1.1); }
-        .footer-copyright { border-top: 1px solid var(--borda-glass); padding-top: 2rem; text-align: center; font-size: 0.9rem; color: var(--cinza-texto); }
-        
-        .designer-link {
-            color: var(--verde-neon);
-            font-weight: bold;
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-        .designer-link:hover {
-            color: var(--roxo-principal);
-            text-decoration: underline;
-        }
-
-        .floating-buttons-right { position: fixed; bottom: 20px; right: 20px; z-index: 1000; display: flex; flex-direction: column; gap: 15px; align-items: flex-end; }
-        .whatsapp-container { display: flex; align-items: center; gap: 12px; }
-        .whatsapp-status { background: rgba(0,0,0,0.7); backdrop-filter: blur(5px); padding: 8px 16px; border-radius: 20px; color: var(--branco); font-size: 0.9rem; opacity: 0; transform: translateX(10px); transition: opacity 0.3s ease, transform 0.3s ease; pointer-events: none; white-space: nowrap; }
-        .whatsapp-container:hover .whatsapp-status { opacity: 1; transform: translateX(0); }
-        .float-button { background-color: #25D366; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 20px rgba(0,0,0,0.3); transition: transform 0.3s ease, background-color 0.3s ease; cursor: pointer; border: none; text-decoration: none; }
-        .float-button:hover { transform: scale(1.1); }
-        .float-button svg { width: 32px; height: 32px; fill: white; stroke: white; }
-        #back-to-top-btn { background-color: rgba(106, 0, 255, 0.7); opacity: 0; pointer-events: none; transform: translateY(20px); transition: opacity 0.3s ease, transform 0.3s ease; }
-        #back-to-top-btn.visible { opacity: 1; pointer-events: auto; transform: translateY(0); }
-        
-        /* --- INÍCIO: CÓDIGO ADICIONADO PARA O BOTÃO DO CURSO --- */
-        .course-container { display: flex; align-items: center; gap: 12px; }
-        .course-status { background: rgba(0,0,0,0.7); backdrop-filter: blur(5px); padding: 8px 16px; border-radius: 20px; color: var(--branco); font-size: 0.9rem; opacity: 0; transform: translateX(10px); transition: opacity 0.3s ease, transform 0.3s ease; pointer-events: none; white-space: nowrap; }
-        .course-container:hover .course-status { opacity: 1; transform: translateX(0); }
-        .course-button {
-            background-color: var(--verde-neon);
-            animation: pulse-glow-button 3s infinite ease-in-out;
-        }
-        .course-button svg {
-            fill: var(--preto);
-            stroke: var(--preto);
-        }
-        /* Animação de pulso para o botão do curso */
-         @keyframes pulse-glow-button {
-            0%, 100% {
-                 box-shadow: 0 0 20px rgba(0, 255, 136, 0.4);
-            }
-            50% {
-                 box-shadow: 0 0 35px rgba(0, 255, 136, 0.7);
-            }
-        }
-        /* --- FIM: CÓDIGO ADICIONADO PARA O BOTÃO DO CURSO --- */
-
-        .chat-container { position: fixed; bottom: 20px; left: 20px; z-index: 1001; }
-        .ai-agent-container { display: flex; align-items: center; gap: 12px; }
-        .ai-agent-status { background: rgba(0,0,0,0.7); backdrop-filter: blur(5px); padding: 8px 16px; border-radius: 20px; color: var(--branco); font-size: 0.9rem; opacity: 0; transform: translateX(10px); transition: opacity 0.3s ease, transform 0.3s ease; pointer-events: none; white-space: nowrap; }
-        .ai-agent-container:hover .ai-agent-status { opacity: 1; transform: translateX(0); }
-        #chat-toggle-button { background: var(--roxo-principal); padding: 0; overflow: hidden; }
-        #chat-toggle-button img { width: 100%; height: 100%; object-fit: cover; }
-        #chat-widget { position: absolute; bottom: 80px; left: 0; width: 350px; max-width: 90vw; height: 500px; background: rgba(10, 10, 10, 0.8); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); border-radius: 20px; border: 1px solid var(--borda-glass); display: flex; flex-direction: column; overflow: hidden; transition: opacity 0.3s ease, transform 0.3s ease; transform-origin: bottom left; box-shadow: 0 10px 40px rgba(0,0,0,0.5); }
-        #chat-widget.hidden { opacity: 0; transform: scale(0.5); pointer-events: none; }
-        .chat-header { padding: 1rem 1.5rem; border-bottom: 1px solid var(--borda-glass); text-align: left; background: rgba(0,0,0,0.2); }
-        .chat-header h3 { font-size: 1.1rem; color: var(--branco); }
-        .chat-header p { font-size: 0.8rem; color: var(--verde-neon); margin: 0; }
-        .chat-messages { flex-grow: 1; padding: 1.5rem; overflow-y: auto; display: flex; flex-direction: column; gap: 1rem; }
-        .message { padding: 0.8rem 1rem; border-radius: 15px; max-width: 85%; line-height: 1.5; font-size: 0.95rem; word-wrap: break-word; }
-        .message a { color: var(--verde-neon); text-decoration: underline; font-weight: 700; }
-        .message.sent { background-color: var(--roxo-principal); color: var(--branco); border-bottom-right-radius: 5px; align-self: flex-end; }
-        .message.received { background-color: #262626; color: var(--branco); border-bottom-left-radius: 5px; align-self: flex-start; }
-        .message.loading { align-self: flex-start; background: none; }
-        .message.loading span { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: #555; animation: bounce 1s infinite; margin: 0 2px; }
-        .message.loading span:nth-child(2) { animation-delay: 0.1s; }
-        .message.loading span:nth-child(3) { animation-delay: 0.2s; }
-        @keyframes bounce { 0%, 80%, 100% { transform: scale(0); } 40% { transform: scale(1); } }
-        .chat-input-area { display: flex; align-items: center; padding: 1rem; border-top: 1px solid var(--borda-glass); background: rgba(0,0,0,0.3); }
-        #chat-input { flex-grow: 1; background: transparent; border: none; outline: none; color: var(--branco); font-size: 1rem; }
-        #chat-send-button { width: 40px; height: 40px; border-radius: 50%; background-color: rgba(0, 255, 136, 0.15); border: 1px solid rgba(0, 255, 136, 0.3); display: flex; align-items: center; justify-content: center; cursor: pointer; padding: 0; transition: all 0.3s ease; }
-        #chat-send-button svg { width: 20px; height: 20px; transition: transform 0.3s ease; }
-        #chat-send-button svg path { fill: var(--verde-neon); }
-        #chat-send-button:hover { background-color: rgba(0, 255, 136, 0.3); box-shadow: 0 0 15px rgba(0, 255, 136, 0.5); transform: scale(1.1); }
-        #chat-send-button:hover svg { transform: rotate(-15deg) scale(1.05); }
-
-        .chat-quick-replies {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-top: 0.5rem;
-            align-self: flex-start;
-        }
-        .quick-reply-btn {
-            background-color: rgba(0, 255, 136, 0.1);
-            border: 1px solid var(--borda-glass);
-            color: var(--verde-neon);
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            cursor: pointer;
-            font-size: 0.85rem;
-            font-family: 'Inter', sans-serif;
-            transition: background-color 0.3s ease;
-        }
-        .quick-reply-btn:hover {
-            background-color: rgba(0, 255, 136, 0.2);
-        }
-
-        .servicos-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 2rem;
-        }
-        .servico-card {
-            aspect-ratio: 9 / 13;
-            border-radius: 16px;
-            background-size: cover;
-            background-position: center;
-            position: relative;
-            cursor: pointer;
-            overflow: hidden;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            display: flex;
-            align-items: flex-end;
-            justify-content: center;
-            padding: 20px;
-            border: 1px solid var(--borda-glass);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-        }
-        .servico-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(to top, rgba(0,0,0,0.95) 10%, rgba(0,0,0,0) 60%);
-        }
-        .servico-card:hover {
-            transform: scale(1.05) translateY(-5px);
-            box-shadow: 0 12px 30px rgba(0, 255, 136, 0.15);
-        }
-        .servico-card h3 {
-            color: var(--branco);
-            font-size: 1.5rem;
-            position: relative;
-            z-index: 2;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
-            margin: 0;
-        }
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1001;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0,0,0,0.8);
-            animation: fadeIn 0.3s;
-        }
-        .modal-content {
-            background-color: var(--preto);
-            background-image: radial-gradient(rgba(0, 255, 136, 0.05) 1px, transparent 1px);
-            background-size: 3rem 3rem;
-            margin: 5% auto;
-            padding: 40px;
-            border: 1px solid var(--borda-glass);
-            width: 90%;
-            max-width: 800px;
-            border-radius: 20px;
-            position: relative;
-            animation: slideIn 0.4s;
-            box-shadow: 0 0 50px rgba(106, 0, 255, 0.3);
-        }
-        .close-button {
-            color: var(--cinza-texto);
-            position: absolute;
-            top: 15px;
-            right: 25px;
-            font-size: 35px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: color 0.3s ease, transform 0.3s ease;
-        }
-        .close-button:hover,
-        .close-button:focus {
-            color: var(--verde-neon);
-            transform: scale(1.1);
-        }
-        #modalTitle {
-            text-align: center;
-            font-size: 2rem;
-            margin-bottom: 30px;
-            color: var(--branco);
-        }
-        .modal-body .servico-detalhe {
-            background: var(--fundo-glass);
-            border: 1px solid var(--borda-glass);
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-        }
-        .modal-body h4 {
-            font-size: 1.2rem;
-            color: var(--verde-neon);
-            margin-bottom: 8px;
-            border-left: 4px solid var(--verde-neon);
-            padding-left: 10px;
-        }
-        .modal-body .servico-detalhe.combo h4 {
-            color: var(--roxo-principal);
-            border-left-color: var(--roxo-principal);
-        }
-        .modal-body p {
-            font-size: 1rem;
-            line-height: 1.6;
-            color: var(--cinza-texto);
-        }
-        .form-container-wrapper {
-            background: var(--fundo-glass);
-            border: 1px solid var(--borda-glass);
-            padding: 2.5rem;
-            border-radius: 16px;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            max-width: 700px;
-            margin: 0 auto 3rem auto;
-        }
-        .form-container-wrapper h2 {
-            font-size: clamp(1.8rem, 3vw, 2.5rem);
-            margin-bottom: 1rem;
-        }
-        .form-container-wrapper .instrucoes, .form-container-wrapper p {
-            color: var(--cinza-texto);
-            font-size: 1rem;
-            line-height: 1.6;
-            margin-bottom: 2rem;
-        }
-        .form-group {
-            margin-bottom: 1.5rem;
-            text-align: left;
-        }
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 700;
-            color: var(--branco);
-            font-family: 'Poppins';
-        }
-        .form-group input[type="number"],
-        .form-group input[type="text"],
-        .form-group input[type="email"],
-        .form-group input[type="tel"],
-        .form-group select {
-            width: 100%;
-            padding: 1rem;
-            background: rgba(0,0,0,0.3);
-            border: 1px solid var(--borda-glass);
-            border-radius: 8px;
-            box-sizing: border-box;
-            font-size: 1rem;
-            color: var(--branco);
-            font-family: 'Inter';
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
-        }
-        .form-group input:focus, .form-group select:focus {
-            outline: none;
-            border-color: var(--verde-neon);
-            box-shadow: 0 0 15px rgba(0, 255, 136, 0.3);
-        }
-        .form-group select {
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            appearance: none;
-            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2300FF88' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
-            background-repeat: no-repeat;
-            background-position: right 1rem center;
-            background-size: 1em;
-        }
-        .resultado-roi {
-            margin-top: 2rem;
-            padding: 1.5rem;
-            border-radius: 8px;
-            font-size: 1.2rem; /* Ajustado para melhor leitura */
-            font-weight: 700;
-            font-family: 'Poppins';
-            display: none;
-            border: 1px solid;
-            line-height: 1.6;
-        }
-        .resultado-roi.positivo {
-            background-color: rgba(0, 255, 136, 0.1);
-            color: var(--verde-neon);
-            border-color: var(--verde-neon);
-        }
-        .resultado-roi.negativo {
-            background-color: rgba(255, 0, 106, 0.1);
-            color: #ff4d6d;
-            border-color: #ff4d6d;
-        }
-        #formStatus {
-            margin-top: 1.5rem;
-            font-weight: bold;
-            font-size: 1rem;
-        }
-        @keyframes fadeIn { from {opacity: 0;} to {opacity: 1;} }
-        @keyframes slideIn { from {transform: translateY(-50px); opacity: 0;} to {transform: translateY(0); opacity: 1;} }
-        
-        @media (max-width: 950px) {
-            .feature-grid, .feature-grid.reverse { grid-template-columns: 1fr; }
-            .feature-image { order: -1; margin-bottom: 2rem; }
-            .timeline { flex-direction: column; gap: 3rem; }
-            .timeline::before { display: none; }
-            .timeline-step { padding: 0; }
-            .footer-grid { grid-template-columns: 1fr; gap: 2.5rem; }
-            section { padding: var(--spacing-section-mobile) 0; }
-            .grid-3 { grid-template-columns: 1fr; }
-            .pricing-card.popular { transform: none; }
-            .servicos-grid { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
-        }
-
-        @media (max-width: 768px) {
-            .container { padding: 0 1.5rem; }
-            h1 { font-size: clamp(2.5rem, 8vw, 3rem); }
-            h2 { font-size: 2rem; }
-            p, .section-subtitle, .trial-banner-link { font-size: 1rem; }
-            .glass-card, .form-container-wrapper { padding: 1.5rem; }
-            .faq-item summary, .faq-item .faq-content { padding-left: 1.5rem; padding-right: 1.5rem; }
-            .btn {
-                 padding: 0.9rem 2.2rem;
-                 font-size: 0.95rem;
-            }
-            .timeline-step { padding-bottom: 2rem; }
-            .footer-grid > div { text-align: center; }
-            .highlight-block { padding: 3rem 1.5rem; }
-            .whatsapp-status, .ai-agent-status, .course-status { display: none; } /* Adicionado .course-status aqui */
-            .modal-content { width: 95%; margin: 10% auto; padding: 2rem; }
-            .servicos-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
-        }
-    </style>
+    
+    <link rel="stylesheet" href="style.css">
 
     <script>
          (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -598,7 +54,7 @@
 
     <div class="trial-banner animate-on-scroll">
         <a href="https://wa.me/message/DQJBWVDS3BJ4N1" target="_blank" class="trial-banner-link">
-            APROVEITE SEU TESTE GRÁTIS DE 10 DIAS COM SUA AUTOMAÇÃO PADRONIZADA.
+             APROVEITE SEU TESTE GRÁTIS DE 10 DIAS COM SUA AUTOMAÇÃO PADRONIZADA.
         </a>
     </div>
     <main>
@@ -608,16 +64,16 @@
                  <p class="section-subtitle animate-on-scroll" style="transition-delay: 0.1s;">Processos manuais e campanhas sem otimização custam mais do que você imagina. Identifique os gargalos que impedem seu crescimento.</p>
                  <div class="grid-3">
                       <div class="glass-card problem-card animate-on-scroll" style="transition-delay: 0.2s;">
-                         <h3>Perda de Leads</h3>
-                         <p>Leads qualificados esfriam por falta de um follow-up rápido e inteligente. A automação responde e nutre 24/7, garantindo que nenhuma oportunidade seja perdida.</p>
+                           <h3>Perda de Leads</h3>
+                           <p>Leads qualificados esfriam por falta de um follow-up rápido e inteligente. A automação responde e nutre 24/7, garantindo que nenhuma oportunidade seja perdida.</p>
                       </div>
                       <div class="glass-card problem-card animate-on-scroll" style="transition-delay: 0.3s;">
-                         <h3>Baixa Retenção</h3>
-                         <p>Clientes se sentem abandonados após a compra. Crie fluxos de pós-venda, onboarding e reengajamento que constroem lealdade e aumentam o LTV (Lifetime Value).</p>
+                           <h3>Baixa Retenção</h3>
+                           <p>Clientes se sentem abandonados após a compra. Crie fluxos de pós-venda, onboarding e reengajamento que constroem lealdade e aumentam o LTV (Lifetime Value).</p>
                       </div>
                       <div class="glass-card problem-card animate-on-scroll" style="transition-delay: 0.4s;">
-                         <h3>Campanhas Ineficazes</h3>
-                         <p>Dinheiro sendo gasto em anúncios que não convertem. Usamos IA para otimizar seu tráfego, encontrar o público certo e reduzir drasticamente seu Custo por Aquisição (CPA).</p>
+                           <h3>Campanhas Ineficazes</h3>
+                           <p>Dinheiro sendo gasto em anúncios que não convertem. Usamos IA para otimizar seu tráfego, encontrar o público certo e reduzir drasticamente seu Custo por Aquisição (CPA).</p>
                       </div>
                  </div>
             </div>
@@ -632,21 +88,21 @@
                          data-title="Soluções para Barbearias"
                          data-img-url="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                          data-impulsionamento="💈 1️⃣ Impulsionamento de Negócio Inteligente (para Barbearia)
-                                                Seu cliente ideal está na internet agora — e o Impulsionamento de Negócio Inteligente faz ele ver sua barbearia antes de qualquer concorrente.
-                                                Aqui não tem sorte, tem estratégia. Cada anúncio é pensado para atrair homens da sua região que realmente valorizam um bom corte, uma barba bem feita e um atendimento de respeito.
-                                                Com segmentação precisa e campanhas otimizadas, você não “impulsiona post”, você enche a agenda.
-                                                👉 Esqueça o boca a boca lento — use o tráfego inteligente e faça sua barbearia lotar todos os dias da semana."
+                                               Seu cliente ideal está na internet agora — e o Impulsionamento de Negócio Inteligente faz ele ver sua barbearia antes de qualquer concorrente.
+                                               Aqui não tem sorte, tem estratégia. Cada anúncio é pensado para atrair homens da sua região que realmente valorizam um bom corte, uma barba bem feita e um atendimento de respeito.
+                                               Com segmentação precisa e campanhas otimizadas, você não “impulsiona post”, você enche a agenda.
+                                               👉 Esqueça o boca a boca lento — use o tráfego inteligente e faça sua barbearia lotar todos os dias da semana."
                          data-automacao="⚙️ 2️⃣ Automações com n8n (para Barbearia)
-                                                Enquanto alguns barbeiros estão respondendo mensagens manualmente, você pode estar atendendo clientes sem nem olhar o celular.
-                                                Com o n8n, sua barbearia ganha um assistente digital que agenda horários, confirma presença, envia lembretes automáticos e até responde dúvidas dos clientes — tudo sozinho.
-                                                O resultado? Menos tempo no WhatsApp e mais tempo na cadeira cortando cabelo.
-                                                👉 A objeção de “não tenho tempo pra essas coisas de tecnologia” cai por terra aqui — porque o n8n trabalha por você, 24 horas por dia, sem errar o horário."
+                                               Enquanto alguns barbeiros estão respondendo mensagens manualmente, você pode estar atendendo clientes sem nem olhar o celular.
+                                               Com o n8n, sua barbearia ganha um assistente digital que agenda horários, confirma presença, envia lembretes automáticos e até responde dúvidas dos clientes — tudo sozinho.
+                                               O resultado? Menos tempo no WhatsApp e mais tempo na cadeira cortando cabelo.
+                                               👉 A objeção de “não tenho tempo pra essas coisas de tecnologia” cai por terra aqui — porque o n8n trabalha por você, 24 horas por dia, sem errar o horário."
                          data-combo="🚀 3️⃣ Estratégia Perfeita: Automação + Impulsionamento Inteligente (para Barbearia)
-                                                A combinação que separa as barbearias comuns das que dominam o bairro.
-                                                De um lado, o Impulsionamento Inteligente traz novos clientes direto do Instagram e Google. Do outro, o n8n organiza tudo — agenda, confirmações, mensagens e até lembretes de retorno.
-                                                Você não perde mais cliente porque esqueceu de responder ou porque o cara “sumiu”.
-                                                👉 Essa é a diferença entre ser uma barbearia movimentada e ser uma barbearia escalável, com agenda cheia e sistema rodando sozinho enquanto você foca no que faz de melhor: cortes impecáveis e experiência de primeira.">
-                         <h3>Barbearias</h3>
+                                               A combinação que separa as barbearias comuns das que dominam o bairro.
+                                               De um lado, o Impulsionamento Inteligente traz novos clientes direto do Instagram e Google. Do outro, o n8n organiza tudo — agenda, confirmações, mensagens e até lembretes de retorno.
+                                               Você não perde mais cliente porque esqueceu de responder ou porque o cara “sumiu”.
+                                               👉 Essa é a diferença entre ser uma barbearia movimentada e ser uma barbearia escalável, com agenda cheia e sistema rodando sozinho enquanto você foca no que faz de melhor: cortes impecáveis e experiência de primeira.">
+                           <h3>Barbearias</h3>
                       </div>
                       <div class="servico-card"
                          data-title="Soluções para Clínicas"
@@ -662,125 +118,125 @@
                                                     Tudo isso sem depender de planilhas ou mensagens manuais.
                                                     👉 A objeção de “não tenho tempo pra aprender isso” acaba aqui — porque o sistema faz o trabalho pesado e aumenta a eficiência da sua equipe sem contratar ninguém novo."
                          data-combo="🚀 3️⃣ Estratégia Perfeita: Automação + Impulsionamento Inteligente (para Clínicas)
-                                                Essa é a combinação que transforma uma clínica comum em uma máquina de resultados.
-                                                O Impulsionamento Inteligente traz pacientes ideais através de anúncios estratégicos; o n8n assume o controle operacional — agendamentos, lembretes, acompanhamento e comunicação automatizada.
-                                                Enquanto outras clínicas perdem pacientes por falta de resposta ou desorganização, você mantém tudo sob controle, com processos fluidos e previsibilidade.
-                                                👉 Essa é a diferença entre viver apagando incêndios e ter uma clínica que cresce de forma estruturada, previsível e automatizada. ">
-                         <h3>Clínicas</h3>
+                                                    Essa é a combinação que transforma uma clínica comum em uma máquina de resultados.
+                                                    O Impulsionamento Inteligente traz pacientes ideais através de anúncios estratégicos; o n8n assume o controle operacional — agendamentos, lembretes, acompanhamento e comunicação automatizada.
+                                                    Enquanto outras clínicas perdem pacientes por falta de resposta ou desorganização, você mantém tudo sob controle, com processos fluidos e previsibilidade.
+                                                    👉 Essa é a diferença entre viver apagando incêndios e ter uma clínica que cresce de forma estruturada, previsível e automatizada. ">
+                           <h3>Clínicas</h3>
                       </div>
                       <div class="servico-card"
                          data-title="Soluções para Hamburguerias"
                          data-img-url="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?q=80&w=1998&auto=format&fit=crop"
                          data-impulsionamento="🍔 1️⃣ Impulsionamento de Negócio Inteligente (para Hamburgueria)
-                                                Se o seu hambúrguer é irresistível, o problema não é o produto — é quem ainda não conhece.
-                                                Com o Impulsionamento de Negócio Inteligente, seus anúncios chegam para quem realmente está com fome e pronto para pedir.
-                                                Nada de gastar dinheiro com curiosos: cada real investido é otimizado para gerar pedidos reais, seja delivery ou no salão.
-                                                Usamos estratégias avançadas de tráfego pago que colocam seus hambúrgueres na frente das pessoas certas, na hora certa.
-                                                👉 Esqueça depender da sorte. Use estratégia e veja seu delivery bombar e sua hamburgueria lotar."
+                                               Se o seu hambúrguer é irresistível, o problema não é o produto — é quem ainda não conhece.
+                                               Com o Impulsionamento de Negócio Inteligente, seus anúncios chegam para quem realmente está com fome e pronto para pedir.
+                                               Nada de gastar dinheiro com curiosos: cada real investido é otimizado para gerar pedidos reais, seja delivery ou no salão.
+                                               Usamos estratégias avançadas de tráfego pago que colocam seus hambúrgueres na frente das pessoas certas, na hora certa.
+                                               👉 Esqueça depender da sorte. Use estratégia e veja seu delivery bombar e sua hamburgueria lotar."
                          data-automacao="⚙️ 2️⃣ Automações com n8n (para Hamburgueria)
-                                                Enquanto você cozinha, o sistema trabalha por você.
-                                                Com o n8n, sua hamburgueria automatiza pedidos, confirmações, mensagens no WhatsApp, atualizações de estoque e ainda publica fotos ou vídeos automaticamente nas redes sociais.
-                                                Basta enviar o conteúdo para o Google Drive que ele se encarrega de postar no Instagram, Facebook, TikTok e outros canais.
-                                                👉 Resultado: mais pedidos, menos trabalho manual e atendimento sempre rápido.
-                                                O n8n se torna seu funcionário digital que nunca esquece nada e atende todos os clientes de forma impecável."
+                                               Enquanto você cozinha, o sistema trabalha por você.
+                                               Com o n8n, sua hamburgueria automatiza pedidos, confirmações, mensagens no WhatsApp, atualizações de estoque e ainda publica fotos ou vídeos automaticamente nas redes sociais.
+                                               Basta enviar o conteúdo para o Google Drive que ele se encarrega de postar no Instagram, Facebook, TikTok e outros canais.
+                                               👉 Resultado: mais pedidos, menos trabalho manual e atendimento sempre rápido.
+                                               O n8n se torna seu funcionário digital que nunca esquece nada e atende todos os clientes de forma impecável."
                          data-combo="🚀 3️⃣ Estratégia Perfeita: Automação + Impulsionamento Inteligente (para Hamburgueria)
-                                                Essa combinação transforma uma hamburgueria comum em uma operação que vende no piloto automático.
-                                                O Impulsionamento Inteligente atrai clientes famintos, enquanto o n8n gerencia todo o processo — desde pedidos até pós-venda.
-                                                Você conquista novos clientes, envia promoções automáticas, mantém presença ativa nas redes sociais e ainda economiza tempo.
-                                                👉 Enquanto outros tentam entender algoritmos, você está vendendo todos os dias e crescendo sua marca sem esforço.">
-                         <h3>Hamburguerias</h3>
+                                               Essa combinação transforma uma hamburgueria comum em uma operação que vende no piloto automático.
+                                               O Impulsionamento Inteligente atrai clientes famintos, enquanto o n8n gerencia todo o processo — desde pedidos até pós-venda.
+                                               Você conquista novos clientes, envia promoções automáticas, mantém presença ativa nas redes sociais e ainda economiza tempo.
+                                               👉 Enquanto outros tentam entender algoritmos, você está vendendo todos os dias e crescendo sua marca sem esforço.">
+                           <h3>Hamburguerias</h3>
                       </div>
                       <div class="servico-card"
                          data-title="Soluções para Lojas"
                          data-img-url="https://images.unsplash.com/photo-1555529771-835f59fc5efe?q=80&w=1974&auto=format&fit=crop"
                          data-impulsionamento=" 🧠 1️⃣ Impulsionamento de Negócio Inteligente (para Lojas)
-                                                Se o seu produto é bom, o problema não é o produto — é quem está vendo.
-                                                Com o Impulsionamento de Negócio Inteligente, seus anúncios são mostrados para quem realmente tem intenção de compra, não para curiosos.
-                                                Cada real investido é otimizado para gerar vendas reais, não curtidas vazias.
-                                                Usamos estratégias avançadas de tráfego pago que colocam seus produtos na frente de quem está pronto para comprar agora.
-                                                👉 Deixe de depender de sorte e passe a usar estratégia. É assim que lojas crescem e se mantêm lucrativas."
+                                               Se o seu produto é bom, o problema não é o produto — é quem está vendo.
+                                               Com o Impulsionamento de Negócio Inteligente, seus anúncios são mostrados para quem realmente tem intenção de compra, não para curiosos.
+                                               Cada real investido é otimizado para gerar vendas reais, não curtidas vazias.
+                                               Usamos estratégias avançadas de tráfego pago que colocam seus produtos na frente de quem está pronto para comprar agora.
+                                               👉 Deixe de depender de sorte e passe a usar estratégia. É assim que lojas crescem e se mantêm lucrativas."
                          data-automacao="⚙️ 2️⃣ Automações com n8n (para Lojas)
-                                                Enquanto você vende, o sistema trabalha.
-                                                Com o n8n, sua loja pode automatizar o atendimento, confirmar pedidos, enviar mensagens no WhatsApp, responder clientes, atualizar estoque e até postar seus produtos automaticamente nas redes sociais.
-                                                Você pode colocar fotos ou vídeos no Google Drive, e o sistema publica tudo no Instagram, Facebook, TikTok e onde mais quiser.
-                                                👉 Resultado: mais vendas, mais tempo livre e zero erros manuais.
-                                                O n8n se torna o seu funcionário digital — aquele que nunca falta e nunca esquece de atender um cliente."
+                                               Enquanto você vende, o sistema trabalha.
+                                               Com o n8n, sua loja pode automatizar o atendimento, confirmar pedidos, enviar mensagens no WhatsApp, responder clientes, atualizar estoque e até postar seus produtos automaticamente nas redes sociais.
+                                               Você pode colocar fotos ou vídeos no Google Drive, e o sistema publica tudo no Instagram, Facebook, TikTok e onde mais quiser.
+                                               👉 Resultado: mais vendas, mais tempo livre e zero erros manuais.
+                                               O n8n se torna o seu funcionário digital — aquele que nunca falta e nunca esquece de atender um cliente."
                          data-combo="🚀 3️⃣ Estratégia Perfeita: Automação + Impulsionamento Inteligente (para Lojas)
-                                                Essa é a combinação que transforma uma loja comum em uma operação que vende no piloto automático.
-                                                O Impulsionamento Inteligente traz o público certo, e o n8n cuida de todo o processo — da divulgação ao pós-venda.
-                                                Você atrai clientes, responde automaticamente, envia ofertas personalizadas e ainda mantém presença ativa nas redes sociais sem precisar postar manualmente.
-                                                👉 Enquanto os outros estão tentando entender o algoritmo, você já está vendendo todos os dias.">
-                         <h3>Lojas</h3>
+                                               Essa é a combinação que transforma uma loja comum em uma operação que vende no piloto automático.
+                                               O Impulsionamento Inteligente traz o público certo, e o n8n cuida de todo o processo — da divulgação ao pós-venda.
+                                               Você atrai clientes, responde automaticamente, envia ofertas personalizadas e ainda mantém presença ativa nas redes sociais sem precisar postar manualmente.
+                                               👉 Enquanto os outros estão tentando entender o algoritmo, você já está vendendo todos os dias.">
+                           <h3>Lojas</h3>
                       </div>
                       <div class="servico-card"
                          data-title="Redes Sociais"
                          data-img-url="https://i.pinimg.com/736x/75/c1/a1/75c1a1ad90cf0be3aca60774bd96d1ea.jpg"
                          data-impulsionamento="📈 1️⃣ Impulsionamento de Negócio Inteligente (para Redes Sociais)
-                                                Você não precisa de mais seguidores — precisa de resultados reais.
-                                                O Impulsionamento de Negócio Inteligente transforma suas redes sociais em uma máquina de atração de clientes.
-                                                Usamos estratégias de tráfego pago com segmentação precisa para atingir as pessoas certas — aquelas que realmente compram o que você oferece.
-                                                👉 Chega de gastar dinheiro com anúncios que não convertem. Aqui, cada real investido trabalha pra você, gerando engajamento, autoridade e novas vendas todos os dias."
+                                               Você não precisa de mais seguidores — precisa de resultados reais.
+                                               O Impulsionamento de Negócio Inteligente transforma suas redes sociais em uma máquina de atração de clientes.
+                                               Usamos estratégias de tráfego pago com segmentação precisa para atingir as pessoas certas — aquelas que realmente compram o que você oferece.
+                                               👉 Chega de gastar dinheiro com anúncios que não convertem. Aqui, cada real investido trabalha pra você, gerando engajamento, autoridade e novas vendas todos os dias."
                          data-automacao="⚙️ 2️⃣ Automações com n8n (para Redes Sociais)
-                                                Enquanto você cria, o sistema publica.
-                                                Com o n8n, você pode colocar um vídeo no Google Drive e ele será automaticamente postado em todas as suas redes sociais — Instagram, TikTok, YouTube, Facebook, LinkedIn, o que quiser.
-                                                Além disso, ele pode gerar legendas, hashtags e até responder comentários.
-                                                👉 Resultado: mais presença digital, mais tempo pra produzir e menos tempo preso em tarefas repetitivas.
-                                                Essa automação é o seu estagiário que nunca dorme e nunca esquece de postar."
+                                               Enquanto você cria, o sistema publica.
+                                               Com o n8n, você pode colocar um vídeo no Google Drive e ele será automaticamente postado em todas as suas redes sociais — Instagram, TikTok, YouTube, Facebook, LinkedIn, o que quiser.
+                                               Além disso, ele pode gerar legendas, hashtags e até responder comentários.
+                                               👉 Resultado: mais presença digital, mais tempo pra produzir e menos tempo preso em tarefas repetitivas.
+                                               Essa automação é o seu estagiário que nunca dorme e nunca esquece de postar."
                          data-combo="⚙️ 2️⃣ Automações com n8n (para Redes Sociais)
-                                            Enquanto você cria, o sistema publica.
-                                            Com o n8n, você pode colocar um vídeo no Google Drive e ele será automaticamente postado em todas as suas redes sociais — Instagram, TikTok, YouTube, Facebook, LinkedIn, o que quiser.
-                                            Além disso, ele pode gerar legendas, hashtags e até responder comentários.
-                                            👉 Resultado: mais presença digital, mais tempo pra produzir e menos tempo preso em tarefas repetitivas.
-                                            Essa automação é o seu estagiário que nunca dorme e nunca esquece de postar.">
-                         <h3>Redes Sociais</h3>
+                                               Enquanto você cria, o sistema publica.
+                                               Com o n8n, você pode colocar um vídeo no Google Drive e ele será automaticamente postado em todas as suas redes sociais — Instagram, TikTok, YouTube, Facebook, LinkedIn, o que quiser.
+                                               Além disso, ele pode gerar legendas, hashtags e até responder comentários.
+                                               👉 Resultado: mais presença digital, mais tempo pra produzir e menos tempo preso em tarefas repetitivas.
+                                               Essa automação é o seu estagiário que nunca dorme e nunca esquece de postar.">
+                           <h3>Redes Sociais</h3>
                       </div>
                       <div class="servico-card"
                          data-title="Soluções Personalizadas"
                          data-img-url="https://images.unsplash.com/photo-1578474846511-04ba529f0b88?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=687"
-                         data-impulsionamento="🧠 1️⃣ Impulsionamento Inteligente (para Restaurantes) 
-                                                Se seus pratos são elogiados, mas o salão vive vazio (ou o delivery só sai pelo iFood), o problema não é a comida — é quem está vendo.
-                                                Com o Impulsionamento Inteligente, mostramos seus pratos para quem está com fome agora e procurando exatamente o que você serve na sua região.
-                                                'AH MAS JÁ ESTOU NO IFOOD' O iFood é um ótimo canal de descoberta, mas ele te 'ALUGA' o cliente. Você paga taxas altíssimas (até 30%) por um cliente que poderia ser seu.
-                                                Nossa estratégia foca em trazer esse cliente para o seu canal de venda direto (seu WhatsApp, seu site ou seu sistema de pedidos próprio).
-                                                👉 Cada real investido é otimizado para gerar pedidos com margem de lucro cheia, não para alimentar um algoritmo que promove seus concorrentes ao lado. Deixe de ser refém das taxas e passe a controlar seu faturamento."
-                         data-automacao=" ⚙️ 2️⃣ Automações com n8n (para Restaurantes) 
-                                                Enquanto a cozinha prepara, o sistema atende e vende.
-                                                Com o n8n, seu restaurante pode:
-                                                Atender clientes 24/7 no WhatsApp, enviando o cardápio digital automaticamente.
-                                                Confirmar pedidos, pegar endereço e forma de pagamento sem intervenção humana.
-                                                Avisar o cliente quando o pedido saiu para entrega.
-                                                Gerenciar reservas de mesas.
-                                                Disparar pesquisas de satisfação após a entrega.
-                                                Você pode colocar as fotos dos seus pratos no Google Drive, e o sistema posta automaticamente no Instagram e Facebook nos horários de pico (hora do almoço, jantar).
-                                                👉 Resultado: mais pedidos, menos confusão na linha telefônica, zero erros de anotação e clientes fiéis. O n8n se torna seu 'maître digital' — aquele que nunca deixa um cliente esperando."
-                         data-combo="🚀 3️⃣ Estratégia Perfeita: Automação + Impulsionamento (para Restaurantes) 
-                                            Essa é a combinação que transforma um restaurante comum em uma máquina de pedidos no piloto automático.
-                                            O Impulsionamento Inteligente traz o cliente faminto (de fora do iFood), e o n8n cuida de todo o atendimento — da captura do pedido no WhatsApp ao pós-venda.
-                                            Você atrai clientes para seu delivery próprio, responde instantaneamente, envia promoções personalizadas (Ex: 'Vimos que gostou da nossa feijoada, que tal pedir de novo com 10% off?'') e mantém suas redes sociais ativas sem esforço.
-                                            👉 Enquanto seus concorrentes disputam o topo do iFood pagando caro por isso, você já está construindo sua própria base de clientes e vendendo com margem cheia todos os dias.">
-                         <h3>Restaurantes</h3>
+                         data-impulsionamento="🧠 1️⃣ Impulsionamento Inteligente (para Restaurantes) 
+                                               Se seus pratos são elogiados, mas o salão vive vazio (ou o delivery só sai pelo iFood), o problema não é a comida — é quem está vendo.
+                                               Com o Impulsionamento Inteligente, mostramos seus pratos para quem está com fome agora e procurando exatamente o que você serve na sua região.
+                                               'AH MAS JÁ ESTOU NO IFOOD' O iFood é um ótimo canal de descoberta, mas ele te 'ALUGA' o cliente. Você paga taxas altíssimas (até 30%) por um cliente que poderia ser seu.
+                                               Nossa estratégia foca em trazer esse cliente para o seu canal de venda direto (seu WhatsApp, seu site ou seu sistema de pedidos próprio).
+                                               👉 Cada real investido é otimizado para gerar pedidos com margem de lucro cheia, não para alimentar um algoritmo que promove seus concorrentes ao lado. Deixe de ser refém das taxas e passe a controlar seu faturamento."
+                         data-automacao=" ⚙️ 2️⃣ Automações com n8n (para Restaurantes) 
+                                               Enquanto a cozinha prepara, o sistema atende e vende.
+                                               Com o n8n, seu restaurante pode:
+                                               Atender clientes 24/7 no WhatsApp, enviando o cardápio digital automaticamente.
+                                               Confirmar pedidos, pegar endereço e forma de pagamento sem intervenção humana.
+                                               Avisar o cliente quando o pedido saiu para entrega.
+                                               Gerenciar reservas de mesas.
+                                               Disparar pesquisas de satisfação após a entrega.
+                                               Você pode colocar as fotos dos seus pratos no Google Drive, e o sistema posta automaticamente no Instagram e Facebook nos horários de pico (hora do almoço, jantar).
+                                               👉 Resultado: mais pedidos, menos confusão na linha telefônica, zero erros de anotação e clientes fiéis. O n8n se torna seu 'maître digital' — aquele que nunca deixa um cliente esperando."
+                         data-combo="🚀 3️⃣ Estratégia Perfeita: Automação + Impulsionamento (para Restaurantes) 
+                                               Essa é a combinação que transforma um restaurante comum em uma máquina de pedidos no piloto automático.
+                                               O Impulsionamento Inteligente traz o cliente faminto (de fora do iFood), e o n8n cuida de todo o atendimento — da captura do pedido no WhatsApp ao pós-venda.
+                                               Você atrai clientes para seu delivery próprio, responde instantaneamente, envia promoções personalizadas (Ex: 'Vimos que gostou da nossa feijoada, que tal pedir de novo com 10% off?'') e mantém suas redes sociais ativas sem esforço.
+                                               👉 Enquanto seus concorrentes disputam o topo do iFood pagando caro por isso, você já está construindo sua própria base de clientes e vendendo com margem cheia todos os dias.">
+                           <h3>Restaurantes</h3>
                       </div>
                       <div class="servico-card"
                          data-title="Soluções Personalizadas"
                          data-img-url="https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2070&auto=format&fit=crop"
-                         data-impulsionamento="🧠 1️⃣ Impulsionamento de Negócio Inteligente (Serviço Personalizado) 
+                         data-impulsionamento="🧠 1️⃣ Impulsionamento de Negócio Inteligente (Serviço Personalizado) 
                                                     Se o seu serviço ou produto é de alta qualidade, mas os clientes certos não estão chegando, o problema não é sua solução — é quem está vendo.
                                                     Nós não usamos fórmulas prontas. Primeiro, estudamos o seu caso para entender quem é o seu cliente ideal e onde ele está.
                                                     Com o Impulsionamento Inteligente, seus anúncios são mostrados apenas para quem tem o perfil exato e a intenção real de comprar o que você oferece.
                                                     Quebra de Objeção: 'Já tentei impulsionar e só gastei dinheiro' Isso acontece quando se anuncia para 'curiosos'. Nossa estratégia foca em otimizar cada real investido para gerar leads qualificados e vendas reais, não curtidas vazias.
                                                     👉 Deixe de depender da sorte ou de indicações e passe a ter uma fonte previsível de clientes. É assim que negócios escalam e se mantêm lucrativos."
-                         data-automacao="⚙️ 2️⃣ Automação e Gestão de Processos (Personalizado) 
-                                                Na automação, nós estudamos seu negócio ou empresa para encontrar os gargalos. Onde você perde tempo? Onde o cliente espera demais? Onde o erro manual custa dinheiro?
-                                                Com base nesse diagnóstico, implementamos os melhores softwares e ferramentas (como o n8n e outras plataformas) para gerir seu negócio de forma eficiente.
-                                                Isso automatiza tudo: do primeiro atendimento no WhatsApp ao envio de propostas, controle de pagamentos e o pós-venda.
-                                                👉 Resultado: Uma operação enxuta, profissional e que funciona sem depender 100% de você. Adaptamos a tecnologia ao seu processo, e não o contrário."
-                         data-combo="🚀 3️⃣ A Estratégia de Decolagem: Automação + Impulsionamento 
-                                                Essa é a combinação que faz qualquer negócio decolar.
-                                                Com a junção do Impulsionamento Inteligente (trazendo o cliente certo) e das Automações (cuidando dos processos e da venda), sua empresa sai da estagnação.
-                                                O Impulsionamento atrai o cliente; a Automação garante que ele seja atendido na hora, nutrido e convertido, 24 horas por dia.
-                                                👉 Isso não é 'achismo', é o presente. Quem não se adaptar, ficará para trás. O futuro dos negócios é a eficiência.
-                                                Isso é o presente e o futuro, e só está no começo. 2026 será o ano da consolidação dessa nova forma de operar. Quem começar agora, vai dominar o mercado.">
-                         <h3>Outros</h3>
+                         data-automacao="⚙️ 2️⃣ Automação e Gestão de Processos (Personalizado) 
+                                                    Na automação, nós estudamos seu negócio ou empresa para encontrar os gargalos. Onde você perde tempo? Onde o cliente espera demais? Onde o erro manual custa dinheiro?
+                                                    Com base nesse diagnóstico, implementamos os melhores softwares e ferramentas (como o n8n e outras plataformas) para gerir seu negócio de forma eficiente.
+                                                    Isso automatiza tudo: do primeiro atendimento no WhatsApp ao envio de propostas, controle de pagamentos e o pós-venda.
+                                                    👉 Resultado: Uma operação enxuta, profissional e que funciona sem depender 100% de você. Adaptamos a tecnologia ao seu processo, e não o contrário."
+                         data-combo="🚀 3️⃣ A Estratégia de Decolagem: Automação + Impulsionamento 
+                                                    Essa é a combinação que faz qualquer negócio decolar.
+                                                    Com a junção do Impulsionamento Inteligente (trazendo o cliente certo) e das Automações (cuidando dos processos e da venda), sua empresa sai da estagnação.
+                                                    O Impulsionamento atrai o cliente; a Automação garante que ele seja atendido na hora, nutrido e convertido, 24 horas por dia.
+                                                    👉 Isso não é 'achismo', é o presente. Quem não se adaptar, ficará para trás. O futuro dos negócios é a eficiência.
+                                                    Isso é o presente e o futuro, e só está no começo. 2026 será o ano da consolidação dessa nova forma de operar. Quem começar agora, vai dominar o mercado.">
+                           <h3>Outros</h3>
                       </div>
                  </div>
             </div>
@@ -790,16 +246,16 @@
             <div class="container">
                  <div class="feature-grid">
                       <div class="feature-text animate-on-scroll">
-                         <h2>Tráfego Inteligente: Clientes Reais, Não Apenas Cliques.</h2>
-                         <p>Paramos de adivinhar e passamos a usar dados. Nossa abordagem de tráfego pago utiliza IA para encontrar seu público-alvo com precisão cirúrgica, otimizando cada centavo do seu orçamento para maximizar o Retorno Sobre o Investimento (ROI).</p>
-                         <ul>
-                             <li><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 1.5H8.25A2.25 2.25 0 0 0 6 3.75v16.5a2.25 2.25 0 0 0 2.25 2.25h7.5A2.25 2.25 0 0 0 18 20.25V3.75a2.25 2.25 0 0 0-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-3 18.75h3" /></svg><div><strong>Otimização de ROI com IA:</strong> Campanhas em Meta, Google e TikTok Ads que aprendem e melhoram sozinhas.</div></li>
-                             <li><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3v11.25A2.25 2.25 0 0 0 6 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0 1 18 16.5h-2.25m-7.5 0h7.5m-7.5 0-1 3m8.5-3 1 3m0 0 .5 1.5m-.5-1.5h-9.5m0 0-.5 1.5M9 11.25v1.5M12 9v3.75m3-6v6" /></svg><div><strong>Análise Preditiva de Audiência:</strong> Encontramos seus melhores clientes antes mesmo que eles procurem por você.</div></li>
-                             <li><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M7.5 14.25v2.25m3-4.5v4.5m3-6.75v6.75m3-9v9M6 20.25h12A2.25 2.25 0 0 0 20.25 18V5.75A2.25 2.25 0 0 0 18 3.5H6A2.25 2.25 0 0 0 3.75 5.75v12.5A2.25 2.25 0 0 0 6 20.25Z" /></svg><div><strong>Relatórios Claros e Acionáveis:</strong> Você entende exatamente para onde seu dinheiro está indo e quais resultados está gerando.</div></li>
-                         </ul>
+                           <h2>Tráfego Inteligente: Clientes Reais, Não Apenas Cliques.</h2>
+                           <p>Paramos de adivinhar e passamos a usar dados. Nossa abordagem de tráfego pago utiliza IA para encontrar seu público-alvo com precisão cirúrgica, otimizando cada centavo do seu orçamento para maximizar o Retorno Sobre o Investimento (ROI).</p>
+                           <ul>
+                                <li><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 1.5H8.25A2.25 2.25 0 0 0 6 3.75v16.5a2.25 2.25 0 0 0 2.25 2.25h7.5A2.25 2.25 0 0 0 18 20.25V3.75a2.25 2.25 0 0 0-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-3 18.75h3" /></svg><div><strong>Otimização de ROI com IA:</strong> Campanhas em Meta, Google e TikTok Ads que aprendem e melhoram sozinhas.</div></li>
+                                <li><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3v11.25A2.25 2.25 0 0 0 6 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0 1 18 16.5h-2.25m-7.5 0h7.5m-7.5 0-1 3m8.5-3 1 3m0 0 .5 1.5m-.5-1.5h-9.5m0 0-.5 1.5M9 11.25v1.5M12 9v3.75m3-6v6" /></svg><div><strong>Análise Preditiva de Audiência:</strong> Encontramos seus melhores clientes antes mesmo que eles procurem por você.</div></li>
+                                <li><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M7.5 14.25v2.25m3-4.5v4.5m3-6.75v6.75m3-9v9M6 20.25h12A2.25 2.25 0 0 0 20.25 18V5.75A2.25 2.25 0 0 0 18 3.5H6A2.25 2.25 0 0 0 3.75 5.75v12.5A2.25 2.25 0 0 0 6 20.25Z" /></svg><div><strong>Relatórios Claros e Acionáveis:</strong> Você entende exatamente para onde seu dinheiro está indo e quais resultados está gerando.</div></li>
+                           </ul>
                       </div>
                       <div class="feature-image animate-on-scroll" style="transition-delay: 0.2s;">
-                         <img src="https://images.pexels.com/photos/6801648/pexels-photo-6801648.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Dashboard de Tráfego Pago com gráficos de performance">
+                           <img src="https://images.pexels.com/photos/6801648/pexels-photo-6801648.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Dashboard de Tráfego Pago com gráficos de performance">
                       </div>
                  </div>
             </div>
@@ -808,39 +264,98 @@
             <div class="container">
                  <div class="feature-grid reverse">
                       <div class="feature-image animate-on-scroll" style="transition-delay: 0.2s;">
-                         <img src="https://images.pexels.com/photos/5926382/pexels-photo-5926382.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Fluxo de trabalho de automação com conexões entre sistemas">
+                           <img src="https://images.pexels.com/photos/5926382/pexels-photo-5926382.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Fluxo de trabalho de automação com conexões entre sistemas">
                       </div>
                       <div class="feature-text animate-on-scroll">
-                         <h2>Automação Sob Medida: Sua Empresa, Suas Regras.</h2>
-                         <p>Nós não forçamos sua empresa a se adaptar a uma ferramenta. Nós criamos um ecossistema de automação que se adapta ao seu processo, conectando os softwares que você já ama e usa, para que eles trabalhem juntos, 24/7, sem erros.</p>
-                         <ul>
-                             <li><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m13.35-.622 1.757-1.757a4.5 4.5 0 0 0-6.364-6.364l-4.5 4.5a4.5 4.5 0 0 0 1.242 7.244" /></svg><div><strong>Integração Total:</strong> Conectamos seu CRM, agenda, e-mail, planilhas e mais, criando um fluxo de dados contínuo e inteligente.</div></li>
-                             <li><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m3.75 13.5 10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75Z" /></svg><div><strong>Nutrição e Follow-up de Leads:</strong> Nenhum lead é esquecido. Respostas instantâneas e sequências de e-mails que convertem no piloto automático.</div></li>
-                             <li><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" /></svg><div><strong>Libere seu Tempo:</strong> Reduza até 80% das tarefas manuais e repetitivas, liberando sua equipe para focar no que realmente importa: estratégia e clientes.</div></li>
-                         </ul>
+                           <h2>Automação Sob Medida: Sua Empresa, Suas Regras.</h2>
+                           <p>Nós não forçamos sua empresa a se adaptar a uma ferramenta. Nós criamos um ecossistema de automação que se adapta ao seu processo, conectando os softwares que você já ama e usa, para que eles trabalhem juntos, 24/7, sem erros.</p>
+                           <ul>
+                                <li><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m13.35-.622 1.757-1.757a4.5 4.5 0 0 0-6.364-6.364l-4.5 4.5a4.5 4.5 0 0 0 1.242 7.244" /></svg><div><strong>Integração Total:</strong> Conectamos seu CRM, agenda, e-mail, planilhas e mais, criando um fluxo de dados contínuo e inteligente.</div></li>
+                                <li><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m3.75 13.5 10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75Z" /></svg><div><strong>Nutrição e Follow-up de Leads:</strong> Nenhum lead é esquecido. Respostas instantâneas e sequências de e-mails que convertem no piloto automático.</div></li>
+                                <li><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" /></svg><div><strong>Libere seu Tempo:</strong> Reduza até 80% das tarefas manuais e repetitivas, liberando sua equipe para focar no que realmente importa: estratégia e clientes.</div></li>
+                           </ul>
                       </div>
                  </div>
             </div>
         </section>
+        <section id="cases-visuais">
+    <div class="container">
+         <h2 class="animate-on-scroll">Projetos que Geraram Resultado</h2>
+         <p class="section-subtitle animate-on-scroll" style="transition-delay: 0.1s;">
+              Não apenas dizemos, nós mostramos. Veja na prática como ajudamos empresas a automatizar processos e escalar o faturamento.
+         </p>
+         
+         <div class="grid-3">
+              <div class="case-visual-card animate-on-scroll" style="transition-delay: 0.2s;">
+                   <div class="case-visual-image">
+                        <img src="https://images.pexels.com/photos/3183150/pexels-photo-3183150.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Case de Sucesso 1">
+                   </div>
+                   <div class="case-visual-content">
+                        <h3>Barbearia Vikings</h3>
+                        <p>Implementação de agendamento automático via IA e campanhas de tráfego local, resultando em 40% mais clientes recorrentes.</p>
+                        <a href="https://www.instagram.com/p/C_exemplo" target="_blank" class="case-visual-link">
+                             Ver o Case no Instagram
+                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="20" height="20">
+                                  <path fill-rule="evenodd" d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z" clip-rule="evenodd" />
+                             </svg>
+                        </a>
+                   </div>
+              </div>
+
+              <div class="case-visual-card animate-on-scroll" style="transition-delay: 0.3s;">
+                   <div class="case-visual-image">
+                        <img src="https://images.pexels.com/photos/590022/pexels-photo-590022.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Case de Sucesso 2">
+                   </div>
+                   <div class="case-visual-content">
+                        <h3>Clínica Bella Estética</h3>
+                        <p>Automação N8N para follow-up de leads do tráfego pago, diminuindo o Custo por Aquisição (CPA) em 35% e lotando a agenda.</p>
+                        <a href="https://wa.me/message/SEUCLIENTE" target="_blank" class="case-visual-link">
+                             Ler Depoimento no WhatsApp
+                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="20" height="20">
+                                  <path fill-rule="evenodd" d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z" clip-rule="evenodd" />
+                             </svg>
+                        </a>
+                   </div>
+              </div>
+
+              <div class="case-visual-card animate-on-scroll" style="transition-delay: 0.4s;">
+                   <div class="case-visual-image">
+                        <img src="https://images.pexels.com/photos/265087/pexels-photo-265087.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Case de Sucesso 3">
+                   </div>
+                   <div class="case-visual-content">
+                        <h3>Projeto Tadeus IA</h3>
+                        <p>Desenvolvimento de um agente de IA multi-plataforma para qualificação de leads, operando 24/7 de forma autônoma.</p>
+                        <a href="https://tadeus-ia.github.io/n8n/" target="_blank" class="case-visual-link">
+                             Conhecer o Projeto
+                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="20" height="20">
+                                  <path fill-rule="evenodd" d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z" clip-rule="evenodd" />
+                             </svg>
+                        </a>
+                   </div>
+              </div>
+
+         </div>
+    </div>
+</section>
         <section id="como-funciona">
             <div class="container">
                  <h2 class="animate-on-scroll">Nosso Processo: Direto ao Ponto</h2>
                  <p class="section-subtitle animate-on-scroll" style="transition-delay: 0.1s;">Três etapas para transformar sua operação e escalar seus resultados de forma sustentável.</p>
                  <div class="timeline">
                       <div class="timeline-step animate-on-scroll" style="transition-delay: 0.2s;">
-                         <div class="step-number">01</div>
-                         <h3>Diagnóstico</h3>
-                         <p>Analisamos seu funil, processos e campanhas atuais para encontrar os maiores pontos de otimização e vazamento de receita.</p>
+                           <div class="step-number">01</div>
+                           <h3>Diagnóstico</h3>
+                           <p>Analisamos seu funil, processos e campanhas atuais para encontrar os maiores pontos de otimização e vazamento de receita.</p>
                       </div>
                       <div class="timeline-step animate-on-scroll" style="transition-delay: 0.3s;">
-                         <div class="step-number">02</div>
-                         <h3>Implementação</h3>
-                         <p>Construímos e integramos as automações e o agente de IA, além de estruturar as novas campanhas de tráfego otimizadas.</p>
+                           <div class="step-number">02</div>
+                           <h3>Implementação</h3>
+                           <p>Construímos e integramos as automações e o agente de IA, além de estruturar as novas campanhas de tráfego otimizadas.</p>
                       </div>
                       <div class="timeline-step animate-on-scroll" style="transition-delay: 0.4s;">
-                         <div class="step-number">03</div>
-                         <h3>Escala</h3>
-                         <p>Com a base pronta, monitoramos os dados em tempo real e otimizamos continuamente para escalar seu faturamento.</p>
+                           <div class="step-number">03</div>
+                           <h3>Escala</h3>
+                           <p>Com a base pronta, monitoramos os dados em tempo real e otimizamos continuamente para escalar seu faturamento.</p>
                       </div>
                  </div>
             </div>
@@ -851,16 +366,16 @@
                  <p class="section-subtitle animate-on-scroll" style="transition-delay: 0.1s;">Veja o que nossos clientes dizem sobre o impacto da nossa parceria.</p>
                  <div class="grid-3">
                       <div class="glass-card case-card animate-on-scroll" style="transition-delay: 0.2s;">
-                         <blockquote>"A automação do follow-up triplicou nossos agendamentos em apenas 2 meses. Liberou 10 horas semanais do nosso time comercial."</blockquote>
-                         <div class="author"><img src="https://images.pexels.com/photos/837358/pexels-photo-837358.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Cliente 1"><div><strong>Carlos Silva</strong><br><small>CEO, Imobiliária Vecta</small></div></div>
+                           <blockquote>"A automação do follow-up triplicou nossos agendamentos em apenas 2 meses. Liberou 10 horas semanais do nosso time comercial."</blockquote>
+                           <div class="author"><img src="https://images.pexels.com/photos/837358/pexels-photo-837358.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Cliente 1"><div><strong>Carlos Silva</strong><br><small>CEO, Imobiliária Vecta</small></div></div>
                       </div>
                       <div class="glass-card case-card animate-on-scroll" style="transition-delay: 0.3s;">
-                         <blockquote>"Reduzimos nosso Custo por Lead em 40% com a otimização de tráfego por IA. O agente qualifica os leads antes de chegarem aos vendedores. Incrível."</blockquote>
-                         <div class="author"><img src="https://images.pexels.com/photos/762020/pexels-photo-762020.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Cliente 2"><div><strong>Juliana Martins</strong><br><small>Diretora de Marketing, Clínica Estética Bella</small></div></div>
+                           <blockquote>"Reduzimos nosso Custo por Lead em 40% com a otimização de tráfego por IA. O agente qualifica os leads antes de chegarem aos vendedores. Incrível."</blockquote>
+                           <div class="author"><img src="https://images.pexels.com/photos/762020/pexels-photo-762020.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Cliente 2"><div><strong>Juliana Martins</strong><br><small>Diretora de Marketing, Clínica Estética Bella</small></div></div>
                       </div>
                       <div class="glass-card case-card animate-on-scroll" style="transition-delay: 0.4s;">
-                         <blockquote>"O processo era caótico. Hoje, do pedido à entrega, tudo é automatizado e integrado. O faturamento cresceu 35% sem aumentar a equipe."</blockquote>
-                         <div class="author"><img src="https://images.pexels.com/photos/842571/pexels-photo-842571.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Cliente 3"><div><strong>Ricardo Almeida</strong><br><small>Fundador, Hamburgueria Fire Burger</small></div></div>
+                           <blockquote>"O processo era caótico. Hoje, do pedido à entrega, tudo é automatizado e integrado. O faturamento cresceu 35% sem aumentar a equipe."</blockquote>
+                           <div class="author"><img src="https://images.pexels.com/photos/842571/pexels-photo-842571.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Cliente 3"><div><strong>Ricardo Almeida</strong><br><small>Fundador, Hamburgueria Fire Burger</small></div></div>
                       </div>
                  </div>
             </div>
@@ -870,26 +385,26 @@
             <div class="container">
                  <h2 class="animate-on-scroll">Empresas que Aceleramos</h2>
                  <p class="section-subtitle animate-on-scroll" style="transition-delay: 0.1s;">
-                     Junte-se a dezenas de negócios que transformaram seus processos e resultados com nossas soluções.
+                      Junte-se a dezenas de negócios que transformaram seus processos e resultados com nossas soluções.
                  </p>
                  <div class="client-logo-grid animate-on-scroll" style="transition-delay: 0.2s;">
                       <div class="client-logo-card" title="Logo Cliente 1">
-                         <img src="mister.png" alt="Logo Cliente 1">
+                           <img src="mister.png" alt="Logo Cliente 1">
                       </div>
                       <div class="client-logo-card" title="Logo Cliente 2">
-                         <img src="vikings.png" alt="Logo Cliente 2">
+                           <img src="vikings.png" alt="Logo Cliente 2">
                       </div>
                       <div class="client-logo-card" title="Logo Cliente 3">
-                         <img src="massaro.png" alt="Logo Cliente 3">
+                           <img src="massaro.png" alt="Logo Cliente 3">
                       </div>
                       <div class="client-logo-card" title="Logo Cliente 4">
-                         <img src="emporio.png" alt="Logo Cliente 4">
+                           <img src="emporio.png" alt="Logo Cliente 4">
                       </div>
                       <div class="client-logo-card" title="Logo Cliente 5">
-                         <img src="fe.png" alt="Logo Cliente 5">
+                           <img src="fe.png" alt="Logo Cliente 5">
                       </div>
                       <div class="client-logo-card" title="Logo Cliente 6">
-                         <img src="bistro.png" alt="Logo Cliente 6">
+                           <img src="bistro.png" alt="Logo Cliente 6">
                       </div>
                  </div>
             </div>
@@ -899,30 +414,30 @@
                  <h2 class="animate-on-scroll" style="margin-bottom: 2rem;">Ferramentas que Integramos</h2>
                  <div class="logos-container">
                       <div class="logos-slide">
-                         <img src="https://img.icons8.com/color/150/google-drive--v1.png" alt="Google Drive">
-                         <img src="https://img.icons8.com/color/150/google-calendar--v1.png" alt="Google Calendar">
-                         <img src="https://img.icons8.com/color/150/slack-new.png" alt="Slack">
-                         <img src="https://img.icons8.com/ios-filled/150/FFFFFF/notion.png" alt="Notion">
-                         <img src="https://img.icons8.com/fluency/150/meta.png" alt="Meta">
-                         <img src="https://img.icons8.com/color/150/trello.png" alt="Trello">
-                         <img src="https://img.icons8.com/color/150/google-drive--v1.png" alt="Google Drive">
-                         <img src="https://img.icons8.com/color/150/google-calendar--v1.png" alt="Google Calendar">
-                         <img src="https://img.icons8.com/color/150/slack-new.png" alt="Slack">
-                         <img src="https://img.icons8.com/ios-filled/150/FFFFFF/notion.png" alt="Notion">
-                         <img src="https://img.icons8.com/fluency/150/meta.png" alt="Meta">
-                         <img src="https://img.icons8.com/color/150/trello.png" alt="Trello">
-                          <img src="https://img.icons8.com/color/150/google-drive--v1.png" alt="Google Drive">
-                         <img src="https://img.icons8.com/color/150/google-calendar--v1.png" alt="Google Calendar">
-                         <img src="https://img.icons8.com/color/150/slack-new.png" alt="Slack">
-                         <img src="https://img.icons8.com/ios-filled/150/FFFFFF/notion.png" alt="Notion">
-                         <img src="https://img.icons8.com/fluency/150/meta.png" alt="Meta">
-                         <img src="https://img.icons8.com/color/150/trello.png" alt="Trello">
-                         <img src="https://img.icons8.com/color/150/google-drive--v1.png" alt="Google Drive">
-                         <img src="https://img.icons8.com/color/150/google-calendar--v1.png" alt="Google Calendar">
-                         <img src="https://img.icons8.com/color/150/slack-new.png" alt="Slack">
-                         <img src="https://img.icons8.com/ios-filled/150/FFFFFF/notion.png" alt="Notion">
-                         <img src="https://img.icons8.com/fluency/150/meta.png" alt="Meta">
-                         <img src="https://img.icons8.com/color/150/trello.png" alt="Trello">
+                           <img src="https://img.icons8.com/color/150/google-drive--v1.png" alt="Google Drive">
+                           <img src="https://img.icons8.com/color/150/google-calendar--v1.png" alt="Google Calendar">
+                           <img src="https://img.icons8.com/color/150/slack-new.png" alt="Slack">
+                           <img src="https://img.icons8.com/ios-filled/150/FFFFFF/notion.png" alt="Notion">
+                           <img src="https://img.icons8.com/fluency/150/meta.png" alt="Meta">
+                           <img src="https://img.icons8.com/color/150/trello.png" alt="Trello">
+                           <img src="https://img.icons8.com/color/150/google-drive--v1.png" alt="Google Drive">
+                           <img src="https://img.icons8.com/color/150/google-calendar--v1.png" alt="Google Calendar">
+                           <img src="https://img.icons8.com/color/150/slack-new.png" alt="Slack">
+                           <img src="https://img.icons8.com/ios-filled/150/FFFFFF/notion.png" alt="Notion">
+                           <img src="https://img.icons8.com/fluency/150/meta.png" alt="Meta">
+                           <img src="https://img.icons8.com/color/150/trello.png" alt="Trello">
+                            <img src="https://img.icons8.com/color/150/google-drive--v1.png" alt="Google Drive">
+                           <img src="https://img.icons8.com/color/150/google-calendar--v1.png" alt="Google Calendar">
+                           <img src="https://img.icons8.com/color/150/slack-new.png" alt="Slack">
+                           <img src="https://img.icons8.com/ios-filled/150/FFFFFF/notion.png" alt="Notion">
+                           <img src="https://img.icons8.com/fluency/150/meta.png" alt="Meta">
+                           <img src="https://img.icons8.com/color/150/trello.png" alt="Trello">
+                           <img src="https://img.icons8.com/color/150/google-drive--v1.png" alt="Google Drive">
+                           <img src="https://img.icons8.com/color/150/google-calendar--v1.png" alt="Google Calendar">
+                           <img src="https://img.icons8.com/color/150/slack-new.png" alt="Slack">
+                           <img src="https://img.icons8.com/ios-filled/150/FFFFFF/notion.png" alt="Notion">
+                           <img src="https://img.icons8.com/fluency/150/meta.png" alt="Meta">
+                           <img src="https://img.icons8.com/color/150/trello.png" alt="Trello">
                       </div>
                  </div>
             </div>
@@ -943,25 +458,25 @@
                  <div class="form-container-wrapper animate-on-scroll">
                       <h2>Estime seu Custo por Cliente</h2>
                       <p class="instrucoes">
-                         Selecione seu segmento e veja uma estimativa do custo para adquirir cada novo cliente com nossas estratégias de tráfego e automação.
+                           Selecione seu segmento e veja uma estimativa do custo para adquirir cada novo cliente com nossas estratégias de tráfego e automação.
                       </p>
                       <form id="cpaForm" style="text-align: center;">
-                         <div class="form-group">
-                             <label for="investimento">Quanto você pensa em investir? (R$)</label>
-                             <input type="number" id="investimento" placeholder="Ex: 500" required>
-                         </div>
-                         <div class="form-group">
-                             <label for="calcSegmento">Qual o seu segmento?</label>
-                             <select id="calcSegmento" required>
-                                 <option value="" disabled selected>Selecione uma opção</option>
-                                 <option value="Barbearia">Barbearia</option>
-                                 <option value="Clinica">Clínica</option>
-                                 <option value="Hamburgueria">Hamburgueria</option>
-                                 <option value="Loja">Loja</option>
-                                 <option value="Outro">Outro</option>
-                             </select>
-                         </div>
-                         <button type="submit" class="btn btn-primary">Estimar Custo</button>
+                           <div class="form-group">
+                                <label for="investimento">Quanto você pensa em investir? (R$)</label>
+                                <input type="number" id="investimento" placeholder="Ex: 500" required>
+                           </div>
+                           <div class="form-group">
+                                <label for="calcSegmento">Qual o seu segmento?</label>
+                                <select id="calcSegmento" required>
+                                     <option value="" disabled selected>Selecione uma opção</option>
+                                     <option value="Barbearia">Barbearia</option>
+                                     <option value="Clinica">Clínica</option>
+                                     <option value="Hamburgueria">Hamburgueria</option>
+                                     <option value="Loja">Loja</option>
+                                     <option value="Outro">Outro</option>
+                                </select>
+                           </div>
+                           <button type="submit" class="btn btn-primary">Estimar Custo</button>
                       </form>
                       <div id="resultadoCPA" class="resultado-roi"></div>
                  </div>
@@ -970,34 +485,34 @@
                       <h2>Receba um Diagnóstico Gratuito</h2>
                       <p>Gostou da estimativa? Preencha o formulário e vamos montar um plano detalhado para alcançar (e superar) esses números no seu negócio.</p>
                       <form id="diagnosticoForm" style="text-align: center;">
-                         <div class="form-group">
-                             <label for="nome">Seu Nome:</label>
-                             <input type="text" id="nome" name="nome" placeholder="Nome completo" required>
-                         </div>
-                         <div class="form-group">
-                              <label for="whatsapp">Seu WhatsApp (com DDD):</label>
-                              <input type="tel" id="whatsapp" name="whatsapp" placeholder="Ex: 11987654321" required>
-                         </div>
-                         <div class="form-group">
-                             <label for="email">Seu Melhor E-mail:</label>
-                             <input type="email" id="email" name="email" placeholder="seuemail@exemplo.com" required>
-                         </div>
-                         <div class="form-group">
-                             <label for="nomeEmpresa">Nome da Empresa:</label>
-                             <input type="text" id="nomeEmpresa" name="nomeEmpresa" placeholder="Sua Barbearia, Clínica, etc." required>
-                         </div>
-                         <div class="form-group">
-                             <label for="segmento">Qual o seu segmento?</label>
-                             <select id="segmento" name="segmento" required>
-                                 <option value="" disabled selected>Selecione uma opção</option>
-                                 <option value="Barbearia">Barbearia</option>
-                                 <option value="Clinica">Clínica</option>
-                                 <option value="Hamburgueria">Hamburgueria</option>
-                                 <option value="Loja">Loja</option>
-                                 <option value="Outro">Outro</option>
-                             </select>
-                         </div>
-                         <button type="submit" id="submitBtn" class="btn btn-primary">Receber Diagnóstico via WhatsApp</button>
+                           <div class="form-group">
+                                <label for="nome">Seu Nome:</label>
+                                <input type="text" id="nome" name="nome" placeholder="Nome completo" required>
+                           </div>
+                           <div class="form-group">
+                                 <label for="whatsapp">Seu WhatsApp (com DDD):</label>
+                                 <input type="tel" id="whatsapp" name="whatsapp" placeholder="Ex: 11987654321" required>
+                           </div>
+                           <div class="form-group">
+                                <label for="email">Seu Melhor E-mail:</label>
+                                <input type="email" id="email" name="email" placeholder="seuemail@exemplo.com" required>
+                           </div>
+                           <div class="form-group">
+                                <label for="nomeEmpresa">Nome da Empresa:</label>
+                                <input type="text" id="nomeEmpresa" name="nomeEmpresa" placeholder="Sua Barbearia, Clínica, etc." required>
+                           </div>
+                           <div class="form-group">
+                                <label for="segmento">Qual o seu segmento?</label>
+                                <select id="segmento" name="segmento" required>
+                                     <option value="" disabled selected>Selecione uma opção</option>
+                                     <option value="Barbearia">Barbearia</option>
+                                     <option value="Clinica">Clínica</option>
+                                     <option value="Hamburgueria">Hamburgueria</option>
+                                     <option value="Loja">Loja</option>
+                                     <option value="Outro">Outro</option>
+                                </select>
+                           </div>
+                           <button type="submit" id="submitBtn" class="btn btn-primary">Receber Diagnóstico via WhatsApp</button>
                       </form>
                       <div id="formStatus"></div>
                  </div>
@@ -1010,50 +525,50 @@
                  <p class="section-subtitle animate-on-scroll" style="transition-delay: 0.1s;">Comece com o essencial ou vá direto para a escala máxima. O investimento se paga com a eficiência gerada.</p>
                  <div class="grid-3">
                       <div class="glass-card pricing-card animate-on-scroll" style="transition-delay: 0.2s;">
-                         <div>
-                             <h3>N8N</h3>
-                             <div class="price">Automação Inteligente.</div>
-                             <ul>
-                                 <li>✓ Fluxos automatizados de vendas e pós-venda (lead → cliente → fidelização)</li>
-                                 <li>✓ Integração com CRM, e-mail e ferramentas que você já usa</li>
-                                 <li>✓ Nutrição personalizada por comportamento (mais leads qualificados)</li>
-                                 <li>✓ Redução de erros e economia real de horas operacionais</li>
-                                 <li>✓ Relatórios em tempo real para decisões rápidas e escaláveis</li>
-                                 <li>✓ Escala sem contratar mais equipe — resultados previsíveis</li>
-                             </ul>
-                         </div>
-                         <a href="https://wa.me/message/DQJBWVDS3BJ4N1" target="_blank" class="btn btn-primary">Ativar Automação</a>
+                           <div>
+                                <h3>N8N</h3>
+                                <div class="price">Automação Inteligente.</div>
+                                <ul>
+                                     <li>✓ Fluxos automatizados de vendas e pós-venda (lead → cliente → fidelização)</li>
+                                     <li>✓ Integração com CRM, e-mail e ferramentas que você já usa</li>
+                                     <li>✓ Nutrição personalizada por comportamento (mais leads qualificados)</li>
+                                     <li>✓ Redução de erros e economia real de horas operacionais</li>
+                                     <li>✓ Relatórios em tempo real para decisões rápidas e escaláveis</li>
+                                     <li>✓ Escala sem contratar mais equipe — resultados previsíveis</li>
+                                </ul>
+                           </div>
+                           <a href="https://wa.me/message/DQJBWVDS3BJ4N1" target="_blank" class="btn btn-primary">Ativar Automação</a>
                       </div>
                       <div class="glass-card pricing-card popular animate-on-scroll" style="transition-delay: 0.3s;">
-                         <div>
-                             <h3>Automação + Tráfego</h3>
-                             <p style="color: var(--verde-neon); font-weight: bold; margin-bottom: 0.5rem;"></p>
-                             <div class="price">Mais Popular!</div>
-                             <ul>
-                                 <li>✓ Tudo da Automação, e mais: campanhas otimizadas orientadas por dados</li>
-                                 <li>✓ Sinergia entre anúncios e jornadas automatizadas (reduz custo por venda)</li>
-                                 <li>✓ Leads qualificados chegando direto no fluxo certo — mais conversões</li>
-                                 <li>✓ Testes contínuos (criativos, audiência, jornada) para melhorar ROAS</li>
-                                 <li>✓ Relatórios unificados: CAC, LTV e margem em um painel só</li>
-                                 <li>✓ Processo end-to-end: captação, qualificação, conversão e retenção</li>
-                             </ul>
-                         </div>
-                         <a href="https://wa.me/message/DQJBWVDS3BJ4N1" target="_blank" class="btn btn-primary">Começar Crescimento</a>
+                           <div>
+                                <h3>Automação + Tráfego</h3>
+                                <p style="color: var(--verde-neon); font-weight: bold; margin-bottom: 0.5rem;"></p>
+                                <div class="price">Mais Popular!</div>
+                                <ul>
+                                     <li>✓ Tudo da Automação, e mais: campanhas otimizadas orientadas por dados</li>
+                                     <li>✓ Sinergia entre anúncios e jornadas automatizadas (reduz custo por venda)</li>
+                                     <li>✓ Leads qualificados chegando direto no fluxo certo — mais conversões</li>
+                                     <li>✓ Testes contínuos (criativos, audiência, jornada) para melhorar ROAS</li>
+                                     <li>✓ Relatórios unificados: CAC, LTV e margem em um painel só</li>
+                                     <li>✓ Processo end-to-end: captação, qualificação, conversão e retenção</li>
+                                </ul>
+                           </div>
+                           <a href="https://wa.me/message/DQJBWVDS3BJ4N1" target="_blank" class="btn btn-primary">Começar Crescimento</a>
                       </div>
                       <div class="glass-card pricing-card animate-on-scroll" style="transition-delay: 0.4s;">
-                         <div>
-                             <h3>Impulsionamento de  Alta Performance</h3>
-                             <div class="price">Estratégia de mídia.</div>
-                             <ul>
-                                 <li>✓ Estratégia de mídia por objetivo (vendas, leads ou retenção)</li>
-                                 <li>✓ Segmentação avançada por intenção e comportamento</li>
-                                 <li>✓ Criativos testados para máxima taxa de conversão</li>
-                                 <li>✓ Otimização diária de lances e orçamento para reduzir CAC</li>
-                                 <li>✓ Remarketing e funis inteligentes para recuperar clientes</li>
-                                 <li>✓ Relatórios claros: investimento x retorno x oportunidades de otimização</li>
-                             </ul>
-                         </div>
-                         <a href="https://wa.me/message/DQJBWVDS3BJ4N1" target="_blank" class="btn btn-primary">Lançar Campanha</a>
+                           <div>
+                                <h3>Impulsionamento de  Alta Performance</h3>
+                                <div class="price">Estratégia de mídia.</div>
+                                <ul>
+                                     <li>✓ Estratégia de mídia por objetivo (vendas, leads ou retenção)</li>
+                                     <li>✓ Segmentação avançada por intenção e comportamento</li>
+                                     <li>✓ Criativos testados para máxima taxa de conversão</li>
+                                     <li>✓ Otimização diária de lances e orçamento para reduzir CAC</li>
+                                     <li>✓ Remarketing e funis inteligentes para recuperar clientes</li>
+                                     <li>✓ Relatórios claros: investimento x retorno x oportunidades de otimização</li>
+                                </ul>
+                           </div>
+                           <a href="https://wa.me/message/DQJBWVDS3BJ4N1" target="_blank" class="btn btn-primary">Lançar Campanha</a>
                       </div>
                  </div>
             </div>
@@ -1078,29 +593,29 @@
         <div class="container">
             <div class="footer-grid">
                  <div>
-                     <a href="#vanta-header" class="footer-logo">Aprovados Automações</a>
-                     <p style="margin-top: 1rem;">Automação e Tráfego Pago que vendem por você.</p>
+                      <a href="#vanta-header" class="footer-logo">Aprovados Automações</a>
+                      <p style="margin-top: 1rem;">Automação e Tráfego Pago que vendem por você.</p>
                  </div>
                  <div class="footer-links">
-                     <h4>Navegação</h4>
-                     <ul>
-                         <li><a href="#trafego">Tráfego</a></li>
-                         <li><a href="#automacao">Automação</a></li>
-                         <li><a href="#cases">Cases</a></li>
-                         <li><a href="#planos">Planos</a></li>
-                     </ul>
+                      <h4>Navegação</h4>
+                      <ul>
+                           <li><a href="#trafego">Tráfego</a></li>
+                           <li><a href="#automacao">Automação</a></li>
+                           <li><a href="#cases">Cases</a></li>
+                           <li><a href="#planos">Planos</a></li>
+                      </ul>
                  </div>
                  <div class="footer-links">
-                     <h4>Social</h4>
-                     <ul>
-                         <li>
-                             <a href="https://www.instagram.com/a_provados/" target="_blank" class="social-icon-link" aria-label="Instagram">
-                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
-                                     <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.85s-.011 3.584-.069 4.85c-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07s-3.584-.012-4.85-.07c-3.252-.148-4.771-1.691-4.919-4.919-.058-1.265-.069-1.645-.069-4.85s.011-3.584.069-4.85c.149-3.225 1.664-4.771 4.919-4.919C8.416 2.175 8.796 2.163 12 2.163m0-1.646C8.74 0 8.333.012 7.053.072 2.695.272.273 2.69.073 7.052.012 8.333 0 8.74 0 12s.012 3.667.072 4.947c.2 4.358 2.618 6.78 6.98 6.98C8.333 23.988 8.74 24 12 24s3.667-.012 4.947-.072c4.354-.2 6.782-2.618 6.979-6.98.06-1.28.072-1.687.072-4.947s-.012-3.667-.072-4.947c-.196-4.354-2.617-6.78-6.979-6.98C15.667.012 15.26 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.88 1.44 1.44 0 0 0 0-2.88z"/>
-                                 </svg>
-                             </a>
-                         </li>
-                     </ul>
+                      <h4>Social</h4>
+                      <ul>
+                           <li>
+                                <a href="https://www.instagram.com/a_provados/" target="_blank" class="social-icon-link" aria-label="Instagram">
+                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                                          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.85s-.011 3.584-.069 4.85c-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07s-3.584-.012-4.85-.07c-3.252-.148-4.771-1.691-4.919-4.919-.058-1.265-.069-1.645-.069-4.85s.011-3.584.069-4.85c.149-3.225 1.664-4.771 4.919-4.919C8.416 2.175 8.796 2.163 12 2.163m0-1.646C8.74 0 8.333.012 7.053.072 2.695.272.273 2.69.073 7.052.012 8.333 0 8.74 0 12s.012 3.667.072 4.947c.2 4.358 2.618 6.78 6.98 6.98C8.333 23.988 8.74 24 12 24s3.667-.012 4.947-.072c4.354-.2 6.782-2.618 6.979-6.98.06-1.28.072-1.687.072-4.947s-.012-3.667-.072-4.947c-.196-4.354-2.617-6.78-6.979-6.98C15.667.012 15.26 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.88 1.44 1.44 0 0 0 0-2.88z"/>
+                                     </svg>
+                                </a>
+                           </li>
+                      </ul>
                  </div>
             </div>
             <div class="footer-copyright">
@@ -1116,16 +631,16 @@
             <h2 id="modalTitle"></h2>
             <div class="modal-body">
                  <div class="servico-detalhe">
-                     <h4>🚀 Impulsionamento de Marca</h4>
-                     <p id="modalImpulsionamento"></p>
+                      <h4>🚀 Impulsionamento de Marca</h4>
+                      <p id="modalImpulsionamento"></p>
                  </div>
                  <div class="servico-detalhe">
-                     <h4>🤖 Automação Inteligente</h4>
-                     <p id="modalAutomacao"></p>
+                      <h4>🤖 Automação Inteligente</h4>
+                      <p id="modalAutomacao"></p>
                  </div>
                  <div class="servico-detalhe combo">
-                     <h4>✨ O Combo Perfeito</h4>
-                     <p id="modalCombo"></p>
+                      <h4>✨ O Combo Perfeito</h4>
+                      <p id="modalCombo"></p>
                  </div>
             </div>
         </div>
@@ -1133,33 +648,37 @@
 
     <div class="floating-buttons-right">
         
-         <div class="whatsapp-container">
+        <div class="whatsapp-container">
             <div class="whatsapp-status">Rodrigo Online</div>
             <a href=" https://wa.me/message/DQJBWVDS3BJ4N1" id="whatsapp-track-button" target="_blank" class="float-button" aria-label="Fale conosco no WhatsApp">
                  <svg viewBox="0 0 895 896" xmlns="http://www.w3.org/2000/svg"><path d="M632.753 514.282c-9.6-4.883-57.115-28.144-65.959-31.321-8.844-3.178-15.24-4.883-21.636 4.883-6.396 9.765-24.996 31.321-30.635 37.717-5.639 6.396-11.278 7.153-20.878 2.27-9.6-4.883-40.43-14.88-77.004-47.525-28.428-25.378-47.605-56.715-53.244-66.48-5.639-9.764-.6-15.08 4.283-19.963 4.363-4.363 9.6-11.278 14.483-16.917 4.883-5.639 6.396-9.765 9.765-16.161 3.178-6.396 1.589-11.278-2.27-20.878-3.938-9.6-21.636-52.285-29.479-71.54-7.56-18.973-15.399-16.44-21.636-16.72-6.078-.27-12.474-.27-18.87-.27-6.396 0-16.917 2.27-25.76 11.278-8.844 9.005-33.842 33.085-33.842 80.563 0 47.478 34.6 93.44 39.483 99.836 4.883 6.396 68.229 104.42 166.19 146.497 97.96 42.077 97.96 27.904 115.637 26.294 17.677-1.61 57.115-23.407 65.12-46.036 8.004-22.628 8.004-41.916 5.639-46.036-2.365-4.283-8.844-6.396-18.444-11.278Z"/><path d="M447.381 22.28C213.155 22.28 22.28 213.155 22.28 447.381c0 78.434 22.08 153.81 62.4 216.923L24.846 871.45l215.34-59.544c60.312 36.376 129.043 55.756 200.076 55.756h.08C681.688 827.662 872.563 636.787 872.563 447.461c-.08-234.226-190.955-425.101-425.182-425.181Zm0 76.843c197.877 0 358.858 160.981 358.858 358.858 0 197.877-160.981 358.858-358.858 358.858-67.461 0-131.745-18.618-185.895-51.579l-13.04-7.64-138.252 38.163 38.84-134.713-8.317-13.518C123.51 590.966 99.123 521.9 99.123 447.381c0-197.877 160.981-358.858 358.858-358.858h-.6Z"/></svg>
             </a>
         </div>
         
-         <div class="course-container">
+        <div class="course-container">
             <div class="course-status">Aprenda com nosso curso</div>
             <a href="https://tadeus-ia.github.io/n8n/" target="_blank" class="float-button course-button" aria-label="Aprenda com nosso curso" id="cta-curso-flutuante">
                  <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path d="M12 3L1 9l4 2.18v6.32L12 21l7-3.5V11.18L23 9l-5-2.5V3h-2v2.32L12 3zm0 2.84L19.38 9 12 12.16 4.62 9 12 5.84zM6 11.68l5 2.5v5l-5-2.5v-5zm7 0v5l5-2.5v-5l-5 2.5z"/></svg>
             </a>
         </div>
-         <a href="#vanta-header" id="back-to-top-btn" class="float-button" aria-label="Voltar ao topo">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+
+        <div class="top-container" id="back-to-top-btn" aria-label="Voltar ao topo">
+            <div class="top-status">Voltar ao topo</div>
+            <a href="#vanta-header" class="float-button"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                  <polyline points="18 15 12 9 6 15"></polyline>
-            </svg>
-        </a>
-    </div>
+             </svg>
+            </a>
+        </div>
     
-    <div class="chat-container">
+    </div> <div class="ai-chat-container-left">
+
         <div class="ai-agent-container">
             <button id="chat-toggle-button" class="float-button" aria-label="Abrir chat com o Agente AI">
                  <img src="tadeus-avatar.png" alt="Assistente Virtual tadeus">
             </button>
             <div class="ai-agent-status">Fale com o tadeus</div>
         </div>
+
         <div id="chat-widget" class="hidden">
             <div class="chat-header">
                  <h3>Fale com o tadeus</h3>
@@ -1169,279 +688,23 @@
                  <div class="message received">Olá! Melhor agora que chegou — mais um cliente pra potencializar resultados. Posso te ajudar com uma auditoria rápida, configurar uma automação ou escalar seu tráfego?</div>
                 
                  <div id="chat-quick-replies" class="chat-quick-replies">
-                     <button class="quick-reply-btn" data-value="Automação">Automação</button>
-                     <button class="quick-reply-btn" data-value="Impulsionamento">Impulsionamento</button>
-                     <button class="quick-reply-btn" data-value="Valor">Valor</button>
-                     <button class="quick-reply-btn" data-value="Dúvida">Dúvida</button>
+                      <button class="quick-reply-btn" data-value="Automação">Automação</button>
+                      <button class="quick-reply-btn" data-value="Impulsionamento">Impulsionamento</button>
+                      <button class="quick-reply-btn" data-value="Valor">Valor</button>
+                      <button class="quick-reply-btn" data-value="Dúvida">Dúvida</button>
                  </div>
                  </div>
-             <form id="chat-form" class="chat-input-area">
-                  <input type="text" id="chat-input" placeholder="Digite sua dúvida..." autocomplete="off">
-                  <button type="submit" id="chat-send-button" aria-label="Enviar mensagem">
-                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path d="M3.478 2.405a.75.75 0 0 0-.926.94l2.432 7.905H13.5a.75.75 0 0 1 0 1.5H4.984l-2.432 7.905a.75.75 0 0 0 .926.94 60.519 60.519 0 0 0 18.445-8.986.75.75 0 0 0 0-1.218A60.517 60.517 0 0 0 3.478 2.405Z"/></svg>
-                  </button>
-             </form>
+              <form id="chat-form" class="chat-input-area">
+                   <input type="text" id="chat-input" placeholder="Digite sua dúvida..." autocomplete="off">
+                   <button type="submit" id="chat-send-button" aria-label="Enviar mensagem">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path d="M3.478 2.405a.75.75 0 0 0-.926.94l2.432 7.905H13.5a.75.75 0 0 1 0 1.5H4.984l-2.432 7.905a.75.75 0 0 0 .926.94 60.519 60.519 0 0 0 18.445-8.986.75.75 0 0 0 0-1.218A60.517 60.517 0 0 0 3.478 2.405Z"/></svg>
+                   </button>
+              </form>
         </div>
-    </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+    </div> <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.globe.min.js"></script>
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            // Efeito de fundo animado
-            VANTA.GLOBE({
-                 el: "#vanta-header", mouseControls: true, touchControls: true, gyroControls: false,
-                 minHeight: 200.00, minWidth: 200.00, scale: 1.00, scaleMobile: 1.00,
-                 color: '#6A00FF', color2: '#9e4bff', backgroundColor: '#0A0A0A', size: 1.20
-            });
-
-            // Animação de elementos ao rolar
-            const observer = new IntersectionObserver((entries) => {
-                 entries.forEach(entry => {
-                     if (entry.isIntersecting) { entry.target.classList.add('is-visible'); }
-                 });
-            }, { threshold: 0.1 });
-            document.querySelectorAll('.animate-on-scroll').forEach(el => { observer.observe(el); });
-
-            // --- INÍCIO: NOVAS FUNCIONALIDADES E AJUSTES ---
-
-            // AJUSTE 1: NOVA CALCULADORA DE CUSTO POR AQUISIÇÃO (CPA)
-            const cpaForm = document.getElementById('cpaForm');
-            if (cpaForm) {
-                 cpaForm.addEventListener('submit', function(event) {
-                     event.preventDefault();
-                    
-                     const segmento = document.getElementById('calcSegmento').value;
-                     const resultadoDiv = document.getElementById('resultadoCPA');
-
-                     if (!segmento) {
-                         resultadoDiv.innerHTML = 'Por favor, selecione um segmento para estimar.';
-                         resultadoDiv.className = 'resultado-roi negativo';
-                         resultadoDiv.style.display = 'block';
-                         return;
-                     }
-
-                     let cpa;
-                     // Lógica para definir o CPA baseado no segmento
-                     switch (segmento) {
-                         case 'Barbearia':
-                         case 'Hamburgueria':
-                              cpa = 3.50;
-                              break;
-                         case 'Clinica':
-                         case 'Loja':
-                              cpa = 5.00;
-                              break;
-                         case 'Outro':
-                              cpa = 2.50;
-                              break;
-                         default:
-                              cpa = 3.50;
-                     }
-
-                     let resultadoHTML = `Para o segmento <strong>${segmento}</strong>, seu custo por cliente é de aproximadamente <strong>R$ ${cpa.toFixed(2).replace('.', ',')}</strong>.`;
-                     resultadoHTML += `<br><br><small style="font-weight: 400; font-size: 0.9rem; opacity: 0.8;">AVISO: Estes valores podem mudar de acordo com o dia, mas ficam nesta margem.</small>`;
-                    
-                     resultadoDiv.innerHTML = resultadoHTML;
-                     resultadoDiv.className = 'resultado-roi positivo';
-                     resultadoDiv.style.display = 'block';
-                 });
-            }
-
-
-            // AJUSTE 2: FORMULÁRIO DE DIAGNÓSTICO ENVIADO DIRETO PARA O WHATSAPP
-            const diagnosticoForm = document.getElementById('diagnosticoForm');
-            if (diagnosticoForm) {
-                 diagnosticoForm.addEventListener('submit', function(event) {
-                     event.preventDefault();
-                    
-                     // --- IMPORTANTE: COLOQUE SEU NÚMERO DE WHATSAPP AQUI ---
-                     // Formato: 55 + DDD + Número (tudo junto, sem espaços ou símbolos)
-                     const seuNumeroWhatsApp = '5511916072188';
-
-                     const nome = document.getElementById('nome').value;
-                     const whatsapp = document.getElementById('whatsapp').value;
-                     const email = document.getElementById('email').value;
-                     const nomeEmpresa = document.getElementById('nomeEmpresa').value;
-                     const segmento = document.getElementById('segmento').value;
-
-                     // /============================================================================
-                     // / INÍCIO DA INTEGRAÇÃO COM WEBHOOK (N8N) - PLACEHOLDER
-                     // /============================================================================
-                     // / Este é o placeholder solicitado para o Webhook.
-                     // / Descomente o bloco abaixo e insira a URL do seu Webhook do n8n.
-                     // / Os dados serão enviados em formato JSON via método POST.
-                     
-                     const webhookUrl = 'https://automacoe-n8n.bitxsu.easypanel.host/webhook-test/leads';
-                     const formData = {
-                         nome: nome,
-                         whatsapp: whatsapp,
-                         email: email,
-                         empresa: nomeEmpresa,
-                         segmento: segmento
-                     };
-
-                     fetch(webhookUrl, {
-                         method: 'POST',
-                         headers: {
-                             'Content-Type': 'application/json'
-                         },
-                         body: JSON.stringify(formData)
-                     })
-                     .then(response => { 
-                         console.log('Sucesso - Webhook n8n enviado.');
-                         // Você pode adicionar tratamento de resposta aqui se necessário
-                         return response.json(); // Ou response.text() dependendo do que seu webhook retorna
-                     })
-                     .then(data => {
-                         console.log('Resposta n8n:', data);
-                     })
-                     .catch((error) => {
-                         console.error('Erro - Webhook n8n:', error);
-                     });
-                     
-                     // /============================================================================
-                     // / FIM DA INTEGRAÇÃO COM WEBHOOK (N8N) - PLACEHOLDER
-                     // /============================================================================
-
-                     // Monta a mensagem para o WhatsApp (código original mantido)
-                     const mensagem = `
-*Olá! Gostaria de solicitar um diagnóstico gratuito.*
-
-*Nome:* ${nome}
-*WhatsApp:* ${whatsapp}
-*E-mail:* ${email}
-*Empresa:* ${nomeEmpresa}
-*Segmento:* ${segmento}
-                     `.trim();
-
-                     // Codifica a mensagem para ser usada na URL (código original mantido)
-                     const mensagemCodificada = encodeURIComponent(mensagem);
-
-                     // Cria o link do WhatsApp e abre em uma nova aba (código original mantido)
-                     const linkWhatsApp = `https://wa.me/${seuNumeroWhatsApp}?text=${mensagemCodificada}`;
-                    
-                     window.open(linkWhatsApp, '_blank');
-                    
-                     // Limpa o formulário e exibe mensagem de sucesso (código original mantido)
-                     diagnosticoForm.reset();
-                     const formStatus = document.getElementById('formStatus');
-                     formStatus.textContent = 'Ótimo! Agora é só enviar a mensagem no seu WhatsApp.';
-                     formStatus.style.color = 'var(--verde-neon)';
-                     setTimeout(() => { formStatus.textContent = ''; }, 5000); // Limpa a mensagem após 5 segundos
-                 });
-            }
-
-            // AJUSTE 3: CÓDIGO ORIGINAL MANTIDO
-            const servicoCards = document.querySelectorAll('.servico-card');
-            const modal = document.getElementById('servicoModal');
-            const closeModalBtn = document.querySelector('.close-button');
-            servicoCards.forEach(card => {
-                 const imgUrl = card.dataset.imgUrl;
-                 if (imgUrl) card.style.backgroundImage = `url('${imgUrl}')`;
-                 card.addEventListener('click', () => {
-                     document.getElementById('modalTitle').textContent = card.dataset.title;
-                     document.getElementById('modalImpulsionamento').textContent = card.dataset.impulsionamento;
-                     document.getElementById('modalAutomacao').textContent = card.dataset.automacao;
-                     document.getElementById('modalCombo').textContent = card.dataset.combo;
-                     modal.style.display = 'block';
-                 });
-            });
-            const closeModal = () => { if(modal) modal.style.display = 'none'; };
-            if (closeModalBtn) closeModalBtn.addEventListener('click', closeModal);
-            window.addEventListener('click', (event) => { if (event.target == modal) closeModal(); });
-
-            // --- CÓDIGO ORIGINAL DO CHAT, SCROLL, ETC (MANTIDO) ---
-            const chatToggleButton = document.getElementById('chat-toggle-button');
-            const chatWidget = document.getElementById('chat-widget');
-            const chatForm = document.getElementById('chat-form');
-            const chatInput = document.getElementById('chat-input');
-            const chatMessages = document.getElementById('chat-messages');
-            const backToTopButton = document.getElementById('back-to-top-btn');
-            const whatsappButton = document.getElementById('whatsapp-track-button');
-            const quickRepliesContainer = document.getElementById('chat-quick-replies');
-
-            chatToggleButton.addEventListener('click', () => chatWidget.classList.toggle('hidden'));
-            chatForm.addEventListener('submit', (e) => {
-                 e.preventDefault();
-                 const userInput = chatInput.value.trim();
-                 if (!userInput) return;
-                 if (document.getElementById('chat-quick-replies')) {
-                     document.getElementById('chat-quick-replies').remove();
-                 }
-                 addMessage(userInput, 'sent');
-                 chatInput.value = '';
-                 getAIResponse(userInput);
-            });
-            const predefinedResponses = {
-                 'Automação': 'Excelente escolha! Nossa <strong>Automação Inteligente</strong> usa a plataforma N8N para criar fluxos de vendas, pós-venda e nutrição. Conectamos suas ferramentas, reduzimos erros e economizamos horas de trabalho, permitindo que sua empresa escale de forma previsível. Quer saber como isso se aplica ao seu negócio?',
-                 'Impulsionamento': 'Ótimo! Nosso <strong>Impulsionamento de Alta Performance</strong> foca em estratégia de mídia para gerar resultados. Analisamos seu público, testamos criativos e otimizamos o orçamento diariamente para reduzir seu Custo de Aquisição (CAC) e maximizar o retorno. Pronto para lançar uma campanha que vende?',
-                 'Valor': 'Nossos planos são desenhados para gerar retorno rápido. O plano <strong>"Automação + Tráfego"</strong> é o mais popular por integrar o melhor dos dois mundos, reduzindo o custo por venda. Quer agendar um diagnóstico gratuito para eu te mostrar o potencial de retorno para o seu caso específico?',
-                 'Dúvida': 'Sem problemas. Sou um agente de IA treinado para te ajudar. Pode me perguntar qualquer coisa sobre nossos serviços, como funciona a integração, quais ferramentas usamos, ou qualquer outra questão que tiver. Estou aqui para esclarecer tudo para você.'
-            };
-            if (quickRepliesContainer) {
-                 quickRepliesContainer.addEventListener('click', function(event) {
-                     if (event.target.classList.contains('quick-reply-btn')) {
-                         const userChoice = event.target.dataset.value;
-                         const botReply = predefinedResponses[userChoice];
-                         addMessage(userChoice, 'sent');
-                         showLoadingIndicator();
-                         setTimeout(() => {
-                             hideLoadingIndicator();
-                             if (botReply) addMessage(botReply, 'received');
-                         }, 500);
-                         event.target.parentElement.remove();
-                     }
-                 });
-             }
-             window.addEventListener('scroll', () => {
-                 if (window.scrollY > 300) {
-                     backToTopButton.classList.add('visible');
-                 } else {
-                     backToTopButton.classList.remove('visible');
-                 }
-            });
-            function addMessage(htmlContent, type) {
-                const messageElement = document.createElement('div');
-                messageElement.className = `message ${type}`;
-                messageElement.innerHTML = htmlContent;
-                chatMessages.appendChild(messageElement);
-                chatMessages.scrollTop = chatMessages.scrollHeight;
-            }
-            function showLoadingIndicator() {
-                const loadingElement = document.createElement('div');
-                loadingElement.className = 'message loading';
-                loadingElement.id = 'loading-indicator';
-                loadingElement.innerHTML = '<span></span><span></span><span></span>';
-                chatMessages.appendChild(loadingElement);
-                chatMessages.scrollTop = chatMessages.scrollHeight;
-            }
-            function hideLoadingIndicator() {
-                const indicator = document.getElementById('loading-indicator');
-                if (indicator) indicator.remove();
-            }
-            async function getAIResponse(userInput) {
-                showLoadingIndicator();
-                try {
-                     const response = await fetch('/.netlify/functions/ask-tadeus', {
-                         method: 'POST',
-                         headers: { 'Content-Type': 'application/json' },
-                         body: JSON.stringify({ message: userInput })
-                     });
-                     if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-                     const data = await response.json();
-                     hideLoadingIndicator();
-                     addMessage(data.reply, 'received');
-                 } catch (error) {
-                     console.error("Erro ao contatar a API:", error);
-                     hideLoadingIndicator();
-                     addMessage("Desculpe, estou com um problema técnico no momento. Por favor, tente novamente ou contate-nos pelo <a href='https://wa.me/message/DQJBWVDS3BJ4N1' target='_blank'>WhatsApp</a>.", 'received');
-                 }
-            }
-            whatsappButton.addEventListener('click', function(event) {
-                // Manter o comportamento original de rastreamento se houver
-            });
-        });
-    </script>
+    
+    <script src="script.js"></script>
 </body>
 </html>
