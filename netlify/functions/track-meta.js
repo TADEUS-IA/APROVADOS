@@ -1,3 +1,5 @@
+// ARQUIVO: netlify/functions/track-meta.js (V2 - Reenvio Forçado)
+
 // ARQUIVO: netlify/functions/track-meta.js
 // OBJETIVO: Central de rastreamento para PageView, Cliques e Formulários via API (Server-Side)
 
