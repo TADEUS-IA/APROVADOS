@@ -12,6 +12,100 @@
     
     <link rel="stylesheet" href="style.css">
 
+    <style>
+        /* Ajuste do Card para crescer conforme o conteúdo */
+        .client-logo-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 20px;
+            height: auto; /* Permite que o card cresça */
+            min-height: 200px; /* Altura mínima visual */
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        /* Imagem do logo com margem para não colar no texto */
+        .client-logo-card img {
+            margin-bottom: 15px;
+            max-width: 100%;
+            height: auto;
+            object-fit: contain;
+        }
+
+        /* Área da descrição (Oculta por padrão) */
+        .case-description {
+            max-height: 0; /* Começa fechado */
+            overflow: hidden; /* Esconde o que passar */
+            opacity: 0;
+            transition: max-height 0.6s ease-in-out, opacity 0.4s ease-in-out, margin 0.4s;
+            text-align: center;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            color: #ccc;
+            width: 100%;
+        }
+
+        /* Estado Aberto (Adaptável a textos longos) */
+        .case-description.open {
+            /* Um valor alto seguro para garantir que textos grandes caibam */
+            max-height: 1500px; 
+            opacity: 1;
+            margin-top: 15px;
+            margin-bottom: 15px;
+        }
+
+        /* Botão Verde 3D Realista */
+        .btn-3d-green {
+            background: linear-gradient(to bottom, #2ecc71, #27ae60);
+            border: none;
+            border-radius: 8px;
+            padding: 12px 24px;
+            color: white;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            cursor: pointer;
+            /* Sombra sólida para efeito 3D */
+            box-shadow: 0 6px 0 #1e8449, 0 10px 10px rgba(0,0,0,0.3);
+            transition: all 0.15s ease;
+            outline: none;
+            width: 100%;
+            max-width: 200px;
+            margin-top: auto; /* Empurra o botão para o final se houver espaço sobrando */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        /* Efeito Hover (Levantar) */
+        .btn-3d-green:hover {
+            background: linear-gradient(to bottom, #35d679, #2ecc71);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 0 #1e8449, 0 12px 12px rgba(0,0,0,0.35);
+        }
+
+        /* Efeito Click (Pressionar) */
+        .btn-3d-green:active {
+            transform: translateY(6px); /* Desce para ocupar o espaço da sombra */
+            box-shadow: 0 0 0 #1e8449, 0 0 0 rgba(0,0,0,0.3); /* Sombra desaparece */
+        }
+
+        /* Ícone da seta */
+        .btn-icon {
+            font-size: 0.8rem;
+            transition: transform 0.4s ease;
+        }
+        
+        /* Gira a seta quando aberto */
+        .btn-3d-green.active .btn-icon {
+            transform: rotate(180deg);
+        }
+    </style>
+
     <script>
          (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
          new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -88,154 +182,154 @@
                          data-title="Soluções para Barbearias"
                          data-img-url="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                          data-impulsionamento="💈 1️⃣ Impulsionamento de Negócio Inteligente (para Barbearia)
-                                               Seu cliente ideal está na internet agora — e o Impulsionamento de Negócio Inteligente faz ele ver sua barbearia antes de qualquer concorrente.
-                                               Aqui não tem sorte, tem estratégia. Cada anúncio é pensado para atrair homens da sua região que realmente valorizam um bom corte, uma barba bem feita e um atendimento de respeito.
-                                               Com segmentação precisa e campanhas otimizadas, você não “impulsiona post”, você enche a agenda.
-                                               👉 Esqueça o boca a boca lento — use o tráfego inteligente e faça sua barbearia lotar todos os dias da semana."
+                                                                Seu cliente ideal está na internet agora — e o Impulsionamento de Negócio Inteligente faz ele ver sua barbearia antes de qualquer concorrente.
+                                                                Aqui não tem sorte, tem estratégia. Cada anúncio é pensado para atrair homens da sua região que realmente valorizam um bom corte, uma barba bem feita e um atendimento de respeito.
+                                                                Com segmentação precisa e campanhas otimizadas, você não “impulsiona post”, você enche a agenda.
+                                                                👉 Esqueça o boca a boca lento — use o tráfego inteligente e faça sua barbearia lotar todos os dias da semana."
                          data-automacao="⚙️ 2️⃣ Automações com n8n (para Barbearia)
-                                               Enquanto alguns barbeiros estão respondendo mensagens manualmente, você pode estar atendendo clientes sem nem olhar o celular.
-                                               Com o n8n, sua barbearia ganha um assistente digital que agenda horários, confirma presença, envia lembretes automáticos e até responde dúvidas dos clientes — tudo sozinho.
-                                               O resultado? Menos tempo no WhatsApp e mais tempo na cadeira cortando cabelo.
-                                               👉 A objeção de “não tenho tempo pra essas coisas de tecnologia” cai por terra aqui — porque o n8n trabalha por você, 24 horas por dia, sem errar o horário."
+                                                                Enquanto alguns barbeiros estão respondendo mensagens manualmente, você pode estar atendendo clientes sem nem olhar o celular.
+                                                                Com o n8n, sua barbearia ganha um assistente digital que agenda horários, confirma presença, envia lembretes automáticos e até responde dúvidas dos clientes — tudo sozinho.
+                                                                O resultado? Menos tempo no WhatsApp e mais tempo na cadeira cortando cabelo.
+                                                                👉 A objeção de “não tenho tempo pra essas coisas de tecnologia” cai por terra aqui — porque o n8n trabalha por você, 24 horas por dia, sem errar o horário."
                          data-combo="🚀 3️⃣ Estratégia Perfeita: Automação + Impulsionamento Inteligente (para Barbearia)
-                                               A combinação que separa as barbearias comuns das que dominam o bairro.
-                                               De um lado, o Impulsionamento Inteligente traz novos clientes direto do Instagram e Google. Do outro, o n8n organiza tudo — agenda, confirmações, mensagens e até lembretes de retorno.
-                                               Você não perde mais cliente porque esqueceu de responder ou porque o cara “sumiu”.
-                                               👉 Essa é a diferença entre ser uma barbearia movimentada e ser uma barbearia escalável, com agenda cheia e sistema rodando sozinho enquanto você foca no que faz de melhor: cortes impecáveis e experiência de primeira.">
+                                                                A combinação que separa as barbearias comuns das que dominam o bairro.
+                                                                De um lado, o Impulsionamento Inteligente traz novos clientes direto do Instagram e Google. Do outro, o n8n organiza tudo — agenda, confirmações, mensagens e até lembretes de retorno.
+                                                                Você não perde mais cliente porque esqueceu de responder ou porque o cara “sumiu”.
+                                                                👉 Essa é a diferença entre ser uma barbearia movimentada e ser uma barbearia escalável, com agenda cheia e sistema rodando sozinho enquanto você foca no que faz de melhor: cortes impecáveis e experiência de primeira.">
                            <h3>Barbearias</h3>
                       </div>
                       <div class="servico-card"
                          data-title="Soluções para Clínicas"
                          data-img-url="https://images.unsplash.com/photo-1576091160550-2173dba999ef?q=80&w=2070&auto=format&fit=crop"
                          data-impulsionamento="🩺 1️⃣ Impulsionamento de Negócio Inteligente (para Clínicas)
-                                                    Sua clínica não precisa de mais postagens aleatórias, precisa de pacientes certos, no momento certo.
-                                                    O Impulsionamento de Negócio Inteligente foi criado para atrair pacientes qualificados da sua cidade, mostrando seus serviços de forma estratégica e profissional.
-                                                    Com campanhas otimizadas e segmentação precisa, você não gasta — investe em visibilidade real e conversões mensuráveis.
-                                                    👉 O resultado? Agenda cheia, reconhecimento local e autoridade no seu segmento de saúde."
+                                                                  Sua clínica não precisa de mais postagens aleatórias, precisa de pacientes certos, no momento certo.
+                                                                  O Impulsionamento de Negócio Inteligente foi criado para atrair pacientes qualificados da sua cidade, mostrando seus serviços de forma estratégica e profissional.
+                                                                  Com campanhas otimizadas e segmentação precisa, você não gasta — investe em visibilidade real e conversões mensuráveis.
+                                                                  👉 O resultado? Agenda cheia, reconhecimento local e autoridade no seu segmento de saúde."
                          data-automacao="⚙️ 2️⃣ Automações com n8n (para Clínicas)
-                                                    Enquanto você foca no atendimento, o sistema trabalha por você.
-                                                    Com o n8n, sua clínica ganha um assistente virtual 24h, que agenda consultas, confirma horários, envia lembretes automáticos, organiza cadastros e até faz follow-up com pacientes.
-                                                    Tudo isso sem depender de planilhas ou mensagens manuais.
-                                                    👉 A objeção de “não tenho tempo pra aprender isso” acaba aqui — porque o sistema faz o trabalho pesado e aumenta a eficiência da sua equipe sem contratar ninguém novo."
+                                                                  Enquanto você foca no atendimento, o sistema trabalha por você.
+                                                                  Com o n8n, sua clínica ganha um assistente virtual 24h, que agenda consultas, confirma horários, envia lembretes automáticos, organiza cadastros e até faz follow-up com pacientes.
+                                                                  Tudo isso sem depender de planilhas ou mensagens manuais.
+                                                                  👉 A objeção de “não tenho tempo pra aprender isso” acaba aqui — porque o sistema faz o trabalho pesado e aumenta a eficiência da sua equipe sem contratar ninguém novo."
                          data-combo="🚀 3️⃣ Estratégia Perfeita: Automação + Impulsionamento Inteligente (para Clínicas)
-                                                    Essa é a combinação que transforma uma clínica comum em uma máquina de resultados.
-                                                    O Impulsionamento Inteligente traz pacientes ideais através de anúncios estratégicos; o n8n assume o controle operacional — agendamentos, lembretes, acompanhamento e comunicação automatizada.
-                                                    Enquanto outras clínicas perdem pacientes por falta de resposta ou desorganização, você mantém tudo sob controle, com processos fluidos e previsibilidade.
-                                                    👉 Essa é a diferença entre viver apagando incêndios e ter uma clínica que cresce de forma estruturada, previsível e automatizada. ">
+                                                                  Essa é a combinação que transforma uma clínica comum em uma máquina de resultados.
+                                                                  O Impulsionamento Inteligente traz pacientes ideais através de anúncios estratégicos; o n8n assume o controle operacional — agendamentos, lembretes, acompanhamento e comunicação automatizada.
+                                                                  Enquanto outras clínicas perdem pacientes por falta de resposta ou desorganização, você mantém tudo sob controle, com processos fluidos e previsibilidade.
+                                                                  👉 Essa é a diferença entre viver apagando incêndios e ter uma clínica que cresce de forma estruturada, previsível e automatizada. ">
                            <h3>Clínicas</h3>
                       </div>
                       <div class="servico-card"
                          data-title="Soluções para Hamburguerias"
                          data-img-url="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?q=80&w=1998&auto=format&fit=crop"
                          data-impulsionamento="🍔 1️⃣ Impulsionamento de Negócio Inteligente (para Hamburgueria)
-                                               Se o seu hambúrguer é irresistível, o problema não é o produto — é quem ainda não conhece.
-                                               Com o Impulsionamento de Negócio Inteligente, seus anúncios chegam para quem realmente está com fome e pronto para pedir.
-                                               Nada de gastar dinheiro com curiosos: cada real investido é otimizado para gerar pedidos reais, seja delivery ou no salão.
-                                               Usamos estratégias avançadas de tráfego pago que colocam seus hambúrgueres na frente das pessoas certas, na hora certa.
-                                               👉 Esqueça depender da sorte. Use estratégia e veja seu delivery bombar e sua hamburgueria lotar."
+                                                                Se o seu hambúrguer é irresistível, o problema não é o produto — é quem ainda não conhece.
+                                                                Com o Impulsionamento de Negócio Inteligente, seus anúncios chegam para quem realmente está com fome e pronto para pedir.
+                                                                Nada de gastar dinheiro com curiosos: cada real investido é otimizado para gerar pedidos reais, seja delivery ou no salão.
+                                                                Usamos estratégias avançadas de tráfego pago que colocam seus hambúrgueres na frente das pessoas certas, na hora certa.
+                                                                👉 Esqueça depender da sorte. Use estratégia e veja seu delivery bombar e sua hamburgueria lotar."
                          data-automacao="⚙️ 2️⃣ Automações com n8n (para Hamburgueria)
-                                               Enquanto você cozinha, o sistema trabalha por você.
-                                               Com o n8n, sua hamburgueria automatiza pedidos, confirmações, mensagens no WhatsApp, atualizações de estoque e ainda publica fotos ou vídeos automaticamente nas redes sociais.
-                                               Basta enviar o conteúdo para o Google Drive que ele se encarrega de postar no Instagram, Facebook, TikTok e outros canais.
-                                               👉 Resultado: mais pedidos, menos trabalho manual e atendimento sempre rápido.
-                                               O n8n se torna seu funcionário digital que nunca esquece nada e atende todos os clientes de forma impecável."
+                                                                Enquanto você cozinha, o sistema trabalha por você.
+                                                                Com o n8n, sua hamburgueria automatiza pedidos, confirmações, mensagens no WhatsApp, atualizações de estoque e ainda publica fotos ou vídeos automaticamente nas redes sociais.
+                                                                Basta enviar o conteúdo para o Google Drive que ele se encarrega de postar no Instagram, Facebook, TikTok e outros canais.
+                                                                👉 Resultado: mais pedidos, menos trabalho manual e atendimento sempre rápido.
+                                                                O n8n se torna seu funcionário digital que nunca esquece nada e atende todos os clientes de forma impecável."
                          data-combo="🚀 3️⃣ Estratégia Perfeita: Automação + Impulsionamento Inteligente (para Hamburgueria)
-                                               Essa combinação transforma uma hamburgueria comum em uma operação que vende no piloto automático.
-                                               O Impulsionamento Inteligente atrai clientes famintos, enquanto o n8n gerencia todo o processo — desde pedidos até pós-venda.
-                                               Você conquista novos clientes, envia promoções automáticas, mantém presença ativa nas redes sociais e ainda economiza tempo.
-                                               👉 Enquanto outros tentam entender algoritmos, você está vendendo todos os dias e crescendo sua marca sem esforço.">
+                                                                Essa combinação transforma uma hamburgueria comum em uma operação que vende no piloto automático.
+                                                                O Impulsionamento Inteligente atrai clientes famintos, enquanto o n8n gerencia todo o processo — desde pedidos até pós-venda.
+                                                                Você conquista novos clientes, envia promoções automáticas, mantém presença ativa nas redes sociais e ainda economiza tempo.
+                                                                👉 Enquanto outros tentam entender algoritmos, você está vendendo todos os dias e crescendo sua marca sem esforço.">
                            <h3>Hamburguerias</h3>
                       </div>
                       <div class="servico-card"
                          data-title="Soluções para Lojas"
                          data-img-url="https://images.unsplash.com/photo-1555529771-835f59fc5efe?q=80&w=1974&auto=format&fit=crop"
                          data-impulsionamento=" 🧠 1️⃣ Impulsionamento de Negócio Inteligente (para Lojas)
-                                               Se o seu produto é bom, o problema não é o produto — é quem está vendo.
-                                               Com o Impulsionamento de Negócio Inteligente, seus anúncios são mostrados para quem realmente tem intenção de compra, não para curiosos.
-                                               Cada real investido é otimizado para gerar vendas reais, não curtidas vazias.
-                                               Usamos estratégias avançadas de tráfego pago que colocam seus produtos na frente de quem está pronto para comprar agora.
-                                               👉 Deixe de depender de sorte e passe a usar estratégia. É assim que lojas crescem e se mantêm lucrativas."
+                                                                Se o seu produto é bom, o problema não é o produto — é quem está vendo.
+                                                                Com o Impulsionamento de Negócio Inteligente, seus anúncios são mostrados para quem realmente tem intenção de compra, não para curiosos.
+                                                                Cada real investido é otimizado para gerar vendas reais, não curtidas vazias.
+                                                                Usamos estratégias avançadas de tráfego pago que colocam seus produtos na frente de quem está pronto para comprar agora.
+                                                                👉 Deixe de depender de sorte e passe a usar estratégia. É assim que lojas crescem e se mantêm lucrativas."
                          data-automacao="⚙️ 2️⃣ Automações com n8n (para Lojas)
-                                               Enquanto você vende, o sistema trabalha.
-                                               Com o n8n, sua loja pode automatizar o atendimento, confirmar pedidos, enviar mensagens no WhatsApp, responder clientes, atualizar estoque e até postar seus produtos automaticamente nas redes sociais.
-                                               Você pode colocar fotos ou vídeos no Google Drive, e o sistema publica tudo no Instagram, Facebook, TikTok e onde mais quiser.
-                                               👉 Resultado: mais vendas, mais tempo livre e zero erros manuais.
-                                               O n8n se torna o seu funcionário digital — aquele que nunca falta e nunca esquece de atender um cliente."
+                                                                Enquanto você vende, o sistema trabalha.
+                                                                Com o n8n, sua loja pode automatizar o atendimento, confirmar pedidos, enviar mensagens no WhatsApp, responder clientes, atualizar estoque e até postar seus produtos automaticamente nas redes sociais.
+                                                                Você pode colocar fotos ou vídeos no Google Drive, e o sistema publica tudo no Instagram, Facebook, TikTok e onde mais quiser.
+                                                                👉 Resultado: mais vendas, mais tempo livre e zero erros manuais.
+                                                                O n8n se torna o seu funcionário digital — aquele que nunca falta e nunca esquece de atender um cliente."
                          data-combo="🚀 3️⃣ Estratégia Perfeita: Automação + Impulsionamento Inteligente (para Lojas)
-                                               Essa é a combinação que transforma uma loja comum em uma operação que vende no piloto automático.
-                                               O Impulsionamento Inteligente traz o público certo, e o n8n cuida de todo o processo — da divulgação ao pós-venda.
-                                               Você atrai clientes, responde automaticamente, envia ofertas personalizadas e ainda mantém presença ativa nas redes sociais sem precisar postar manualmente.
-                                               👉 Enquanto os outros estão tentando entender o algoritmo, você já está vendendo todos os dias.">
+                                                                Essa é a combinação que transforma uma loja comum em uma operação que vende no piloto automático.
+                                                                O Impulsionamento Inteligente traz o público certo, e o n8n cuida de todo o processo — da divulgação ao pós-venda.
+                                                                Você atrai clientes, responde automaticamente, envia ofertas personalizadas e ainda mantém presença ativa nas redes sociais sem precisar postar manualmente.
+                                                                👉 Enquanto os outros estão tentando entender o algoritmo, você já está vendendo todos os dias.">
                            <h3>Lojas</h3>
                       </div>
                       <div class="servico-card"
                          data-title="Redes Sociais"
                          data-img-url="https://i.pinimg.com/736x/75/c1/a1/75c1a1ad90cf0be3aca60774bd96d1ea.jpg"
                          data-impulsionamento="📈 1️⃣ Impulsionamento de Negócio Inteligente (para Redes Sociais)
-                                               Você não precisa de mais seguidores — precisa de resultados reais.
-                                               O Impulsionamento de Negócio Inteligente transforma suas redes sociais em uma máquina de atração de clientes.
-                                               Usamos estratégias de tráfego pago com segmentação precisa para atingir as pessoas certas — aquelas que realmente compram o que você oferece.
-                                               👉 Chega de gastar dinheiro com anúncios que não convertem. Aqui, cada real investido trabalha pra você, gerando engajamento, autoridade e novas vendas todos os dias."
+                                                                Você não precisa de mais seguidores — precisa de resultados reais.
+                                                                O Impulsionamento de Negócio Inteligente transforma suas redes sociais em uma máquina de atração de clientes.
+                                                                Usamos estratégias de tráfego pago com segmentação precisa para atingir as pessoas certas — aquelas que realmente compram o que você oferece.
+                                                                👉 Chega de gastar dinheiro com anúncios que não convertem. Aqui, cada real investido trabalha pra você, gerando engajamento, autoridade e novas vendas todos os dias."
                          data-automacao="⚙️ 2️⃣ Automações com n8n (para Redes Sociais)
-                                               Enquanto você cria, o sistema publica.
-                                               Com o n8n, você pode colocar um vídeo no Google Drive e ele será automaticamente postado em todas as suas redes sociais — Instagram, TikTok, YouTube, Facebook, LinkedIn, o que quiser.
-                                               Além disso, ele pode gerar legendas, hashtags e até responder comentários.
-                                               👉 Resultado: mais presença digital, mais tempo pra produzir e menos tempo preso em tarefas repetitivas.
-                                               Essa automação é o seu estagiário que nunca dorme e nunca esquece de postar."
+                                                                Enquanto você cria, o sistema publica.
+                                                                Com o n8n, você pode colocar um vídeo no Google Drive e ele será automaticamente postado em todas as suas redes sociais — Instagram, TikTok, YouTube, Facebook, LinkedIn, o que quiser.
+                                                                Além disso, ele pode gerar legendas, hashtags e até responder comentários.
+                                                                👉 Resultado: mais presença digital, mais tempo pra produzir e menos tempo preso em tarefas repetitivas.
+                                                                Essa automação é o seu estagiário que nunca dorme e nunca esquece de postar."
                          data-combo="⚙️ 2️⃣ Automações com n8n (para Redes Sociais)
-                                               Enquanto você cria, o sistema publica.
-                                               Com o n8n, você pode colocar um vídeo no Google Drive e ele será automaticamente postado em todas as suas redes sociais — Instagram, TikTok, YouTube, Facebook, LinkedIn, o que quiser.
-                                               Além disso, ele pode gerar legendas, hashtags e até responder comentários.
-                                               👉 Resultado: mais presença digital, mais tempo pra produzir e menos tempo preso em tarefas repetitivas.
-                                               Essa automação é o seu estagiário que nunca dorme e nunca esquece de postar.">
+                                                                Enquanto você cria, o sistema publica.
+                                                                Com o n8n, você pode colocar um vídeo no Google Drive e ele será automaticamente postado em todas as suas redes sociais — Instagram, TikTok, YouTube, Facebook, LinkedIn, o que quiser.
+                                                                Além disso, ele pode gerar legendas, hashtags e até responder comentários.
+                                                                👉 Resultado: mais presença digital, mais tempo pra produzir e menos tempo preso em tarefas repetitivas.
+                                                                Essa automação é o seu estagiário que nunca dorme e nunca esquece de postar.">
                            <h3>Redes Sociais</h3>
                       </div>
                       <div class="servico-card"
                          data-title="Soluções Personalizadas"
                          data-img-url="https://images.unsplash.com/photo-1578474846511-04ba529f0b88?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=687"
-                         data-impulsionamento="🧠 1️⃣ Impulsionamento Inteligente (para Restaurantes) 
-                                               Se seus pratos são elogiados, mas o salão vive vazio (ou o delivery só sai pelo iFood), o problema não é a comida — é quem está vendo.
-                                               Com o Impulsionamento Inteligente, mostramos seus pratos para quem está com fome agora e procurando exatamente o que você serve na sua região.
-                                               'AH MAS JÁ ESTOU NO IFOOD' O iFood é um ótimo canal de descoberta, mas ele te 'ALUGA' o cliente. Você paga taxas altíssimas (até 30%) por um cliente que poderia ser seu.
-                                               Nossa estratégia foca em trazer esse cliente para o seu canal de venda direto (seu WhatsApp, seu site ou seu sistema de pedidos próprio).
-                                               👉 Cada real investido é otimizado para gerar pedidos com margem de lucro cheia, não para alimentar um algoritmo que promove seus concorrentes ao lado. Deixe de ser refém das taxas e passe a controlar seu faturamento."
-                         data-automacao=" ⚙️ 2️⃣ Automações com n8n (para Restaurantes) 
-                                               Enquanto a cozinha prepara, o sistema atende e vende.
-                                               Com o n8n, seu restaurante pode:
-                                               Atender clientes 24/7 no WhatsApp, enviando o cardápio digital automaticamente.
-                                               Confirmar pedidos, pegar endereço e forma de pagamento sem intervenção humana.
-                                               Avisar o cliente quando o pedido saiu para entrega.
-                                               Gerenciar reservas de mesas.
-                                               Disparar pesquisas de satisfação após a entrega.
-                                               Você pode colocar as fotos dos seus pratos no Google Drive, e o sistema posta automaticamente no Instagram e Facebook nos horários de pico (hora do almoço, jantar).
-                                               👉 Resultado: mais pedidos, menos confusão na linha telefônica, zero erros de anotação e clientes fiéis. O n8n se torna seu 'maître digital' — aquele que nunca deixa um cliente esperando."
-                         data-combo="🚀 3️⃣ Estratégia Perfeita: Automação + Impulsionamento (para Restaurantes) 
-                                               Essa é a combinação que transforma um restaurante comum em uma máquina de pedidos no piloto automático.
-                                               O Impulsionamento Inteligente traz o cliente faminto (de fora do iFood), e o n8n cuida de todo o atendimento — da captura do pedido no WhatsApp ao pós-venda.
-                                               Você atrai clientes para seu delivery próprio, responde instantaneamente, envia promoções personalizadas (Ex: 'Vimos que gostou da nossa feijoada, que tal pedir de novo com 10% off?'') e mantém suas redes sociais ativas sem esforço.
-                                               👉 Enquanto seus concorrentes disputam o topo do iFood pagando caro por isso, você já está construindo sua própria base de clientes e vendendo com margem cheia todos os dias.">
+                         data-impulsionamento="🧠 1️⃣ Impulsionamento Inteligente (para Restaurantes) 
+                                                                Se seus pratos são elogiados, mas o salão vive vazio (ou o delivery só sai pelo iFood), o problema não é a comida — é quem está vendo.
+                                                                Com o Impulsionamento Inteligente, mostramos seus pratos para quem está com fome agora e procurando exatamente o que você serve na sua região.
+                                                                'AH MAS JÁ ESTOU NO IFOOD' O iFood é um ótimo canal de descoberta, mas ele te 'ALUGA' o cliente. Você paga taxas altíssimas (até 30%) por um cliente que poderia ser seu.
+                                                                Nossa estratégia foca em trazer esse cliente para o seu canal de venda direto (seu WhatsApp, seu site ou seu sistema de pedidos próprio).
+                                                                👉 Cada real investido é otimizado para gerar pedidos com margem de lucro cheia, não para alimentar um algoritmo que promove seus concorrentes ao lado. Deixe de ser refém das taxas e passe a controlar seu faturamento."
+                         data-automacao=" ⚙️ 2️⃣ Automações com n8n (para Restaurantes) 
+                                                                Enquanto a cozinha prepara, o sistema atende e vende.
+                                                                Com o n8n, seu restaurante pode:
+                                                                Atender clientes 24/7 no WhatsApp, enviando o cardápio digital automaticamente.
+                                                                Confirmar pedidos, pegar endereço e forma de pagamento sem intervenção humana.
+                                                                Avisar o cliente quando o pedido saiu para entrega.
+                                                                Gerenciar reservas de mesas.
+                                                                Disparar pesquisas de satisfação após a entrega.
+                                                                Você pode colocar as fotos dos seus pratos no Google Drive, e o sistema posta automaticamente no Instagram e Facebook nos horários de pico (hora do almoço, jantar).
+                                                                👉 Resultado: mais pedidos, menos confusão na linha telefônica, zero erros de anotação e clientes fiéis. O n8n se torna seu 'maître digital' — aquele que nunca deixa um cliente esperando."
+                         data-combo="🚀 3️⃣ Estratégia Perfeita: Automação + Impulsionamento (para Restaurantes) 
+                                                                Essa é a combinação que transforma um restaurante comum em uma máquina de pedidos no piloto automático.
+                                                                O Impulsionamento Inteligente traz o cliente faminto (de fora do iFood), e o n8n cuida de todo o atendimento — da captura do pedido no WhatsApp ao pós-venda.
+                                                                Você atrai clientes para seu delivery próprio, responde instantaneamente, envia promoções personalizadas (Ex: 'Vimos que gostou da nossa feijoada, que tal pedir de novo com 10% off?'') e mantém suas redes sociais ativas sem esforço.
+                                                                👉 Enquanto seus concorrentes disputam o topo do iFood pagando caro por isso, você já está construindo sua própria base de clientes e vendendo com margem cheia todos os dias.">
                            <h3>Restaurantes</h3>
                       </div>
                       <div class="servico-card"
                          data-title="Soluções Personalizadas"
                          data-img-url="https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2070&auto=format&fit=crop"
-                         data-impulsionamento="🧠 1️⃣ Impulsionamento de Negócio Inteligente (Serviço Personalizado) 
-                                                    Se o seu serviço ou produto é de alta qualidade, mas os clientes certos não estão chegando, o problema não é sua solução — é quem está vendo.
-                                                    Nós não usamos fórmulas prontas. Primeiro, estudamos o seu caso para entender quem é o seu cliente ideal e onde ele está.
-                                                    Com o Impulsionamento Inteligente, seus anúncios são mostrados apenas para quem tem o perfil exato e a intenção real de comprar o que você oferece.
-                                                    Quebra de Objeção: 'Já tentei impulsionar e só gastei dinheiro' Isso acontece quando se anuncia para 'curiosos'. Nossa estratégia foca em otimizar cada real investido para gerar leads qualificados e vendas reais, não curtidas vazias.
-                                                    👉 Deixe de depender da sorte ou de indicações e passe a ter uma fonte previsível de clientes. É assim que negócios escalam e se mantêm lucrativos."
-                         data-automacao="⚙️ 2️⃣ Automação e Gestão de Processos (Personalizado) 
-                                                    Na automação, nós estudamos seu negócio ou empresa para encontrar os gargalos. Onde você perde tempo? Onde o cliente espera demais? Onde o erro manual custa dinheiro?
-                                                    Com base nesse diagnóstico, implementamos os melhores softwares e ferramentas (como o n8n e outras plataformas) para gerir seu negócio de forma eficiente.
-                                                    Isso automatiza tudo: do primeiro atendimento no WhatsApp ao envio de propostas, controle de pagamentos e o pós-venda.
-                                                    👉 Resultado: Uma operação enxuta, profissional e que funciona sem depender 100% de você. Adaptamos a tecnologia ao seu processo, e não o contrário."
-                         data-combo="🚀 3️⃣ A Estratégia de Decolagem: Automação + Impulsionamento 
-                                                    Essa é a combinação que faz qualquer negócio decolar.
-                                                    Com a junção do Impulsionamento Inteligente (trazendo o cliente certo) e das Automações (cuidando dos processos e da venda), sua empresa sai da estagnação.
-                                                    O Impulsionamento atrai o cliente; a Automação garante que ele seja atendido na hora, nutrido e convertido, 24 horas por dia.
-                                                    👉 Isso não é 'achismo', é o presente. Quem não se adaptar, ficará para trás. O futuro dos negócios é a eficiência.
-                                                    Isso é o presente e o futuro, e só está no começo. 2026 será o ano da consolidação dessa nova forma de operar. Quem começar agora, vai dominar o mercado.">
+                         data-impulsionamento="🧠 1️⃣ Impulsionamento de Negócio Inteligente (Serviço Personalizado) 
+                                                                  Se o seu serviço ou produto é de alta qualidade, mas os clientes certos não estão chegando, o problema não é sua solução — é quem está vendo.
+                                                                  Nós não usamos fórmulas prontas. Primeiro, estudamos o seu caso para entender quem é o seu cliente ideal e onde ele está.
+                                                                  Com o Impulsionamento Inteligente, seus anúncios são mostrados apenas para quem tem o perfil exato e a intenção real de comprar o que você oferece.
+                                                                  Quebra de Objeção: 'Já tentei impulsionar e só gastei dinheiro' Isso acontece quando se anuncia para 'curiosos'. Nossa estratégia foca em otimizar cada real investido para gerar leads qualificados e vendas reais, não curtidas vazias.
+                                                                  👉 Deixe de depender da sorte ou de indicações e passe a ter uma fonte previsível de clientes. É assim que negócios escalam e se mantêm lucrativos."
+                         data-automacao="⚙️ 2️⃣ Automação e Gestão de Processos (Personalizado) 
+                                                                  Na automação, nós estudamos seu negócio ou empresa para encontrar os gargalos. Onde você perde tempo? Onde o cliente espera demais? Onde o erro manual custa dinheiro?
+                                                                  Com base nesse diagnóstico, implementamos os melhores softwares e ferramentas (como o n8n e outras plataformas) para gerir seu negócio de forma eficiente.
+                                                                  Isso automatiza tudo: do primeiro atendimento no WhatsApp ao envio de propostas, controle de pagamentos e o pós-venda.
+                                                                  👉 Resultado: Uma operação enxuta, profissional e que funciona sem depender 100% de você. Adaptamos a tecnologia ao seu processo, e não o contrário."
+                         data-combo="🚀 3️⃣ A Estratégia de Decolagem: Automação + Impulsionamento 
+                                                                  Essa é a combinação que faz qualquer negócio decolar.
+                                                                  Com a junção do Impulsionamento Inteligente (trazendo o cliente certo) e das Automações (cuidando dos processos e da venda), sua empresa sai da estagnação.
+                                                                  O Impulsionamento atrai o cliente; a Automação garante que ele seja atendido na hora, nutrido e convertido, 24 horas por dia.
+                                                                  👉 Isso não é 'achismo', é o presente. Quem não se adaptar, ficará para trás. O futuro dos negócios é a eficiência.
+                                                                  Isso é o presente e o futuro, e só está no começo. 2026 será o ano da consolidação dessa nova forma de operar. Quem começar agora, vai dominar o mercado.">
                            <h3>Outros</h3>
                       </div>
                  </div>
@@ -396,23 +490,68 @@
                       Junte-se a dezenas de negócios que transformaram seus processos e resultados com nossas soluções.
                  </p>
                  <div class="client-logo-grid animate-on-scroll" style="transition-delay: 0.2s;">
-                      <div class="client-logo-card" title="Logo Cliente 1">
-                           <img src="mister.png" alt="Logo Cliente 1">
+                      <div class="client-logo-card" title="Mister">
+                           <img src="mister.png" alt="Logo Mister">
+                           <div class="case-description">
+                               <p>A automatização de fluxo de caixa e integração com CRM elevou nossa eficiência operacional em 40%, permitindo focar em estratégias de crescimento e atendimento ao cliente.</p>
+                           </div>
+                           <button class="btn-3d-green">
+                               Ver Case <span class="btn-icon">▼</span>
+                           </button>
                       </div>
-                      <div class="client-logo-card" title="Logo Cliente 2">
-                           <img src="vikings.png" alt="Logo Cliente 2">
+                      <div class="client-logo-card" title="Vikings">
+                           <img src="vikings.png" alt="Logo Vikings">
+                           <div class="case-description">
+                               <p>Nossa otimização de tráfego pago resultou em uma redução significativa de 35% no custo por lead, melhorando o retorno sobre investimento e expandindo nosso alcance de mercado.</p>
+                           </div>
+                           <button class="btn-3d-green">
+                               Ver Case <span class="btn-icon">▼</span>
+                           </button>
                       </div>
-                      <div class="client-logo-card" title="Logo Cliente 3">
-                           <img src="massaro.png" alt="Logo Cliente 3">
+                      <div class="client-logo-card" title="Massaro">
+                           <img src="massaro.png" alt="Logo Massaro">
+                           <div class="case-description">
+                               <p>A implementação de um agente de IA para atendimento inicial, operando 24/7, garantiu que nenhum cliente ficasse sem resposta, aumentando nossa taxa de conversão.</p>
+                           </div>
+                           <button class="btn-3d-green">
+                               Ver Case <span class="btn-icon">▼</span>
+                           </button>
                       </div>
-                      <div class="client-logo-card" title="Logo Cliente 4">
-                           <img src="emporio.png" alt="Logo Cliente 4">
+                      <div class="client-logo-card" title="Empório">
+                           <img src="emporio.png" alt="Logo Empório">
+                           <div class="case-description">
+                               <p>O restaurante eliminou a confusão das reservas manuais. Com o n8n, o cliente envia uma mensagem e o sistema confirma a mesa, registra no mapa do salão, envia lembrete e até ajusta o fluxo em caso de atraso. A equipe parou de correr atrás de papel, e o salão virou um relógio suíço na operação.</p>
+                           </div>
+                           <button class="btn-3d-green">
+                               Ver Case <span class="btn-icon">▼</span>
+                           </button>
                       </div>
-                      <div class="client-logo-card" title="Logo Cliente 5">
-                           <img src="fe.png" alt="Logo Cliente 5">
+                      <div class="client-logo-card" title="Fé">
+                           <img src="fe.png" alt="Logo Fé">
+                           <div class="case-description">
+                               <p>A reestruturação completa do funil de vendas digital otimizou a jornada do cliente, resultando em um processo de vendas mais fluido e eficiente.</p>
+                           </div>
+                           <button class="btn-3d-green">
+                               Ver Case <span class="btn-icon">▼</span>
+                           </button>
                       </div>
-                      <div class="client-logo-card" title="Logo Cliente 6">
-                           <img src="bistro.png" alt="Logo Cliente 6">
+                      <div class="client-logo-card" title="Bistrô">
+                           <img src="bistro.png" alt="Logo Bistrô">
+                           <div class="case-description">
+                               <p>Implementamos um sistema automatizado de reservas e feedback de clientes que melhorou a organização interna e a satisfação geral dos nossos frequentadores.</p>
+                           </div>
+                           <button class="btn-3d-green">
+                               Ver Case <span class="btn-icon">▼</span>
+                           </button>
+                      </div>
+                       <div class="client-logo-card" title="Pause">
+                           <img src="pause.png" alt="Logo Pause">
+                           <div class="case-description">
+                               <p>A página de filmes usava horas para montar posts, legendas e programar publicações. Com o n8n, o fluxo coleta novidades do cinema, monta posts, cria legendas com SEO, agenda a publicação e ainda envia no DM uma mensagem automática para quem comenta “quero mais”. A automação manteve constância, aumentou o engajamento e transformou seguidores em fãs fiéis.</p>
+                           </div>
+                           <button class="btn-3d-green">
+                               Ver Case <span class="btn-icon">▼</span>
+                           </button>
                       </div>
                  </div>
             </div>
@@ -694,7 +833,7 @@
             </div>
             <div id="chat-messages" class="chat-messages">
                  <div class="message received">Olá! Melhor agora que chegou — mais um cliente pra potencializar resultados. Posso te ajudar com uma auditoria rápida, configurar uma automação ou escalar seu tráfego?</div>
-                
+                 
                  <div id="chat-quick-replies" class="chat-quick-replies">
                       <button class="quick-reply-btn" data-value="Automação">Automação</button>
                       <button class="quick-reply-btn" data-value="Impulsionamento">Impulsionamento</button>
@@ -702,17 +841,41 @@
                       <button class="quick-reply-btn" data-value="Dúvida">Dúvida</button>
                  </div>
                  </div>
-              <form id="chat-form" class="chat-input-area">
-                   <input type="text" id="chat-input" placeholder="Digite sua dúvida..." autocomplete="off">
-                   <button type="submit" id="chat-send-button" aria-label="Enviar mensagem">
-                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path d="M3.478 2.405a.75.75 0 0 0-.926.94l2.432 7.905H13.5a.75.75 0 0 1 0 1.5H4.984l-2.432 7.905a.75.75 0 0 0 .926.94 60.519 60.519 0 0 0 18.445-8.986.75.75 0 0 0 0-1.218A60.517 60.517 0 0 0 3.478 2.405Z"/></svg>
-                   </button>
-              </form>
+               <form id="chat-form" class="chat-input-area">
+                    <input type="text" id="chat-input" placeholder="Digite sua dúvida..." autocomplete="off">
+                    <button type="submit" id="chat-send-button" aria-label="Enviar mensagem">
+                       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path d="M3.478 2.405a.75.75 0 0 0-.926.94l2.432 7.905H13.5a.75.75 0 0 1 0 1.5H4.984l-2.432 7.905a.75.75 0 0 0 .926.94 60.519 60.519 0 0 0 18.445-8.986.75.75 0 0 0 0-1.218A60.517 60.517 0 0 0 3.478 2.405Z"/></svg>
+                    </button>
+               </form>
         </div>
 
     </div> <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.globe.min.js"></script>
     
     <script src="script.js"></script>
+
+    <script>
+        document.querySelectorAll('.btn-3d-green').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault(); // Previne qualquer comportamento padrão
+                
+                const card = this.closest('.client-logo-card');
+                const description = card.querySelector('.case-description');
+                
+                // Toggle da classe active no botão para rotação do ícone
+                this.classList.toggle('active');
+                
+                // Toggle da classe open na descrição
+                description.classList.toggle('open');
+                
+                // Altera o texto do botão
+                if (description.classList.contains('open')) {
+                    this.childNodes[0].nodeValue = "Fechar ";
+                } else {
+                    this.childNodes[0].nodeValue = "Ver Case ";
+                }
+            });
+        });
+    </script>
 </body>
 </html>
