@@ -771,3 +771,61 @@ footer { background: #050505; padding: 4rem 0 2rem; }
         transform-origin: bottom left;
     }
 }
+
+/* --- ESTILIZAÇÃO AVANÇADA DO SELECT (MODO FORÇADO) --- */
+
+/* 1. Força o sistema a reconhecer o tema escuro */
+:root {
+    color-scheme: dark;
+}
+
+/* 2. O Campo Fechado (Input) */
+select {
+    appearance: none !important;
+    -webkit-appearance: none !important;
+    -moz-appearance: none !important;
+    background-color: #0a0a0a !important;
+    color: #ffffff !important;
+    border: 1px solid #2ecc71 !important;
+    border-radius: 8px !important;
+    padding: 12px !important;
+    font-family: 'Inter', sans-serif !important;
+    font-size: 1rem !important;
+    cursor: pointer !important;
+    outline: none !important;
+    /* Seta Verde */
+    background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%232ecc71%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E") !important;
+    background-repeat: no-repeat !important;
+    background-position: right 15px top 50% !important;
+    background-size: 12px auto !important;
+}
+
+/* 3. Hover e Foco no Campo Fechado */
+select:hover, select:focus {
+    border-color: #00FF88 !important; /* Verde Neon */
+    box-shadow: 0 0 15px rgba(0, 255, 136, 0.4) !important;
+}
+
+/* 4. A Lista de Opções (Tentativa de Hack para Cor de Fundo) */
+option {
+    background-color: #050505 !important; /* Fundo quase preto */
+    color: #ffffff !important;
+    padding: 15px !important;
+    /* Tenta forçar a cor verde no texto ou fundo */
+}
+
+/* 5. O TRUQUE DA SOMBRA INTERNA (Para tentar matar o azul) 
+   Isso funciona para o item SELECIONADO (Checked) */
+option:checked {
+    background-color: #00FF88 !important;
+    color: #000000 !important; /* Texto preto para contraste */
+    box-shadow: 0 0 10px 100px #00FF88 inset !important; /* Força o preenchimento verde */
+    -webkit-text-fill-color: #000000 !important;
+}
+
+/* 6. Tentativa para o HOVER na lista (Suporte limitado pelos navegadores) */
+option:hover, option:focus, option:active {
+    background-color: #00FF88 !important;
+    box-shadow: 0 0 10px 100px #00FF88 inset !important;
+    color: #000000 !important;
+}
